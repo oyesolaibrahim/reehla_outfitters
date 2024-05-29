@@ -34,7 +34,6 @@ useEffect(() => {
   .then((result) => {
       console.log(result.data.jalabs);
       setMyCarts(result.data.jalabs)
-       console.log(myCarts)
       })
     . catch ((error) => {
       console.log('Error Fetching Jalabs in Cart', error);

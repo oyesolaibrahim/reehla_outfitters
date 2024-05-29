@@ -25,7 +25,7 @@ axios(fetching)
   . catch ((error) => {
     console.log('Error Fetching Jalabs in Cart', error);
   })
-}, [sessionId, myCarts])
+}, [sessionId])
 
  
 useEffect(() => {
@@ -86,7 +86,7 @@ const clearCart = () => {
 
   return (
     <>  
-      <div className="md:flex justify-between">
+      <div className="md:flex justify-between xs:min-h-screen">
         <div className="flex flex-col space-y-3 justify-between">
           {myCarts.map(myCart => (
             <div className="bg-yellow-100 max-h-62 min-h-62 sm:max-w-2/3 md:w-3/4 sm:min-w-36 md:min-w-36 p-10 m-5">
@@ -106,8 +106,8 @@ const clearCart = () => {
           ))}
        {myCarts.length === 0 || <button onClick={handleClearCart} className="text-white sm:w-1/6 xs:w-1/2 ml-5 mb-3 bg-red-800 py-3 px-5 rounded-lg">Clear Cart</button>} 
           {myCarts.length === 0 && (
-        <div className="bg-yellow-100 mt-10 ml-10 rounded-lg py-5 px-5 uppercase">
-            <h3 className="text-2xl font-bold">Sorry, Your Cart is empty</h3>
+        <div className="bg-yellow-100 mt-10 sm:ml-10 md:ml-10 lg:ml-10 xs:mx-auto xs:w-4/5 rounded-lg py-5 px-5 uppercase">
+            <h3 className="text-2xl font-bold text-center">Sorry, Your Cart is empty</h3>
             <div className="relative mt-4 text-center">
                 <i className="fa fa-shopping-cart fa-4x cursor-pointer mt-auto" aria-hidden="true"></i>
                 <div className="bg-red-800 rounded-full absolute top-0 left-1/2">

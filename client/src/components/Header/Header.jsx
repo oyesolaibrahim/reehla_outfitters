@@ -68,12 +68,12 @@ const Header = ({ myCarts = [] }) => {
                                 <h3 className="cursor-pointer lg:min-w-32 md:min-w-36 font-bold sm:mb-5 md:mb-0 py-3 sm:hover:text-red-800 md:px-5 md:pr-10 md:hover:text-white">Blog</h3>
                             </Link>
                         </div>
-                        <div className="flex xs:m-0 md:flex-row lg:flex-row md:mr-10 sm:pl-5 sm:flex-col xs:flex xs:flex-col sm:items-start xs:items-start md:items-center">
+                        <div className="flex md:flex-row lg:flex-row md:mr-10 sm:pl-5 sm:flex-col sm:items-start xs:items-start xs:flex-col md:items-center">
                             <Link to="/signup">
-                                <h3 className="cursor-pointer font-bold xs:mb-6 sm:mb-5 md:mb-0 hover:rounded-lg hover:bg-red-800 py-3 px-5 lg:mr-3 md:mr-3 hover:text-white">Signup</h3>
+                                <h3 className="cursor-pointer font-bold xs:mb-6 sm:mb-5 md:mb-0 hover:rounded-lg hover:bg-red-800 py-3 xs:-ml-5 xs:px-5 lg:mr-3 md:mr-3 hover:text-white">Signup</h3>
                             </Link>
                             <Link to="/login">
-                                <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 rounded-lg bg-red-800 py-3 px-5 text-white">Login</h3>
+                                <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 rounded-lg bg-red-800 py-3 px-5 xs:-ml-5 text-white">Login</h3>
                             </Link>
                         </div>
                     </div>

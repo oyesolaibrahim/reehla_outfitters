@@ -39,8 +39,8 @@ useEffect(() => {
         <Header/>
         <main className="bg-gray-700 pb-16">
             <section ref={rightSlide}>
-                <div className={`py-10 text-white mb-10 ${visible ? 'animate-slideInRight' : ''}`}>
-                    <h1 className="flex sm:text-6xl md:text-6xl xs:text-4xl justify-center">Available Children Jalabs</h1>
+                <div className={`py-10 text-white ${visible ? 'animate-slideInRight' : ''}`}>
+                    <h1 className="flex text-center sm:text-6xl md:text-6xl xs:text-4xl justify-center">Available Children Jalabs</h1>
                 </div>   
                 <ChildrenArticle childrenJalabs={childrenJalabs}/>
             </section>

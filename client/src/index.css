@@ -87,6 +87,7 @@ body {
     bottom: 60px;
   }
   .cart {
+    margin-top: 5px;
     top: -25px;
     left: 30px;
   }
