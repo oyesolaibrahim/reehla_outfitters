@@ -99,7 +99,6 @@ axios(fetching)
     console.log('Error Fetching Jalabs in Cart', error);
   })
 }, [sessionId, myCarts])
-
   
   return (
     <CartProvider initialCartItems={myCarts}>
