@@ -1,0 +1,106 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+* {
+  font-family: "Merriweather", serif;
+}
+body {
+  overflow-x: hidden;
+}
+.inline-block {
+  display: inline-block;
+}
+.width {
+  width: 30%;
+}
+.height {
+  max-height: 30vh;
+  min-height: 30vh;
+}
+.vh {
+  min-height: 90vh;
+  max-height: 90vh;
+}
+.z {
+  z-index: 99;
+}
+.background {
+  background-image: url("../src/assets/shared/background..jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+.toolpoint {
+  position: relative;
+}
+.toolpoint::after{
+  content: "";
+  position: absolute;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent transparent #960018;
+  top: 50%;
+  right: -11%;
+  transform: translateY(-50%);
+}
+.right {
+  right: 0;
+}
+.negative-right {
+  right: -100%;
+}
+
+@media screen and (max-width:650px) {
+
+  .xsvh {
+    max-height: 43vh;
+    min-height: 43vh;
+  }
+  .search {
+    width: 65vw;
+  }
+  .orders {
+    padding: 5px 10px;
+    right: 10px;
+  }
+
+  .cart {
+    left: 100px;
+    top: 20px;
+  }
+  .top {
+    top: -80px;
+  }
+}
+@media screen and (max-width:450px) {
+
+  .xsvh {
+    max-height: 35vh;
+    min-height: 35vh;
+  }
+  .search {
+    width: 55vw;
+  }
+  .orders {
+    padding: 2px 7px;
+    bottom: 60px;
+  }
+  .cart {
+    top: -25px;
+    left: 30px;
+  }
+  .top {
+    top: -60px;
+  }
+  .top2 {
+    top: -40px;
+  }
+  .width {
+    width: 30%;
+  }
+  .p-width {
+    max-width: 100px;
+    font-size: 0.8rem;
+  }
+  }
