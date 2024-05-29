@@ -12,7 +12,7 @@ const { getAllBlogs, createBlogMessage } = require("./controllers/blog.controlle
 require('dotenv').config();
 const fs = require('fs');
 
-mongoose.connect("mongodb://0.0.0.0:27017/realBabs_App")
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     console.log("Database connected successfully!");
 })

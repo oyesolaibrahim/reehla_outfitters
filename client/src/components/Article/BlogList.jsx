@@ -6,13 +6,13 @@ const BlogList = ({ blogs }) => {
   
   return (
     <>
-        <div className='p-10'>
+        <div className='sm:p-10'>
             {blogs.map(blog => (
-              <div key={blog.id} className="bg-yellow-100 p-10 my-8 flex items-start space-x-20">
-                {blog.imageUrl && <img src={blog.imageUrl} alt="Blog" className="w-1/3" />}
+              <div key={blog.id} className="bg-yellow-100 p-10 my-8 flex items-start xs:flex-col sm:flex-row space-x-20">
+                {blog.imageUrl && <img src={blog.imageUrl} alt="Blog" className="sm:w-1/3 xs:w-full xs:mb-10" />}
                 <div>
-                    <h3 className="text-xl font-semibold mb-2">{blog.subject}</h3>
-                    <p className="text-gray-600">{blog.message}</p>
+                    <h3 className="text-xl font-semibold mb-2 xs:text-center">{blog.subject}</h3>
+                    <p className="text-gray-600 xs:text-center xs:pl-0">{blog.message}</p>
                 </div>
               </div>
             ))}

@@ -6,14 +6,7 @@ import ThirdSection from "./Sections/ThirdSection";
 import FourthSection from "./Sections/FourthSection";
 
 const Home = () => {
-    const backgroundImageUrl = 'https://unsplash.com/photos/a-bottle-of-perfume-on-a-pink-background-JIZvOtNHQWY';
-
-    const containerStyle = {
-      backgroundImage: `url(${backgroundImageUrl})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      minHeight: '100vh',
-    }
+    
     const userToken = sessionStorage.getItem("userToken")
     const FirstName = sessionStorage.getItem("User")
     return (

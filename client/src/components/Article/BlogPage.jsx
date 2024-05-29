@@ -24,7 +24,7 @@ const BlogPage = () => {
     <>
     <Header/>
     <main>
-        <div className='bg-blue-800 py-10'>
+        <div className='bg-gray-700 py-10'>
           <BlogList blogs={blogs} />
         </div>
     </main>
