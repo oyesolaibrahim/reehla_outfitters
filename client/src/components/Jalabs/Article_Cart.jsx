@@ -90,7 +90,7 @@ const clearCart = () => {
     <>  
       <div className="md:flex justify-between xs:min-h-screen">
         <div className="flex flex-col space-y-3 justify-between">
-          {myCarts.map(myCart => (
+          {myCarts?.map(myCart => (
             <div className="bg-yellow-100 max-h-62 min-h-62 sm:max-w-2/3 md:w-3/4 sm:min-w-36 md:min-w-36 p-10 m-5">
             <article key={myCart._id} className=" relative sm:flex md:flex justify-between sm:items-center md:items-center">
               <img className="w-1/3 mb-5" src={`${process.env.REACT_APP_SERVER}/${myCart.itemDetails?.imageUrl}`} alt="perfume-img"/>

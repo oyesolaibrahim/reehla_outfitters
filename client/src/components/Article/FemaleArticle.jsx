@@ -48,7 +48,7 @@ const FemaleArticle = ({ femaleJalabs }) => {
   return (
     <>
       <div className="flex flex-wrap space-y-6 xs:justify-center sm:pl-5 sm:justify-between md:justify-between sm:items-center md:items-center">
-        {objects.map(jalab => (
+        {objects?.map(jalab => (
           <article key={jalab._id} className="bg-yellow-100 xs:my-3 width vh xsvh xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2">
             <Link to={`/jalabs/${jalab._id}`} state={{ jalab }}>
               <img className="xs:flex xs:p-3 xs:justify-center" src={`${process.env.REACT_APP_SERVER}/${jalab.imageUrl}`} alt="jalab-img" />

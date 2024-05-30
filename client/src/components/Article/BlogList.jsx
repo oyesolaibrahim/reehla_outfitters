@@ -7,7 +7,7 @@ const BlogList = ({ blogs }) => {
   return (
     <>
         <div className='sm:p-10'>
-            {blogs.map(blog => (
+            {blogs?.map(blog => (
               <div key={blog.id} className="bg-yellow-100 p-10 my-8 flex items-start xs:flex-col sm:flex-row space-x-20">
                 {blog.imageUrl && <img src={blog.imageUrl} alt="Blog" className="sm:w-1/3 xs:w-full xs:mb-10" />}
                 <div>
