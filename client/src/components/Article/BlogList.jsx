@@ -12,7 +12,7 @@ const BlogList = ({ blogs }) => {
                 {blog.imageUrl && <img src={blog.imageUrl} alt="Blog" className="sm:w-1/3 xs:w-full xs:mb-10" />}
                 <div>
                     <h3 className="text-xl font-semibold mb-2 xs:text-center">{blog.subject}</h3>
-                    <p className="text-gray-600 xs:text-center xs:pl-0">{blog.message}</p>
+                    <p className="text-gray-600 xs:text-center">{blog.message}</p>
                 </div>
               </div>
             ))}

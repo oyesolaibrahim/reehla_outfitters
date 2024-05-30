@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { PaystackButton } from 'react-paystack';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const PaystackCheckoutForm = ({total}) => {
   const [email, setEmail] = useState(sessionStorage.getItem("email"));
   const [amount, setAmount] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState('card'); // Default to card payment
+  const [paymentMethod, setPaymentMethod] = useState('card'); 
   const [reference, setReference] = useState('');
-  const publicKey = "pk_live_700851092aa7f6e84a05d49e6511a8c80e4ea9cf"; // Replace with your Paystack public key
+  const publicKey = "pk_live_700851092aa7f6e84a05d49e6511a8c80e4ea9cf"; 
 
   const initializePayment = async () => {
-    const response = await fetch('http://localhost:4000/initialize-payment', {
+    const response = await fetch(`${process.env.SERVER}/initialize-payment`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, amount, paymentMethod }),
@@ -21,13 +22,19 @@ const PaystackCheckoutForm = ({total}) => {
     return data.reference;
   };
   const onSuccess = () => {
-    fetch(`http://localhost:4000/verify-payment/${reference}`)
+    fetch(`${process.env.SERVER}/verify-payment/${reference}`)
       .then(response => response.json())
       .then(data => {
         if (data.message === 'Payment verified successfully') {
-          alert('Payment Successful!');
+          Swal.fire({
+            icon: 'success',
+            text: 'Payment Successful!',
+          })  
         } else {
-          alert('Payment verification failed');
+          Swal.fire({
+            icon: 'error',
+            text: 'Payment verification failed',
+          })
         }
       });
   };
@@ -40,7 +47,7 @@ const PaystackCheckoutForm = ({total}) => {
         {
           display_name: 'Mobile Number',
           variable_name: 'mobile_number',
-          value: '+2348012345678', // Example value
+          value: '+2348012345678', 
         },
       ],
     },
@@ -55,9 +62,9 @@ const PaystackCheckoutForm = ({total}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const reference = await initializePayment(); // Get the reference
-    const paystackUrl = `https://checkout.paystack.com/${reference}`; // Construct the Paystack URL
-    window.location.href = paystackUrl; // Redirect the user to Paystack
+    const reference = await initializePayment(); 
+    const paystackUrl = `https://checkout.paystack.com/${reference}`; 
+    window.location.href = paystackUrl; 
   };
 
   const userEmail = sessionStorage.getItem("email")

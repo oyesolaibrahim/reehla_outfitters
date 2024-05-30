@@ -34,12 +34,6 @@ const Header = ({ myCarts = [] }) => {
         setSearchQuery(e.target.value);
     };
 
-    // Ensure myCarts is an array before filtering
-
-    // const filteredItems = myCarts && myCarts.filter(item =>
-    //     item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    // );
-
     return (
         <header className="bg-yellow-400 py-3 sm:px-10 xs:px-1 sticky md:-top-20 lg:-top-28 top top2 sm:-top-24 z-10">
             <div className="flex md:justify-center sm:justify-center items-center">

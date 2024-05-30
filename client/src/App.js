@@ -31,7 +31,7 @@ function App() {
   const [myCarts, setMyCarts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/jalab')
+    axios.get(`${process.env.SERVER}/api/jalab`)
       .then(response => {
         setJalabs(response.data); 
         console.log(jalabs)
@@ -40,7 +40,7 @@ function App() {
         console.error('Error fetching jalabs:', error.message);
       });
 
-      axios.get('http://localhost:4000/api/femalejalab')
+      axios.get(`${process.env.SERVER}/api/femalejalab`)
       .then(response => {
         setFemaleJalabs(response.data); 
         console.log(femaleJalabs)
@@ -49,7 +49,7 @@ function App() {
         console.error('Error fetching jalabs:', error.message);
       })
 
-      axios.get('http://localhost:4000/api/childrenjalab')
+      axios.get(`${process.env.SERVER}/api/childrenjalab`)
       .then(response => {
         setChildrenJalabs(response.data); 
         console.log(femaleJalabs)
@@ -87,7 +87,7 @@ function App() {
 useEffect(() => {
   const fetching =  {
     method: 'GET',
-    url : `http://localhost:4000/api/cart?sessionId=${sessionId}`
+    url : `${process.env.SERVER}/api/cart?sessionId=${sessionId}`
 }
 axios(fetching)
 .then((result) => {
@@ -99,6 +99,7 @@ axios(fetching)
     console.log('Error Fetching Jalabs in Cart', error);
   })
 }, [sessionId, myCarts])
+
   
   return (
     <CartProvider initialCartItems={myCarts}>

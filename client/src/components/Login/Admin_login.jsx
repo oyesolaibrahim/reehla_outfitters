@@ -19,7 +19,7 @@ const AdminLogin = () => {
       
       const fetching =  {
         method: 'POST',
-        url: 'http://localhost:4000/api/admin/login',
+        url: `${process.env.SERVER}/api/admin/login`,
         data: {
           email,
           password

@@ -14,7 +14,7 @@ const adminToken = sessionStorage.getItem("adminToken")
 useEffect(() => {
   const fetching =  {
     method: 'GET',
-    url : `http://localhost:4000/api/cart?sessionId=${sessionId}`
+    url : `${process.env.SERVER}/api/cart?sessionId=${sessionId}`
 }
 axios(fetching)
 .then((result) => {
@@ -36,7 +36,7 @@ useEffect(() => {
   const removeJalab = (jalabId) => {
     const fetching = {
         method: 'DELETE',
-        url: `http://localhost:4000/api/delete?jalabId=${jalabId}`,
+        url: `${process.env.SERVER}/api/delete?jalabId=${jalabId}`,
     };
 
     axios(fetching)
@@ -69,7 +69,7 @@ const handleClearCart = () => {
 const clearCart = () => {
     const fetching = {
         method: 'DELETE',
-        url: 'http://localhost:4000/api/deleteAll',
+        url: `${process.env.SERVER}/api/deleteAll`,
     };
 
     axios(fetching)

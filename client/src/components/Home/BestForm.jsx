@@ -56,7 +56,7 @@ const BestForm = ({ bestSellerData }) => {
     }
     
     try {
-      const result = await axios.post('http://localhost:4000/api/bestseller', formDataToSend, {
+      const result = await axios.post(`${process.env.SERVER}/api/bestseller`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -100,7 +100,7 @@ const BestForm = ({ bestSellerData }) => {
     }
     
     try {
-      const result = await axios.put(`http://localhost:4000/api/updatebestseller?bestSellerId=${bestSellerData._id}`, formDataToSend, {
+      const result = await axios.put(`${process.env.SERVER}/api/updatebestseller?bestSellerId=${bestSellerData._id}`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

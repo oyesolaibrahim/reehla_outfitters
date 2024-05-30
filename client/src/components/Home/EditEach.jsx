@@ -25,10 +25,10 @@ const EditForm = () => {
       setError(null);
       try {
         const [brandResponse, arrivalResponse, bestSellerResponse, jalabResponse] = await Promise.all([
-          axios.get(`http://localhost:4000/api/toponebrand?brandId=${id}`),
-          axios.get(`http://localhost:4000/api/toponearrival?arrivalId=${id}`),
-          axios.get(`http://localhost:4000/api/toponebestseller?bestSellerId=${id}`),
-          axios.get(`http://localhost:4000/api/editsinglejalab?jalabId=${id}`)
+          axios.get(`${process.env.SERVER}/api/toponebrand?brandId=${id}`),
+          axios.get(`${process.env.SERVER}/api/toponearrival?arrivalId=${id}`),
+          axios.get(`${process.env.SERVER}/api/toponebestseller?bestSellerId=${id}`),
+          axios.get(`${process.env.SERVER}/api/editsinglejalab?jalabId=${id}`)
         ]);
 
         setBrandData(brandResponse.data.brand);

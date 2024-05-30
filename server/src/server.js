@@ -12,6 +12,7 @@ const { getAllBlogs, createBlogMessage } = require("./controllers/blog.controlle
 require('dotenv').config();
 const fs = require('fs');
 
+
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     console.log("Database connected successfully!");

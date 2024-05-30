@@ -7,12 +7,12 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
     const [myCarts, setMyCarts] = useState([]);
     const [subTotal, setSubTotal] = useState(0);
     const { cartValue, changeCartValue } = useCart();
-    const [totalItems, setTotalItems] = useState(0); // New state for total items
+    const [totalItems, setTotalItems] = useState(0);
 
     useEffect(() => {
         const fetching = {
             method: 'GET',
-            url: 'http://localhost:4000/api/orders'
+            url: `${process.env.SERVER}/api/orders`
         };
         axios(fetching)
             .then((result) => {
@@ -36,7 +36,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
         console.log(clientId)
         const fetching = {
             method: 'DELETE',
-            url: `http://localhost:4000/api/deleteoneclient?clientId=${clientId}`,
+            url: `${process.env.SERVER}/api/deleteoneclient?clientId=${clientId}`,
         };
 
         axios(fetching)
@@ -70,7 +70,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
     const clearCart = () => {
         const fetching = {
             method: 'DELETE',
-            url: 'http://localhost:4000/api/deleteallclients',
+            url: `${process.env.SERVER}/api/deleteallclients`,
         };
 
         axios(fetching)

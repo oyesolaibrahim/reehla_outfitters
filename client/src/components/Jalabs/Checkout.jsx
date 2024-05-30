@@ -60,7 +60,7 @@ const Checkout = ({ sessionId }) => {
         console.log(cartDetails)
         const fetching = {
             method: 'POST',
-            url: `http://localhost:4000/api/user/checkout?sessionId=${sessionId}`,
+            url: `${process.env.SERVER}/api/user/checkout?sessionId=${sessionId}`,
             data: {
                 firstName,
                 lastName,
@@ -99,7 +99,7 @@ const Checkout = ({ sessionId }) => {
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
-                const result = await axios.get(`http://localhost:4000/api/cart?sessionId=${sessionId}`);
+                const result = await axios.get(`${process.env.SERVER}/api/cart?sessionId=${sessionId}`);
                 setCartItems(result.data.jalabs || []);
                 console.log(cartItems);
             } catch (error) {

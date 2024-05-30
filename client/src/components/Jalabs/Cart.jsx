@@ -12,7 +12,7 @@ const Cart = ({sessionId}) => {
     useEffect(() => {
         const fetching = {
             method: 'GET',
-            url: `http://localhost:4000/api/orders`
+            url: `${process.env.SERVER}/api/orders`
         };
 
         axios(fetching)
@@ -28,7 +28,7 @@ const Cart = ({sessionId}) => {
 useEffect(() => {
     const fetching =  {
       method: 'GET',
-      url : `http://localhost:4000/api/cart?sessionId=${sessionId}`
+      url : `${process.env.SERVER}/api/cart?sessionId=${sessionId}`
   }
   axios(fetching)
   .then((result) => {

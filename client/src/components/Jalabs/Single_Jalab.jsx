@@ -31,7 +31,7 @@ const Single_Jalab = ({ sessionId }) => {
 
     const fetching = {
       method: 'POST',
-      url: `http://localhost:4000/api/cart?sessionId=${sessionId}`,
+      url: `${process.env.SERVER}/api/cart?sessionId=${sessionId}`,
       data: {
         pricePerQuantity: pricePerQuantity,
         totalPrice: totalPrice,

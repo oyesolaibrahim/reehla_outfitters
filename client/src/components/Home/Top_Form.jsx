@@ -30,7 +30,7 @@ const TopForm = ({ brandData }) => {
             setFormData({
                 ...formData,
                 imageFile: files[0],
-                imageUrl: ''  // Clear the imageUrl if an imageFile is selected
+                imageUrl: '' 
             });
         } else {
             setFormData({
@@ -52,7 +52,7 @@ const TopForm = ({ brandData }) => {
             data.append('imageUrl', formData.imageUrl);
         }
         try {
-            const result = await axios.post('http://localhost:4000/api/topbrand', data);
+            const result = await axios.post(`${process.env.SERVER}/api/topbrand`, data);
             setFormData({
                 brandName: '',
                 imageUrl: '',
@@ -83,7 +83,7 @@ const TopForm = ({ brandData }) => {
         }
 
         try {
-            const result = await axios.put(`http://localhost:4000/api/updatebrand?brandId=${brandData._id}`, data);
+            const result = await axios.put(`${process.env.SERVER}/api/updatebrand?brandId=${brandData._id}`, data);
             setFormData({
                 brandName: '',
                 imageUrl: '',
