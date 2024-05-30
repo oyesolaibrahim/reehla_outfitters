@@ -21,7 +21,7 @@ const BrandForm = () => {
     setSubmitting(true);
     
     try {
-      const result = await axios.post(`${process.env.SERVER}/api/jalab`, formData);
+      const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/jalab`, formData);
       alert('Jalabs added successfully');
       console.log(result.data); 
       setFormData({

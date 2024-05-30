@@ -12,7 +12,7 @@ const SubscriptionForm = () => {
     setSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:4000/api/subscribe', { email });
+      const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/subscribe`, { email });
       setSuccessMessage('Subscription successful!');
       setError('');
       setEmail('');

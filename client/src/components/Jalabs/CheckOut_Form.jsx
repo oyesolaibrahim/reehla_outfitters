@@ -11,7 +11,7 @@ const PaystackCheckoutForm = ({total}) => {
   const publicKey = "pk_live_700851092aa7f6e84a05d49e6511a8c80e4ea9cf"; 
 
   const initializePayment = async () => {
-    const response = await fetch(`${process.env.SERVER}/initialize-payment`, {
+    const response = await fetch(`${process.env.REACT_APP_SERVER}/initialize-payment`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, amount, paymentMethod }),
@@ -22,7 +22,7 @@ const PaystackCheckoutForm = ({total}) => {
     return data.reference;
   };
   const onSuccess = () => {
-    fetch(`${process.env.SERVER}/verify-payment/${reference}`)
+    fetch(`${process.env.REACT_APP_SERVER}/verify-payment/${reference}`)
       .then(response => response.json())
       .then(data => {
         if (data.message === 'Payment verified successfully') {

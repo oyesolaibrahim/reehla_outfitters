@@ -31,7 +31,7 @@ const Single_Jalab = ({ sessionId }) => {
 
     const fetching = {
       method: 'POST',
-      url: `${process.env.SERVER}/api/cart?sessionId=${sessionId}`,
+      url: `${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`,
       data: {
         pricePerQuantity: pricePerQuantity,
         totalPrice: totalPrice,
@@ -81,7 +81,7 @@ const Single_Jalab = ({ sessionId }) => {
       <main className="bg-gray-700">
         <div className="md:flex relative bg-yellow-100 sm:p-20 md:p-20 xs:py-10 xs:px-5">
           <div>
-            <img className="rounded-lg" src={`http://localhost:4000/${object.imageUrl}`} alt="jalab-img"/>
+            <img className="rounded-lg" src={`${process.env.REACT_APP_SERVER}/${object.imageUrl}`} alt="jalab-img"/>
           </div>
           <div className="sm:py-10 xs:py-10 xs:px-5 md:ml-36">
             <form onSubmit={addToCart}>

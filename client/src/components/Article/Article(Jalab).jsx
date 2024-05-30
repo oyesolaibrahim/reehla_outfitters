@@ -18,7 +18,7 @@ const Article_Jalab = ({ jalabs }) => {
   const removeJalab = (jalabId) => {
     const fetching = {
       method: 'DELETE',
-      url: 'http://localhost:4000/api/delete',
+      url: `${process.env.REACT_APP_SERVER}/api/delete`,
       data: { jalabId }
     };
 
@@ -35,7 +35,7 @@ const Article_Jalab = ({ jalabs }) => {
   const clearCart = () => {
     const fetching = {
       method: 'DELETE',
-      url: 'http://localhost:4000/api/deleteAll',
+      url: `${process.env.REACT_APP_SERVER}/api/deleteAll`,
       data: { sessionId }
     };
 
@@ -63,7 +63,7 @@ const Article_Jalab = ({ jalabs }) => {
         {objects.map(jalab => (
           <article key={jalab._id} className="bg-yellow-100 xs:my-3 width vh xsvh xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2">
             <Link to={`/jalabs/${jalab._id}`} state={{ jalab }}>
-              <img className="xs:flex xs:p-3 xs:justify-center" src={`http://localhost:4000/${jalab.imageUrl}`} alt="jalab-img"/>
+              <img className="xs:flex xs:p-3 xs:justify-center" src={`${process.env.REACT_APP_SERVER}/${jalab.imageUrl}`} alt="jalab-img"/>
             </Link>
             <div className="flex sm:justify-between md:justify-between xs:justify-center space-x-4 xs:py-5 mt-10">
               <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-10 font-semibold sm:text-xl md:text-xl xs:text-xs">{jalab.name}</h3>

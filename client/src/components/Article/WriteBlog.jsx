@@ -16,7 +16,7 @@ const WritingBlogMessage = () => {
     setSending(true);
 
     try {
-      const response = await axios.post('http://localhost:4000/api/blogs', { subject, message, imageUrl });
+      const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/blogs`, { subject, message, imageUrl });
       setSuccessMessage('Message sent successfully');
       setError('');
       setSubject('');

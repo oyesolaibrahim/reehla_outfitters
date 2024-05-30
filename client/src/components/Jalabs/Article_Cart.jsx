@@ -14,7 +14,7 @@ const adminToken = sessionStorage.getItem("adminToken")
 useEffect(() => {
   const fetching =  {
     method: 'GET',
-    url : `${process.env.SERVER}/api/cart?sessionId=${sessionId}`
+    url : `${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`
 }
 axios(fetching)
 .then((result) => {
@@ -36,7 +36,7 @@ useEffect(() => {
   const removeJalab = (jalabId) => {
     const fetching = {
         method: 'DELETE',
-        url: `${process.env.SERVER}/api/delete?jalabId=${jalabId}`,
+        url: `${process.env.REACT_APP_SERVER}/api/delete?jalabId=${jalabId}`,
     };
 
     axios(fetching)
@@ -69,7 +69,7 @@ const handleClearCart = () => {
 const clearCart = () => {
     const fetching = {
         method: 'DELETE',
-        url: `${process.env.SERVER}/api/deleteAll`,
+        url: `${process.env.REACT_APP_SERVER}/api/deleteAll`,
     };
 
     axios(fetching)
@@ -91,7 +91,7 @@ const clearCart = () => {
           {myCarts.map(myCart => (
             <div className="bg-yellow-100 max-h-62 min-h-62 sm:max-w-2/3 md:w-3/4 sm:min-w-36 md:min-w-36 p-10 m-5">
             <article key={myCart._id} className=" relative sm:flex md:flex justify-between sm:items-center md:items-center">
-              <img className="w-1/3 mb-5" src={`http://localhost:4000/${myCart.itemDetails?.imageUrl}`} alt="perfume-img"/>
+              <img className="w-1/3 mb-5" src={`${process.env.REACT_APP_SERVER}/${myCart.itemDetails?.imageUrl}`} alt="perfume-img"/>
               <div>
                 <h3 className="sm:flex md:flex justify-center mt-10 font-semibold text-3xl">{myCart.itemDetails?.name || myCart.productName}</h3>
                 <h3 className="w-96 m-5 sm:text-center md:text-center">{myCart.description}</h3>

@@ -11,7 +11,7 @@ const Article = () => {
     useEffect(() => {
         const fetchBestSellers = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/bestseller');
+                const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/bestseller`);
                 console.log('Best sellers fetched successfully:', response);
                 setObjects(response.data.jalab);
             } catch (error) {
@@ -23,9 +23,9 @@ const Article = () => {
 
     const removeBestSeller = async (bestId) => {
         try {
-            const response = await axios.delete(`http://localhost:4000/api/deletebestseller?bestId=${bestId}`);
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletebestseller?bestId=${bestId}`);
             console.log('Best seller deleted successfully:', response);
-            setObjects(objects.filter(object => object._id !== bestId)); // Remove deleted item from state
+            setObjects(objects.filter(object => object._id !== bestId)); 
         } catch (error) {
             console.log('Error deleting best seller:', error);
         }
@@ -51,7 +51,7 @@ const Article = () => {
 
     const clearBestSellers = async () => {
         try {
-            await axios.delete('http://localhost:4000/api/deletebestsellers');
+            await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletebestsellers`);
             setObjects([]);
             alert('All best sellers deleted successfully');
         } catch (error) {
@@ -67,7 +67,7 @@ const Article = () => {
                 {objects.map(object => (
                     <article key={object._id} className="bg-yellow-100 xs:my-3 width vh xsvh xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2">
                         <Link to={`/jalabs/${object._id}`} state={{ object }}>
-                            <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={`http://localhost:4000/${object.imageUrl}`} alt="jalab-img"/>
+                            <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={`${process.env.REACT_APP_SERVER}/${object.imageUrl}`} alt="jalab-img"/>
                         </Link>    
                         <div className="flex items-center justify-between mb-5">
                             <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}</h3>

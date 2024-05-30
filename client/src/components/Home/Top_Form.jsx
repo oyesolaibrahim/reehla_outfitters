@@ -52,7 +52,7 @@ const TopForm = ({ brandData }) => {
             data.append('imageUrl', formData.imageUrl);
         }
         try {
-            const result = await axios.post(`${process.env.SERVER}/api/topbrand`, data);
+            const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/topbrand`, data);
             setFormData({
                 brandName: '',
                 imageUrl: '',
@@ -83,7 +83,7 @@ const TopForm = ({ brandData }) => {
         }
 
         try {
-            const result = await axios.put(`${process.env.SERVER}/api/updatebrand?brandId=${brandData._id}`, data);
+            const result = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatebrand?brandId=${brandData._id}`, data);
             setFormData({
                 brandName: '',
                 imageUrl: '',

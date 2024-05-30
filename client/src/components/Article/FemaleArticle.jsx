@@ -19,7 +19,7 @@ const FemaleArticle = ({ femaleJalabs }) => {
 
   const removeJalab = async (jalabId) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/api/deletesinglemalejalab?jalabId=${jalabId}`);
+      const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletesinglemalejalab?jalabId=${jalabId}`);
       console.log('Jalab deleted successfully:', response);
       setObjects(objects.filter(object => object._id !== jalabId));
     } catch (error) {
@@ -29,7 +29,7 @@ const FemaleArticle = ({ femaleJalabs }) => {
 
   const clearJalab = async () => {
     try {
-      await axios.delete('http://localhost:4000/api/deleteallmalejalabs');
+      await axios.delete(`${process.env.REACT_APP_SERVER}/api/deleteallmalejalabs`);
       setObjects([]);
       console.log('All brands cleared successfully');
     } catch (error) {
@@ -51,7 +51,7 @@ const FemaleArticle = ({ femaleJalabs }) => {
         {objects.map(jalab => (
           <article key={jalab._id} className="bg-yellow-100 xs:my-3 width vh xsvh xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2">
             <Link to={`/jalabs/${jalab._id}`} state={{ jalab }}>
-              <img className="xs:flex xs:p-3 xs:justify-center" src={`http://localhost:4000/${jalab.imageUrl}`} alt="jalab-img" />
+              <img className="xs:flex xs:p-3 xs:justify-center" src={`${process.env.REACT_APP_SERVER}/${jalab.imageUrl}`} alt="jalab-img" />
             </Link>
             <div className="flex sm:justify-between md:justify-between xs:justify-center space-x-4 xs:py-10">
               <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-10 font-semibold sm:text-xl md:text-xl xs:text-xs">{jalab.name}</h3>

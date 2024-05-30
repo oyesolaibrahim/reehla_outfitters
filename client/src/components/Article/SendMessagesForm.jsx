@@ -14,7 +14,7 @@ const SendMessageForm = () => {
     setSending(true);
 
     try {
-      const response = await axios.post('http://localhost:4000/api/send-messages', { subject, message, imageUrl });
+      const response = await axios.post(`${process.env.SERVER}/api/send-messages`, { subject, message, imageUrl });
       setSuccessMessage('Message sent successfully');
       setError('');
       setSubject('');

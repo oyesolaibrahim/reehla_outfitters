@@ -12,7 +12,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
     useEffect(() => {
         const fetching = {
             method: 'GET',
-            url: `${process.env.SERVER}/api/orders`
+            url: `${process.env.REACT_APP_SERVER}/api/orders`
         };
         axios(fetching)
             .then((result) => {
@@ -36,7 +36,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
         console.log(clientId)
         const fetching = {
             method: 'DELETE',
-            url: `${process.env.SERVER}/api/deleteoneclient?clientId=${clientId}`,
+            url: `${process.env.REACT_APP_SERVER}/api/deleteoneclient?clientId=${clientId}`,
         };
 
         axios(fetching)
@@ -70,7 +70,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
     const clearCart = () => {
         const fetching = {
             method: 'DELETE',
-            url: `${process.env.SERVER}/api/deleteallclients`,
+            url: `${process.env.REACT_APP_SERVER}/api/deleteallclients`,
         };
 
         axios(fetching)
@@ -92,7 +92,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
                         <article key={myCart._id} className="bg-yellow-100 flex flex-col relative sm:flex md:flex sm:items-center md:items-center max-h-62 min-h-62 sm:max-w-2/3 md:w-3/4 sm:min-w-36 md:min-w-36 p-10 m-5">
                             {myCart.cartDetails.map((item, index) => (
                                 <div key={index} className="flex xs:flex-col">
-                                    <img className="sm:w-1/6 h-1/2 flex flex-col" src={`http://localhost:4000/${item.itemDetails?.imageUrl}`} alt="item-img" />
+                                    <img className="sm:w-1/6 h-1/2 flex flex-col" src={`${process.env.REACT_APP_SERVER}/${item.itemDetails?.imageUrl}`} alt="item-img" />
                                     <div className="sm:ml-10">
                                         <h3 className="sm:flex md:flex justify-center mt-10 font-semibold text-2xl">{item.itemDetails?.name}</h3>
                                         <div className="flex my-3 justify-between space-x-20">

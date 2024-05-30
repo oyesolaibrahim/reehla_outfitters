@@ -22,7 +22,7 @@ const Admin_signUp = () => {
       
       const configuration =  {
         method: 'POST',
-        url: `${process.env.SERVER}/api/admin/signup`,
+        url: `${process.env.REACT_APP_SERVER}/api/admin/signup`,
         data: {
           firstName,
           lastName,

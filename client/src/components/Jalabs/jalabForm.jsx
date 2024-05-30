@@ -59,7 +59,7 @@ console.log(location.pathname)
     }
 
     try {
-      const result = await axios.post(`${process.env.SERVER}/api/jalab`, formDataToSend, {
+      const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/jalab`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -102,7 +102,7 @@ console.log(location.pathname)
     }
 
     try {
-      const result = await axios.put(`${process.env.SERVER}/api/updatesinglejalab?jalabId=${jalabData._id}`, formDataToSend, {
+      const result = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesinglejalab?jalabId=${jalabData._id}`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -10,7 +10,7 @@ const New_Arrival_Article = () => {
 
     const removeBrand = async (newArrivalId) => {
         try {
-            const response = await axios.delete(`http://localhost:4000/api/deletenewarrival?newArrivalId=${newArrivalId}`);
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletenewarrival?newArrivalId=${newArrivalId}`);
             console.log('Jalab deleted successfully:', response);
             setObjects(objects.filter(object => object._id !== newArrivalId)); 
         } catch (error) {
@@ -37,7 +37,7 @@ const New_Arrival_Article = () => {
     };
     const clearBrand = async () => {
         try {
-            await axios.delete('http://localhost:4000/api/deletenewarrivals');
+            await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletenewarrivals`);
             setObjects([]); 
             console.log('All brands cleared successfully');
         } catch (error) {
@@ -48,7 +48,7 @@ const New_Arrival_Article = () => {
     useEffect(() => {
         const fetchBrands = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/newarrival');
+                const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/newarrival`);
                 console.log('Brand gotten successfully:', response);
                 setObjects(response.data.jalab);
             } catch (error) {
@@ -66,7 +66,7 @@ const New_Arrival_Article = () => {
                 {objects.map(object => (
                     <article key={object._id} className="bg-yellow-100 xs:my-3 width vh xsvh xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2">
                         <Link to={`/jalabs/${object._id}`} state={{ object }}>
-                            <img className="xs:flex xs:p-3 xs:justify-center" src={`http://localhost:4000/${object.imageUrl}`} alt="perfume-img"/>
+                            <img className="xs:flex xs:p-3 xs:justify-center" src={`${process.env.REACT_APP_SERVER}/${object.imageUrl}`} alt="perfume-img"/>
                         </Link> 
                         <div className="flex items-center justify-between mb-5">
                             <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}</h3>

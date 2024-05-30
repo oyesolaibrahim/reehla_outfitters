@@ -20,7 +20,7 @@ const UserSignUp = () => {
       
       const fetching =  {
         method: 'POST',
-        url: `${process.env.SERVER}/api/user/signup`,
+        url: `${process.env.REACT_APP_SERVER}/api/user/signup`,
         data: {
           firstName,
           lastName,

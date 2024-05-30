@@ -28,7 +28,7 @@ const Cart = ({sessionId}) => {
 useEffect(() => {
     const fetching =  {
       method: 'GET',
-      url : `${process.env.SERVER}/api/cart?sessionId=${sessionId}`
+      url : `${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`
   }
   axios(fetching)
   .then((result) => {

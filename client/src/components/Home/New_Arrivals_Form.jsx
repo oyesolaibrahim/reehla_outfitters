@@ -56,7 +56,7 @@ const NewArrivalsForm = ({ arrivalData }) => {
         }
 
         try {
-            const result = await axios.post(`${process.env.SERVER}/api/newarrival`, formDataWithImage, {
+            const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/newarrival`, formDataWithImage, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -99,7 +99,7 @@ const NewArrivalsForm = ({ arrivalData }) => {
         }
 
         try {
-            const result = await axios.put(`${process.env.SERVER}/api/updatearrival?arrivalId=${arrivalData._id}`, formDataWithImage, {
+            const result = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatearrival?arrivalId=${arrivalData._id}`, formDataWithImage, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

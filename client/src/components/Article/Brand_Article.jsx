@@ -14,7 +14,7 @@ const Brand_Article = () => {
 
     const removeBrand = async (brandId) => {
         try {
-            const response = await axios.delete(`http://localhost:4000/api/deletetopbrand?brandId=${brandId}`);
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletetopbrand?brandId=${brandId}`);
             console.log('Brand deleted successfully:', response);
             setObjects(objects.filter(object => object._id !== brandId)); 
             setId(brandId); 
@@ -43,7 +43,7 @@ const Brand_Article = () => {
 
     const clearBrand = async () => {
         try {
-            await axios.delete('http://localhost:4000/api/deletetopbrands');
+            await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletetopbrands`);
             setObjects([]); 
             alert('Are you sure you want to delete all?');
         } catch (error) {
@@ -54,10 +54,10 @@ const Brand_Article = () => {
     useEffect(() => {
         const fetchBrands = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/topbrand');
+                const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/topbrand`);
                 const brandsWithFullImageUrl = response.data.brands.map(brand => ({
                     ...brand,
-                    imageUrl: `http://localhost:4000/${brand.imageUrl}`
+                    imageUrl: `${process.env.REACT_APP_SERVER}/${brand.imageUrl}`
                 }));
                 setObjects(brandsWithFullImageUrl);
             } catch (error) {
