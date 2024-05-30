@@ -18,10 +18,10 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
             .then((result) => {
                 console.log(result.data.carts);
                 setMyCarts(result.data.carts);
-                const totalPrice = result.data.carts.reduce((acc, item) => acc + item.total, 0);
+                const totalPrice = result.data.carts?.reduce((acc, item) => acc + item.total, 0);
                 setSubTotal(totalPrice);
 
-                const totalItemCount = result.data.carts.reduce((acc, cart) => {
+                const totalItemCount = result.data.carts?.reduce((acc, cart) => {
                     return acc + cart.cartDetails.reduce((itemAcc, item) => itemAcc + item.quantity, 0);
                 }, 0);
                 setTotalItems(totalItemCount);
@@ -41,7 +41,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
 
         axios(fetching)
             .then((response) => {
-                setMyCarts(myCarts.filter(client => client._id !== clientId)); // Use client._id instead of jalabId
+                setMyCarts(myCarts?.filter(client => client._id !== clientId)); // Use client._id instead of jalabId
                 console.log('Client deleted successfully:', response);
             })
             .catch((error) => {

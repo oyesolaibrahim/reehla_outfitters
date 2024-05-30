@@ -10,7 +10,7 @@ export const CartProvider = ({ children, initialCartItems }) => {
 
   
   useEffect(() => {
-    const initialCartValue = initialCartItems.reduce((total, item) => total + item.quantity, 0);
+    const initialCartValue = initialCartItems?.reduce((total, item) => total + item.quantity, 0);
     setCartValue(initialCartValue);
   }, [initialCartItems]);
 

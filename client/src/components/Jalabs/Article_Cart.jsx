@@ -30,7 +30,7 @@ axios(fetching)
 
  
 useEffect(() => {
-    const totalPrice = myCarts.reduce((acc, item) => acc + item.totalPrice, 0);
+    const totalPrice = myCarts?.reduce((acc, item) => acc + item.totalPrice, 0);
     setSubTotal(totalPrice);
   }, []);
   // }, [myCarts]);
@@ -43,7 +43,7 @@ useEffect(() => {
 
     axios(fetching)
         .then((response) => {
-            setMyCarts(myCarts.filter(jalab => jalab._id !== jalabId));
+            setMyCarts(myCarts?.filter(jalab => jalab._id !== jalabId));
             console.log('Jalab deleted successfully:', response);
         })
         .catch((error) => {

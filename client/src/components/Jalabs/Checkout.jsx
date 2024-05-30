@@ -44,7 +44,7 @@ const Checkout = ({ sessionId }) => {
 
     const Confirm = (e) => {
         e.preventDefault();
-        const cartDetails = cartItems.map(item => ({
+        const cartDetails = cartItems?.map(item => ({
             pricePerQuantity: item.pricePerQuantity,
             totalPrice: item.totalPrice,
             quantity: item.quantity,
@@ -110,9 +110,9 @@ const Checkout = ({ sessionId }) => {
     
         fetchCartItems();
        
-        const totalPrice = cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
+        const totalPrice = cartItems?.reduce((acc, item) => acc + item.totalPrice, 0);
         setSubTotal(totalPrice);
-        const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+        const totalQuantity = cartItems?.reduce((acc, item) => acc + item.quantity, 0);
         setQuantity(totalQuantity);
         setTotal(subTotal + deliveryFee)
       }, [sessionId, cartItems]);
