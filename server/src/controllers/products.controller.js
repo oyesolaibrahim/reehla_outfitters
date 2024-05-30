@@ -235,7 +235,7 @@ const createToBestSeller_Jalab = (req, res) => {
     if (!['Male', 'Female', 'Children'].includes(category)) {
         return res.status(400).json({ message: "Invalid category" });
     }
-    const imageFilePath = req.file ? `/uploads/${req.file.filename}` : imageUrl;
+    const imageFilePath = req.file ? `uploads/${req.file.filename}` : imageUrl;
 
 
 

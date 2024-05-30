@@ -25,13 +25,15 @@ axios(fetching)
   . catch ((error) => {
     console.log('Error Fetching Jalabs in Cart', error);
   })
-}, [sessionId, myCarts])
+}, [sessionId])
+//}, [sessionId, myCarts])
 
  
 useEffect(() => {
     const totalPrice = myCarts.reduce((acc, item) => acc + item.totalPrice, 0);
     setSubTotal(totalPrice);
-  }, [myCarts]);
+  }, []);
+  // }, [myCarts]);
 
   const removeJalab = (jalabId) => {
     const fetching = {
@@ -106,7 +108,7 @@ const clearCart = () => {
           ))}
        {myCarts.length === 0 || <button onClick={handleClearCart} className="text-white sm:w-1/6 xs:w-1/2 ml-5 mb-3 bg-red-800 py-3 px-5 rounded-lg">Clear Cart</button>} 
           {myCarts.length === 0 && (
-        <div className="bg-yellow-100 mt-10 sm:ml-10 md:ml-10 lg:ml-10 xs:mx-auto xs:w-4/5 rounded-lg py-5 px-5 uppercase">
+        <div className="bg-yellow-100 mt-10 sm:mx-auto md:ml-10 lg:ml-10 xs:mx-auto xs:w-4/5 rounded-lg py-5 px-5 lg:px-5 uppercase">
             <h3 className="text-2xl font-bold text-center">Sorry, Your Cart is empty</h3>
             <div className="relative mt-4 text-center">
                 <i className="fa fa-shopping-cart fa-4x cursor-pointer mt-auto" aria-hidden="true"></i>

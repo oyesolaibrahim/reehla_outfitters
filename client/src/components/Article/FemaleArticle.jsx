@@ -58,7 +58,7 @@ const FemaleArticle = ({ femaleJalabs }) => {
               <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-10 font-semibold sm:text-xl md:text-xl xs:text-xs">₦{jalab.price}</h3>
             </div>
             {adminToken && (
-              <div className="flex sm:items-start md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 mt-3">
+              <div className="flex xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 mt-3">
                 <button onClick={() => removeJalab(jalab._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Jalab</button>
                 <Link to={`/edit/${jalab._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Jalab</button></Link>
               </div>

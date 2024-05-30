@@ -79,7 +79,7 @@ const Brand_Article = () => {
                         <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.brandName}</h3>
                         <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-5 font-semibold text-center p-width">{object.description}</h3>
                         {adminToken && (
-                            <div className="flex md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 my-3">
+                            <div className="flex xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 my-3">
                                 <button onClick={() => removeBrand(object._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Brand</button>
                                 <Link to={`/edit/${object._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Brand</button></Link>
                             </div>

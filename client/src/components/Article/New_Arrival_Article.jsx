@@ -76,7 +76,7 @@ const New_Arrival_Article = () => {
                             <h3 className="font-semibold xs:text-sm">{object.category}</h3>
                         </div> 
                     {adminToken && (
-                            <div className="flex xs:justify-center sm:items-start md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 mt-3">
+                            <div className="flex xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 mt-3">
                                 <button onClick={() => removeBrand(object._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Product</button>
                               <Link to={`/edit/${object._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Product</button></Link>  
                             </div>

@@ -157,7 +157,7 @@ const TopForm = ({ brandData }) => {
                 </button>
 
                 {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}
-                {successfulMsg && <p className='bg-green-600 text-white mt-5 rounded-lg py-3 px-5'>{successfulMsg}</p>}
+                {successfulMsg && <p className='bg-green-600 w-1/2 text-white mt-5 rounded-lg py-3 px-5'>{successfulMsg}</p>}
             </form>
         </>
     );
