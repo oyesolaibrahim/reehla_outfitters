@@ -1,6 +1,6 @@
 const User = require("../models/user.model"); 
 const Clients = require("../models/userCheckout.model"); 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const jwtDecode = require("jwt-decode");
 const axios = require('axios');
