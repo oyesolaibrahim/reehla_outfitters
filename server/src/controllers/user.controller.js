@@ -236,7 +236,7 @@ const createPayment = async (req, res) => {
 
 
 const verifyPayment = async (req, res) => {
-  const { reference } = req.params;
+  const { reference } = req.query;
 
   try {
     const response = await axios.get(

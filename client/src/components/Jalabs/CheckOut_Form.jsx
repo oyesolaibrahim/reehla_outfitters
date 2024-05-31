@@ -22,7 +22,7 @@ const PaystackCheckoutForm = ({total}) => {
     return data.reference;
   };
   const onSuccess = () => {
-    fetch(`${process.env.REACT_APP_SERVER}/verify-payment/${reference}`)
+    fetch(`${process.env.REACT_APP_SERVER}/verify-payment?reference=${reference}`)
       .then(response => response.json())
       .then(data => {
         if (data.message === 'Payment verified successfully') {

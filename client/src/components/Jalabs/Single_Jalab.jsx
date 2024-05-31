@@ -78,7 +78,7 @@ const Single_Jalab = ({ sessionId }) => {
   return (
     <>
       <Header />
-      <main className="bg-gray-700">
+      <main className="bg-gray-700  overflow-x-hidden">
         <div className="md:flex relative bg-yellow-100 sm:p-20 md:p-20 xs:py-10 xs:px-5">
           <div>
             <img className="rounded-lg" src={`${process.env.REACT_APP_SERVER}/${object.imageUrl}`} alt="jalab-img"/>

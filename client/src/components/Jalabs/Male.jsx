@@ -42,7 +42,7 @@ useEffect(() => {
             <main className="bg-gray-700 py-10">
             <section ref={rightSlide}>
                 <div className={`sm:pt-10 md:pt-36   text-white sm:mb-10 ${visible ? 'animate-slideInRight' : ''}`}>
-                    <h1 className="flex sm:text-6xl md:text-6xl xs:text-4xl justify-center">Available Male Jalabs</h1>
+                    <h1 className="flex sm:text-6xl md:text-6xl xs:text-4xl justify-center text-center mb-3">Available Male Jalabs</h1>
                 </div>   
                 <Article_Jalab jalabs={jalabs}/>
             </section>

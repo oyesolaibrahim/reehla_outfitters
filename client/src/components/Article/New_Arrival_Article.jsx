@@ -71,9 +71,9 @@ const New_Arrival_Article = () => {
                         <div className="flex items-center justify-between mb-5">
                             <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}</h3>
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between xs:flex-col xs:space-y-3 xs:items-center">
                             <h3 className="font-semibold xs:text-sm">₦{object.price}</h3>
-                            <h3 className="font-semibold xs:text-sm">{object.category}</h3>
+                            <h3 className="font-semibold xs:text-sm">({object.category})</h3>
                         </div> 
                     {adminToken && (
                             <div className="flex xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 mt-3">
