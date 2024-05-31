@@ -32,8 +32,8 @@ axios(fetching)
 useEffect(() => {
     const totalPrice = myCarts?.reduce((acc, item) => acc + item.totalPrice, 0);
     setSubTotal(totalPrice);
-  }, []);
-  // }, [myCarts]);
+  // }, []);
+  }, [myCarts]);
 
   const removeJalab = (jalabId) => {
     const fetching = {
