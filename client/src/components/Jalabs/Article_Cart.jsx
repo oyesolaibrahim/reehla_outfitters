@@ -25,8 +25,8 @@ axios(fetching)
   . catch ((error) => {
     console.log('Error Fetching Jalabs in Cart', error);
   })
-}, [sessionId])
-//}, [sessionId, myCarts])
+// }, [sessionId])
+}, [sessionId, myCarts])
 
  
 useEffect(() => {
