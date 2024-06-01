@@ -3,13 +3,15 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
-const { GridFsStorage } = require('multer-gridfs-storage');
-const Grid = require("gridfs-stream");
 const path = require("path");
 const cors = require("cors");
+const { createFragrance, createJalab, addJalab, jalabsToCart, jalabsInCart, deleteJalabFromCart, deleteAllJalabsFromCart, adminCart, createToNewArrival_Jalab, createToBestSeller_Jalab, createToTopBrand, getFromBestSeller_Jalab, getFromNewArrival_Jalab, getFromTopBrand, removeBrand, deleteAllBrands, deleteAllNewArrivals, removeFromNewArrival_Jalab, deleteAllBestSellers, removeFromBestSeller_Jalab, deleteSingleMaleJalab, deleteAllMaleJalabs, editSingleMaleJalab, updateProduct, editProductPage, updateBrand, updateArrival, editBrandPage, editArrivalPage, updateBestSeller, editBestSellerPage, editJalabPage, updatesinglejalab, femaleJalab, childrenJalab } = require("./controllers/products.controller");
+const { addUser, userLogin, userCheckout, createPayment, verifyPayment, Subscription, Subscribe, sendMessageToSubscribers, deleteOneClient, deleteAllClients} = require("./controllers/user.controller");
+const { addAdmin, login} = require("./controllers/admin.controller");
+const { getAllBlogs, createBlogMessage } = require("./controllers/blog.controller");
 require('dotenv').config();
-
-let gfs;
+const fs = require('fs');
+const Grid = require('gridfs-stream');
 
 
 
@@ -25,9 +27,8 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
 }
 
-const conn = mongoose.createConnection(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-conn.once('open', () => {
-  gfs = Grid(conn.db, mongoose.mongo);
+mongoose.connection.once('open', () => {
+  gfs = Grid(mongoose.connection.db, mongoose.mongo);
   gfs.collection('uploads');
 });
 
@@ -53,18 +54,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const storage = new GridFsStorage({
-  url: process.env.MONGODB_URI,
-  options: { useNewUrlParser: true, useUnifiedTopology: true },
-  file: (req, file) => {
-    return {
-      filename: Date.now() + path.extname(file.originalname),
-      bucketName: 'uploads'
-    };
-  }
-});
 
-
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 // const storage = multer.diskStorage({
 //   destination: (req, file, cb) => {
 //     cb(null, path.join(__dirname, '/uploads')); 
@@ -73,8 +65,6 @@ const storage = new GridFsStorage({
 //       cb(null, Date.now() + path.extname(file.originalname));
 //   }
 // });
-const upload = multer({ storage });
-
 // const upload = multer({
 //   storage,
 //   limits: {
@@ -83,7 +73,11 @@ const upload = multer({ storage });
 // });
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
+app.post('/upload', upload.single('file'), (req, res) => {
+  const file = req.file;
+  // You can now save or retrieve the file using GridFS
+  res.send('File uploaded successfully');
+});
 
 
 app.get("/api/jalab", addJalab);
@@ -136,7 +130,7 @@ app.delete("/api/deleteallmalejalabs", deleteAllMaleJalabs);
 app.delete("/api/deleteoneclient", deleteOneClient);
 app.delete("/api/deleteallclients", deleteAllClients);
 
-app.get('/image/:filename', (req, res) => {
+app.get('/files/:filename', (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     if (!file || file.length === 0) {
       return res.status(404).json({
@@ -144,18 +138,10 @@ app.get('/image/:filename', (req, res) => {
       });
     }
 
-    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
-      const readStream = gfs.createReadStream(file.filename);
-      readStream.pipe(res);
-    } else {
-      res.status(404).json({
-        err: 'Not an image'
-      });
-    }
+    const readStream = gfs.createReadStream(file.filename);
+    readStream.pipe(res);
   });
 });
-
-
 
   const port = process.env.PORT || 5000;
   app.listen(port, () => {
