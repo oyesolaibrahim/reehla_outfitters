@@ -11,7 +11,6 @@ const { addAdmin, login} = require("./controllers/admin.controller");
 const { getAllBlogs, createBlogMessage } = require("./controllers/blog.controller");
 require('dotenv').config();
 const fs = require('fs');
-const Grid = require('gridfs-stream');
 
 
 
@@ -26,11 +25,6 @@ const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
 }
-
-mongoose.connection.once('open', () => {
-  gfs = Grid(mongoose.connection.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
 
 const corsConfig = {
     origin: true,
@@ -55,29 +49,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, path.join(__dirname, '/uploads')); 
-//   },
-//   filename: (req, file, cb) => {
-//       cb(null, Date.now() + path.extname(file.originalname));
-//   }
-// });
-// const upload = multer({
-//   storage,
-//   limits: {
-//     fileSize: 10 * 1024 * 1024, 
-//   },
-// });
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '/uploads')); 
+  },
+  filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024, 
+  },
+});
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.post('/upload', upload.single('file'), (req, res) => {
-  const file = req.file;
-  // You can now save or retrieve the file using GridFS
-  res.send('File uploaded successfully');
-});
+
 
 
 app.get("/api/jalab", addJalab);
@@ -130,18 +119,7 @@ app.delete("/api/deleteallmalejalabs", deleteAllMaleJalabs);
 app.delete("/api/deleteoneclient", deleteOneClient);
 app.delete("/api/deleteallclients", deleteAllClients);
 
-app.get('/files/:filename', (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: 'No file exists'
-      });
-    }
 
-    const readStream = gfs.createReadStream(file.filename);
-    readStream.pipe(res);
-  });
-});
 
   const port = process.env.PORT || 5000;
   app.listen(port, () => {
