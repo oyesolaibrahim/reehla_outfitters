@@ -21,6 +21,14 @@ mongoose.connect(process.env.MONGODB_URI)
 .catch((err) => {
     console.log("Error connecting to DB:", err.message);
 });
+// mongoose.connect("mongodb://0.0.0.0:27017/realBabs_App")
+// .then(() => {
+//     console.log("Database connected successfully!");
+// })
+// .catch((err) => {
+//     console.log("Error connecting to DB:", err.message);
+// });
+
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);

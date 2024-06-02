@@ -107,6 +107,14 @@ body {
     max-height: 35vh;
     min-height: 35vh;
   }
+  .xsvhsp {
+    max-height: 50vh;
+    min-height: 50vh;
+  }
+  .xsvhs {
+    max-height: 40vh;
+    min-height: 40vh;
+  }
   .search {
     width: 55vw;
   }
@@ -118,12 +126,6 @@ body {
     margin-top: 5px;
     top: -25px;
     left: 30px;
-  }
-  .top {
-    top: -60px;
-  }
-  .top2 {
-    top: -40px;
   }
   .width {
     width: 30%;

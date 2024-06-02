@@ -36,7 +36,7 @@ const Header = ({ myCarts = [] }) => {
 
     return (
         <header className="bg-yellow-400 py-3 sm:px-10 xs:px-1 sticky md:-top-20 lg:-top-28 top top2 sm:-top-24 z-10">
-            <div className="flex md:justify-center sm:justify-center items-center">
+            <div className="flex md:justify-center xs:mb-8 sm:justify-center items-center">
                 <div className="items-center">
                     <img className="lg:w-1/2 md:w-2/3 sm:w-1/2 xs:w-full text-red-800" src={logo} alt="logo-img" />
                 </div>

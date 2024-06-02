@@ -121,7 +121,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
                         </article>
                     ))}
                     {myCarts.length === 0 ? (
-                        <div className="bg-yellow-100 mt-10 ml-10 rounded-lg py-5 px-5 w-1/3 uppercase">
+                        <div className="bg-yellow-100 mt-10 sm:ml-10 rounded-lg py-5 px-5  sm:w-1/3 uppercase">
                             <h3 className="text-2xl font-bold">Sorry, Orders is empty</h3>
                             <div className="relative mt-4 text-center">
                                 <i className="fa fa-shopping-cart fa-4x cursor-pointer mt-auto" aria-hidden="true"></i>
