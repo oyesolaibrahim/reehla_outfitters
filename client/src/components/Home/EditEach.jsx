@@ -7,6 +7,7 @@ import BestForm from './BestForm';
 import { useParams } from 'react-router-dom';
 import NewArrivalsForm from './New_Arrivals_Form';
 import AddJalabsForm from '../Jalabs/jalabForm';
+import WritingBlogMessage from '../Article/WriteBlog';
 
 const EditForm = () => {
   const { id } = useParams();
@@ -14,6 +15,7 @@ const EditForm = () => {
   const [arrivalData, setArrivalData] = useState(null);
   const [bestSellerData, setBestSellerData] = useState(null);
   const [jalabData, setJalabData] = useState(null);
+  const [blogData, setBlogData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,17 +26,19 @@ const EditForm = () => {
       setLoading(true);
       setError(null);
       try {
-        const [brandResponse, arrivalResponse, bestSellerResponse, jalabResponse] = await Promise.all([
+        const [brandResponse, arrivalResponse, bestSellerResponse, jalabResponse, blogResponse] = await Promise.all([
           axios.get(`${process.env.REACT_APP_SERVER}/api/toponebrand?brandId=${id}`),
           axios.get(`${process.env.REACT_APP_SERVER}/api/toponearrival?arrivalId=${id}`),
           axios.get(`${process.env.REACT_APP_SERVER}/api/toponebestseller?bestSellerId=${id}`),
-          axios.get(`${process.env.REACT_APP_SERVER}/api/editsinglejalab?jalabId=${id}`)
+          axios.get(`${process.env.REACT_APP_SERVER}/api/editsinglejalab?jalabId=${id}`),
+          axios.get(`${process.env.REACT_APP_SERVER}/api/editblog?blogId=${id}`)
         ]);
 
         setBrandData(brandResponse.data.brand);
         setArrivalData(arrivalResponse.data.arrival);
         setBestSellerData(bestSellerResponse.data.bestSeller);
         setJalabData(jalabResponse.data.jalab);
+        setBlogData(blogResponse.data.blog);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('Failed to load data. Please try again later.');
@@ -55,7 +59,7 @@ const EditForm = () => {
   if (error) {
     return <div>{error}</div>;
   }
-
+console.log(blogData)
   return (
     <>
       <Header />
@@ -64,6 +68,7 @@ const EditForm = () => {
         {arrivalData && <NewArrivalsForm arrivalData={arrivalData} />}
         {bestSellerData && <BestForm bestSellerData={bestSellerData} />}
         {jalabData && <AddJalabsForm jalabData={jalabData} />}
+        {blogData && <WritingBlogMessage blogData={blogData} />}
       </main>
       <Footer />
     </>

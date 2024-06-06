@@ -77,7 +77,7 @@ const AdminLogin = () => {
                 </div>
                 <div>
                    {error && <h3 className="bg-red-600 text-white w-1/3 py-3 px-5 m-auto rounded-lg uppercase text-center mb-5">{error}</h3>}
-                    <div className="bg-yellow-100 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
+                    <div className="bg-red-200 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
                         <form onSubmit={(e)=>Login(e)}>
                             <div className="mb-10 flex justify-center">
                                 <label htmlFor="email">

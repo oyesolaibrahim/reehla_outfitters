@@ -5,16 +5,23 @@ import AddJalabsForm from "../Jalabs/jalabForm";
 
 const Article_Jalab = ({ jalabs }) => {
   const [objects, setObjects] = useState([]);
+
   const adminToken = sessionStorage.getItem("adminToken");
-  const sessionId = sessionStorage.getItem("sessionId"); // Ensure sessionId is retrieved properly
-
+  const sessionId = sessionStorage.getItem("sessionId");
   useEffect(() => {
-    if (jalabs) {
-      setObjects(jalabs);
-      console.log(objects);
-    }
-  }, [jalabs]);
-
+    const fetchJalabs = async () => {
+      try {
+        const [jalabsResponse] = await Promise.all([
+          axios.get(`${process.env.REACT_APP_SERVER}/api/jalab`),
+        ]);
+        setObjects(jalabsResponse.data.jalabs);
+        console.log(objects)
+      } catch (error) {
+        console.error('Error fetching jalabs:', error.message);
+      }
+    };
+    fetchJalabs();
+  }, []);
   const removeJalab = (jalabId) => {
     const fetching = {
       method: 'DELETE',
@@ -60,10 +67,10 @@ const Article_Jalab = ({ jalabs }) => {
   return (
     <>
       <div className="flex flex-wrap space-y-6 xs:justify-center sm:pl-5 sm:justify-between md:justify-between sm:items-center md:items-center">
-        {objects?.map(jalab => (
+        {objects.map(jalab => (
           <article key={jalab._id} className={`bg-yellow-100 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
             <Link to={`/jalabs/${jalab._id}`} state={{ jalab }}>
-              <img className="xs:flex xs:p-3 xs:justify-center" src={`${process.env.REACT_APP_SERVER}/${jalab.imageUrl}`} alt="jalab-img"/>
+              <img className="xs:flex xs:p-3 xs:justify-center" src={jalab.imageUrl} alt="jalab-img"/>
             </Link>
             <div className="flex sm:justify-between md:justify-between xs:justify-center space-x-4 xs:py-5 mt-10">
               <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-10 font-semibold sm:text-xl md:text-xl xs:text-xs">{jalab.name}</h3>

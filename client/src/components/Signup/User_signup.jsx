@@ -71,7 +71,7 @@ const UserSignUp = () => {
                 </div>
                 <div>
                 {error && <h3 className="bg-red-600 text-white w-1/3 py-3 px-5 m-auto rounded-lg uppercase text-center mb-5">{error}</h3>}
-                    <div className="bg-yellow-100 md:w-3/5 sm:w-screen xs:w-screen md:flex m-auto rounded-2xl pb-10 px-10">
+                    <div className="bg-red-200 md:w-3/5 sm:w-screen xs:w-screen md:flex m-auto rounded-2xl pb-10 px-10">
                         <form onSubmit={(e) => {Signup(e)}}>
                             <div className="pt-20 mb-10 flex">
                                 <label htmlFor="firstname">

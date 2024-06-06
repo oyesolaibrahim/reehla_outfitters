@@ -121,7 +121,7 @@ const Checkout = ({ sessionId }) => {
             <Header />
             <main className="bg-gray-700 lg:p-16">
                 <form className="rounded-lg xs:py-10 lg:ml-10 xs:ml-0 md:py-10 sm:py-10" onSubmit={(e) => Confirm(e)}>
-                    <div className="bg-yellow-100 xs:p-10 md:flex rounded-2xl lg:px-16 py-4 lg:w-1/2 md:mx-auto md:p-10 sm:p-10 sm:w-4/5 sm:mx-auto md:w-2/3">
+                    <div className="bg-red-200 xs:p-10 md:flex rounded-2xl lg:px-16 py-4 lg:w-1/2 md:mx-auto md:p-10 sm:p-10 sm:w-4/5 sm:mx-auto md:w-2/3">
                         <div className="">
                             <div className="pt-20 mb-10 flex flex-col items-start space-y-3">
                                 <label htmlFor="firstname">{token && "Firstname:"}</label>

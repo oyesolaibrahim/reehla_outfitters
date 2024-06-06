@@ -122,27 +122,6 @@ const clientData = {
         })
     }
     
-const deleteOneClient = (req, res) => {
-  const clientId = req.query.clientId
-  console.log(clientId)
-  Clients.findByIdAndDelete(clientId)
-  .then((client) => {
-    res.status(200).json({message: "Client removed successfully", client})
-  })
-  .catch(error => {
-    console.error(error)
-    res.status(404).json({message: "Client failed to be removed", error})
-  })
-}
-const deleteAllClients = (req, res) => {
-  Clients.deleteMany()
-  .then((client) => {
-    res.status(200).json({message: "Client deleted successfully", client})
-  })
-  .catch(error => {
-    res.status(404).json({message: "Client failed to be deleted"})
-  })
-}
     /*const editDeliveryFee = () => {
          sessionId = req.params.id;
         const deliveryFee = req.body.deliveryFee
@@ -168,7 +147,6 @@ const Subscribe = async (req, res) => {
     const newSubscription = new Subscription({ email });
     await newSubscription.save();
 
-    // Send welcome email
     await sendEmail(email, 'Welcome to RealBabStore', 'Thank you for subscribing to our newsletter!');
 
     res.status(201).json({ message: 'Subscription successful' });
@@ -178,7 +156,7 @@ const Subscribe = async (req, res) => {
   }
 };
 const sendMessageToSubscribers = async (req, res) => {
-  const { subject, message } = req.body;
+  const { subject, message, attachment } = req.body;
 
   if (!subject || !message) {
     return res.status(400).json({ message: 'Subject and message are required' });
@@ -190,11 +168,22 @@ const sendMessageToSubscribers = async (req, res) => {
       return res.status(200).json({ message: 'No subscribers to send messages to' });
     }
 
-    const emailPromises = subscribers.map(subscriber => 
-      sendEmail(subscriber.email, subject, message)
-    );
-
-    await Promise.all(emailPromises);
+    // If attachment is a file, process it directly
+    if (attachment && attachment.mimetype.startsWith('image')) {
+      const emailPromises = subscribers.map(subscriber =>
+        sendEmailWithAttachment(subscriber.email, subject, message, attachment.buffer)
+      );
+      await Promise.all(emailPromises);
+    }
+    // If attachment is a URL, download the image and send it as an attachment
+    else if (attachment) {
+      const response = await axios.get(attachment);
+      const imageBuffer = Buffer.from(response.data, 'binary');
+      const emailPromises = subscribers.map(subscriber =>
+        sendEmailWithAttachment(subscriber.email, subject, message, imageBuffer)
+      );
+      await Promise.all(emailPromises);
+    }
 
     res.status(200).json({ message: 'Messages sent successfully' });
   } catch (error) {
@@ -202,9 +191,6 @@ const sendMessageToSubscribers = async (req, res) => {
     res.status(500).json({ message: 'Error sending messages' });
   }
 };
-
-
-
 const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY;
 
 const createPayment = async (req, res) => {
@@ -266,7 +252,5 @@ module.exports = {
     Subscribe,
     sendMessageToSubscribers,
     createPayment,
-    verifyPayment,
-    deleteOneClient,
-    deleteAllClients
+    verifyPayment
 }

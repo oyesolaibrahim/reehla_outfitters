@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../Firebase';
 
 const NewArrivalsForm = ({ arrivalData }) => {
     const [formData, setFormData] = useState({
@@ -36,32 +38,34 @@ const NewArrivalsForm = ({ arrivalData }) => {
     };
 
     const handleFileChange = (e) => {
-        setFormData({ ...formData, imageFile: e.target.files[0], imageUrl: '' });
+        const file = e.target.files[0];
+        setFormData({ ...formData, imageFile: file, imageUrl: '' }); // Clear imageUrl when a file is selected
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitting(true);
 
-        const formDataWithImage = new FormData();
-        formDataWithImage.append('productName', formData.productName);
-        formDataWithImage.append('category', formData.category);
-        formDataWithImage.append('description', formData.description);
-        formDataWithImage.append('price', formData.price);
-        formDataWithImage.append('oldPrice', formData.oldPrice);
-        if (formData.imageFile) {
-            formDataWithImage.append('imageFile', formData.imageFile);
-        } else {
-            formDataWithImage.append('imageUrl', formData.imageUrl);
-        }
-
         try {
-            const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/newarrival`, formDataWithImage, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+            let imageUrl = formData.imageUrl;
+
+            if (formData.imageFile) {
+                const file = formData.imageFile;
+                const storageRef = ref(storage, `images/${file.name}`);
+                const snapshot = await uploadBytes(storageRef, file);
+                imageUrl = await getDownloadURL(snapshot.ref);
+            }
+
+            const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/newarrival`, {
+                productName: formData.productName,
+                category: formData.category,
+                description: formData.description,
+                price: formData.price,
+                oldPrice: formData.oldPrice,
+                imageUrl: imageUrl,
             });
-            console.log(result.data);
+
+            console.log(response.data);
             setFormData({
                 productName: '',
                 category: 'Male',
@@ -81,54 +85,46 @@ const NewArrivalsForm = ({ arrivalData }) => {
             setSubmitting(false);
         }
     };
-
     const handleUpdate = async (e) => {
         e.preventDefault();
         setSubmitting(true);
-
-        const formDataWithImage = new FormData();
-        formDataWithImage.append('productName', formData.productName);
-        formDataWithImage.append('category', formData.category);
-        formDataWithImage.append('description', formData.description);
-        formDataWithImage.append('price', formData.price);
-        formDataWithImage.append('oldPrice', formData.oldPrice);
-        if (formData.imageFile) {
-            formDataWithImage.append('imageFile', formData.imageFile);
-        } else {
-            formDataWithImage.append('imageUrl', formData.imageUrl);
-        }
-
+    
         try {
-            const result = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatearrival?arrivalId=${arrivalData._id}`, formDataWithImage, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+            let imageUrl = formData.imageUrl;
+    
+            if (formData.imageFile) {
+                const file = formData.imageFile;
+                const storageRef = ref(storage, `images/${file.name}`);
+                const snapshot = await uploadBytes(storageRef, file);
+                imageUrl = await getDownloadURL(snapshot.ref);
+            }
+    
+            const response = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatearrival?arrivalId=${arrivalData._id}`, {
+                productName: formData.productName,
+                category: formData.category,
+                description: formData.description,
+                price: formData.price,
+                oldPrice: formData.oldPrice,
+                imageUrl: imageUrl,
             });
-            console.log(result.data);
-            setFormData({
-                productName: '',
-                category: 'Male',
-                description: '',
-                price: '',
-                oldPrice: '',
-                imageUrl: '',
-                imageFile: null,
-            });
-            setError('');
+    
+            console.log(response.data);
             setSuccessfulMsg("Updated Successfully");
+            setError('');
         } catch (error) {
-            console.error('Error updating new arrival:', error.message);
+            console.error('Error updating arrival:', error.message);
             setSuccessfulMsg('');
-            setError('Error updating new arrival. Please try again later.');
+            setError('Error updating arrival. Please try again later.');
         } finally {
             setSubmitting(false);
         }
     };
+    
 
     const location = useLocation();
 
     return (
-        <form className='bg-yellow-100 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/" ? handleSubmit : handleUpdate}>
+        <form className='bg-yellow-100 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={handleSubmit}>
             <label>
                 <input
                     className='w-full mb-5 p-3 rounded-lg'
@@ -142,7 +138,7 @@ const NewArrivalsForm = ({ arrivalData }) => {
             </label>
             <br />
             <label>
-                Image URL:
+                Image URL or Upload Image:
                 <input
                     className='w-full mb-5 p-3 rounded-lg'
                     placeholder='Image URL'
@@ -150,18 +146,15 @@ const NewArrivalsForm = ({ arrivalData }) => {
                     name="imageUrl"
                     value={formData.imageUrl}
                     onChange={handleChange}
-                    disabled={formData.imageFile !== null}
                 />
             </label>
             <br />
             <label>
-                Upload Image:
                 <input
                     className='w-full mb-5 p-3 rounded-lg'
                     type="file"
                     onChange={handleFileChange}
                     accept="image/*"
-                    disabled={formData.imageUrl !== ''}
                 />
             </label>
             <br />
@@ -214,9 +207,16 @@ const NewArrivalsForm = ({ arrivalData }) => {
                 />
             </label>
             <br />
-            <button className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-                {submitting ? (location.pathname === "/" ? 'Submitting...' : 'Updating...') : (location.pathname === "/" ? 'Submit' : 'Update')}
-            </button>
+            
+        {location.pathname === "/" ? (
+          <button onClick={handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+            {submitting ? 'Submitting...' : 'Submit'}
+          </button>
+        ) : (
+          <button onClick={handleUpdate} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+            {submitting ? 'Updating...' : 'Update'}
+          </button>
+        )}
             {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}
             {successfulMsg && <p className='bg-green-600 w-1/2 text-white mt-5 rounded-lg py-3 px-5'>{successfulMsg}</p>}
         </form>

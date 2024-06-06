@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../Firebase';
 
 const TopForm = ({ brandData }) => {
     const [formData, setFormData] = useState({
@@ -40,19 +42,28 @@ const TopForm = ({ brandData }) => {
         }
     };
 
+    const uploadImageToFirebase = async (file) => {
+        const storageRef = ref(storage, `images/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        return await getDownloadURL(snapshot.ref);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitting(true);
-        const data = new FormData();
-        data.append('brandName', formData.brandName);
-        data.append('description', formData.description);
-        if (formData.imageFile) {
-            data.append('imageFile', formData.imageFile);
-        } else {
-            data.append('imageUrl', formData.imageUrl);
-        }
+
         try {
-            const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/topbrand`, data);
+            let imageUrl = formData.imageUrl;
+            if (formData.imageFile) {
+                imageUrl = await uploadImageToFirebase(formData.imageFile);
+            }
+
+            const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/topbrand`, {
+                brandName: formData.brandName,
+                description: formData.description,
+                imageUrl: imageUrl,
+            });
+
             setFormData({
                 brandName: '',
                 imageUrl: '',
@@ -73,25 +84,22 @@ const TopForm = ({ brandData }) => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         setSubmitting(true);
-        const data = new FormData();
-        data.append('brandName', formData.brandName);
-        data.append('description', formData.description);
-        if (formData.imageFile) {
-            data.append('imageFile', formData.imageFile);
-        } else {
-            data.append('imageUrl', formData.imageUrl);
-        }
 
         try {
-            const result = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatebrand?brandId=${brandData._id}`, data);
-            setFormData({
-                brandName: '',
-                imageUrl: '',
-                description: '',
-                imageFile: null
+            let imageUrl = formData.imageUrl;
+            if (formData.imageFile) {
+                imageUrl = await uploadImageToFirebase(formData.imageFile);
+            }
+
+            const result = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatebrand?brandId=${brandData._id}`, {
+                brandName: formData.brandName,
+                description: formData.description,
+                imageUrl: imageUrl,
             });
-            setError('');
+
+            console.log(result.data);
             setSuccessfulMsg('Updated Successfully');
+            setError('');
         } catch (error) {
             console.error('Error updating brand:', error.message);
             setSuccessfulMsg('');
@@ -105,7 +113,7 @@ const TopForm = ({ brandData }) => {
 
     return (
         <>
-            <form className='bg-yellow-100 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/" ? handleSubmit : handleUpdate}>
+            <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/" ? handleSubmit : handleUpdate}>
                 <label>
                     <input
                         className='w-full mb-5 p-3 rounded-lg'

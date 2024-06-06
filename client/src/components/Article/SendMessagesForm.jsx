@@ -4,22 +4,39 @@ import axios from 'axios';
 const SendMessageForm = () => {
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const [attachment, setAttachment] = useState(null);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setAttachment(file);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
 
     try {
-      const response = await axios.post(`${process.env.SERVER}/api/send-messages`, { subject, message, imageUrl });
+      const formData = new FormData();
+      formData.append('subject', subject);
+      formData.append('message', message);
+      if (attachment) {
+        formData.append('attachment', attachment);
+      }
+
+      const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/send-messages`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       setSuccessMessage('Message sent successfully');
       setError('');
       setSubject('');
       setMessage('');
-      setImageUrl('');
+      setAttachment(null);
     } catch (error) {
       console.error('Error sending message:', error);
       setError('Error sending message. Please try again later.');
@@ -56,12 +73,11 @@ const SendMessageForm = () => {
           ></textarea>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="imageUrl">Image URL:</label>
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="attachment">Attach Image or Enter URL:</label>
           <input
-            type="text"
-            id="imageUrl"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            type="file"
+            id="attachment"
+            onChange={handleFileChange}
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         </div>

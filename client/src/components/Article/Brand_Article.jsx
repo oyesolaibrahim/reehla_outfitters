@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import TopForm from "../Home/Top_Form";
 import Swal from 'sweetalert2';
+import { getDownloadURL, ref } from 'firebase/storage'; 
+import { storage } from '../Firebase'; 
 
 const Brand_Article = () => {
     const [brandName, setBrandName] = useState("");
@@ -50,29 +52,47 @@ const Brand_Article = () => {
             console.log('Error clearing brands:', error);
         }
     };
-
     useEffect(() => {
         const fetchBrands = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/topbrand`);
-                const brandsWithFullImageUrl = response.data.brands.map(brand => ({
-                    ...brand,
-                    imageUrl: `${process.env.REACT_APP_SERVER}/${brand.imageUrl}`
+                console.log(response.data);
+                
+                const brandsWithFullImageUrl = await Promise.all(response.data.brands.map(async (brand) => {
+                    try {
+                        // Construct the full image URL by concatenating the base URL of Firebase Storage with the relative image path
+                        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_FIREBASE_STORAGE_BUCKET}/o/${encodeURIComponent(brand.imageUrl)}?alt=media`;
+                        
+                        const storageRef = ref(storage, brand.imageUrl);
+                        const downloadUrl = await getDownloadURL(storageRef);
+                        console.log(`Successfully retrieved image URL for brand ${brand.name}:`, downloadUrl);
+                        return {
+                            ...brand,
+                            imageUrl: downloadUrl
+                        };
+                    } catch (error) {
+                        console.error(`Error getting image URL for brand ${brand.name}:`, error.message);
+                        return { ...brand, imageUrl: '' };
+                    }
                 }));
+        
                 setObjects(brandsWithFullImageUrl);
+                console.log(objects)
             } catch (error) {
                 console.log('Error getting brands:', error);
             }
         };
+          
         fetchBrands();
     }, []);
-
+    
+    
     const adminToken = sessionStorage.getItem("adminToken");
     return (
         <>  
             <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
                 {objects?.map(object => (
-                    <article key={object._id} className={`bg-yellow-100 xs:my-3 width vh ${adminToken ? "xsvhs" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
+                    <article key={object._id} className={`bg-red-200 xs:my-3 width vh ${adminToken ? "xsvhs" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
                         <Link to="/brand">
                             <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={object.imageUrl} alt="brand-img"/>
                         </Link>    

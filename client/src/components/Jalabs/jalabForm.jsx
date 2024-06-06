@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../Firebase';
 
 const AddJalabsForm = ({ jalabData }) => {
   const [formData, setFormData] = useState({
@@ -30,8 +32,8 @@ const AddJalabsForm = ({ jalabData }) => {
     }
   }, [jalabData]);
 
-  const isEditPage = location.pathname === ("/male/jalabs" || "female/jalabs" || "children/jalabs");
-console.log(location.pathname)
+  const isEditPage = location.pathname === "/edit/:id";
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -45,25 +47,21 @@ console.log(location.pathname)
     e.preventDefault();
     setSubmitting(true);
 
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('category', formData.category);
-    formDataToSend.append('description', formData.description);
-    formDataToSend.append('price', formData.price);
-    formDataToSend.append('oldPrice', formData.oldPrice);
-
-    if (formData.imageFile) {
-      formDataToSend.append('imageFile', formData.imageFile);
-    } else {
-      formDataToSend.append('imageUrl', formData.imageUrl);
-    }
-
     try {
-      const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/jalab`, formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      let imageUrl = '';
+
+      if (formData.imageFile) {
+        const file = formData.imageFile;
+        const storageRef = ref(storage, `images/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        imageUrl = await getDownloadURL(snapshot.ref);
+      }
+
+      const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/jalab`, {
+        ...formData,
+        imageUrl
       });
+      
       setFormData({
         name: '',
         imageFile: null,
@@ -88,36 +86,23 @@ console.log(location.pathname)
     e.preventDefault();
     setSubmitting(true);
 
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('category', formData.category);
-    formDataToSend.append('description', formData.description);
-    formDataToSend.append('price', formData.price);
-    formDataToSend.append('oldPrice', formData.oldPrice);
-
-    if (formData.imageFile) {
-      formDataToSend.append('imageFile', formData.imageFile);
-    } else {
-      formDataToSend.append('imageUrl', formData.imageUrl);
-    }
-
     try {
-      const result = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesinglejalab?jalabId=${jalabData._id}`, formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      let imageUrl = formData.imageUrl;
+
+      if (formData.imageFile) {
+        const file = formData.imageFile;
+        const storageRef = ref(storage, `images/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        imageUrl = await getDownloadURL(snapshot.ref);
+      }
+
+      const result = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesinglejalab?jalabId=${jalabData._id}`, {
+        ...formData,
+        imageUrl
       });
-      setFormData({
-        name: '',
-        imageFile: null,
-        imageUrl: '',
-        category: 'Male',
-        description: '',
-        price: '',
-        oldPrice: ''
-      });
-      setError('');
+
       setSuccessfulMsg("Updated Successfully");
+      setError('');
     } catch (error) {
       console.error('Error updating Jalab:', error.message);
       setError('Error updating Jalab. Please try again later.');
@@ -128,7 +113,7 @@ console.log(location.pathname)
   };
 
   return (
-    <form className='bg-yellow-100 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={handleSubmit}>
+    <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={isEditPage ? handleUpdate : handleSubmit}>
       <label>
         Name of Jalab:
         <input
@@ -217,8 +202,8 @@ console.log(location.pathname)
       </label>
       <br />
       
-      <button onClick={!isEditPage ? handleUpdate : handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-        {submitting || (!isEditPage ? "Update" : 'Submit')}{submitting && (!isEditPage ? 'Updating...' : 'Submitting...')}
+      <button className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+        {submitting ? (isEditPage ? 'Updating...' : 'Submitting...') : (isEditPage ? 'Update' : 'Submit')}
       </button>
       
       {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}

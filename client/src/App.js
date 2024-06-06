@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from './components/Home/Home';
 import './App.css';
 import UserSignUp from "./components/Signup/User_signup";
@@ -22,111 +22,81 @@ import Female from "./components/Jalabs/Female";
 import Children from "./components/Jalabs/Children";
 import BrandPage from "./components/Jalabs/Brand";
 
-
 function App() {
   const [jalabs, setJalabs] = useState([]); 
   const [femaleJalabs, setFemaleJalabs] = useState([]); 
   const [childrenJalabs, setChildrenJalabs] = useState([]); 
-  const [sessionId, setSessionId] = useState(""); 
+  const [sessionId, setSessionId] = useState(localStorage.getItem("sessionId") || ""); 
   const [myCarts, setMyCarts] = useState([]);
 
+  // Fetching jalabs data
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER}/api/jalab`)
-      .then(response => {
-        setJalabs(response.data); 
-        console.log(jalabs)
-      })
-      .catch(error => {
+    const fetchJalabs = async () => {
+      try {
+        const [jalabsResponse, femaleJalabsResponse, childrenJalabsResponse] = await Promise.all([
+          axios.get(`${process.env.REACT_APP_SERVER}/api/jalab`),
+          axios.get(`${process.env.REACT_APP_SERVER}/api/femalejalab`),
+          axios.get(`${process.env.REACT_APP_SERVER}/api/childrenjalab`)
+        ]);
+        setJalabs(jalabsResponse.data);
+        setFemaleJalabs(femaleJalabsResponse.data);
+        setChildrenJalabs(childrenJalabsResponse.data);
+      } catch (error) {
         console.error('Error fetching jalabs:', error.message);
-      });
-      axios.get(`${process.env.REACT_APP_SERVER}/api/femalejalab`)
-      .then(response => {
-        setFemaleJalabs(response.data); 
-        console.log(femaleJalabs)
-      })
-      .catch(error => {
-        console.error('Error fetching jalabs:', error.message);
-      })
-
-      axios.get(`${process.env.REACT_APP_SERVER}/api/childrenjalab`)
-      .then(response => {
-        setChildrenJalabs(response.data); 
-        console.log(femaleJalabs)
-      })
-      .catch(error => {
-        console.error('Error fetching jalabs:', error.message);
-      })
+      }
+    };
+    fetchJalabs();
   }, []);
 
+  // Setting session ID
   useEffect(() => {
-    const existingSessionId = localStorage.getItem("sessionId")
-    if (!existingSessionId) {
-      const newSessionId = uuidv4()
-      localStorage.setItem("sessionId", newSessionId)
-      setSessionId(newSessionId)
-    } else {
-      setSessionId(existingSessionId)
+    if (!sessionId) {
+      const newSessionId = uuidv4();
+      localStorage.setItem("sessionId", newSessionId);
+      setSessionId(newSessionId);
     }
-  }, [])
- 
-//  useEffect(() => {
-//    const clearStorageOnExit = () => {
-//        window.addEventListener('beforeunload', () => {
-//            localStorage.clear();
-//        });
-//    };
-//    clearStorageOnExit();
-//    return () => {
-//        window.removeEventListener('beforeunload', () => {
-//            localStorage.clear();
-//        });
-//    };
-//}, []);
+  }, [sessionId]);
 
-useEffect(() => {
-  const fetching =  {
-    method: 'GET',
-    url : `${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`
-}
-axios(fetching)
-.then((result) => {
-    console.log(result.data.jalabs);
-    setMyCarts(result.data.jalabs)
-     console.log(myCarts)
-    })
-  . catch ((error) => {
-    console.log('Error Fetching Jalabs in Cart', error);
-  })
-// }, [sessionId])
-}, [sessionId, myCarts])
+  // Fetching cart data based on session ID
+  useEffect(() => {
+    if (sessionId) {
+      const fetchCart = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`);
+          setMyCarts(response.data.jalabs);
+        } catch (error) {
+          console.error('Error fetching jalabs in cart:', error.message);
+        }
+      };
+      fetchCart();
+    }
+  }, [sessionId]);
 
-  
   return (
     <CartProvider initialCartItems={myCarts}>
-    <BrowserRouter>
-       <Routes>
-         <Route path='/' element={<Home/>}/>
-         <Route path='/signup' element={<UserSignUp/>}/>
-         <Route path='/login' element={<UserLogin/>}/>
-         <Route path='/admin/signup' element={<Admin_signUp/>}/>
-         <Route path='/admin/login' element={<AdminLogin/>}/>
-         <Route path='/male/jalabs' element={<Male jalabs={jalabs}/>}/>
-         <Route path='/female/jalabs' element={<Female femaleJalabs={femaleJalabs}/>}/>
-         <Route path='/children/jalabs' element={<Children childrenJalabs={childrenJalabs}/>}/>
-         <Route path='/jalabs/:id' element={<Single_Jalab sessionId={sessionId}/>}/>
-         <Route path='/jalabs/new' element={<AddJalabsForm/>}/>
-         <Route path='/jalabs/cart' element={<Cart sessionId={sessionId}/>}/>
-         <Route path='/checkout' element={<Checkout sessionId={sessionId}/>}/>
-         <Route path='/edit/:id' element={<EditEachForm/>}/>
-         <Route path='/blog' element={<BlogPage/>}/>
-         <Route path='/brand' element={<BrandPage/>}/>
-         <Route path='/writeblog' element={<WritingBlogMessage/>}/>
-         <Route path='/sendmessage' element={<SendMessagePage/>}/>
-       </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/signup' element={<UserSignUp />} />
+          <Route path='/login' element={<UserLogin />} />
+          <Route path='/admin/signup' element={<Admin_signUp />} />
+          <Route path='/admin/login' element={<AdminLogin />} />
+          <Route path='/male/jalabs' element={<Male jalabs={jalabs} />} />
+          <Route path='/female/jalabs' element={<Female femaleJalabs={femaleJalabs} />} />
+          <Route path='/children/jalabs' element={<Children childrenJalabs={childrenJalabs} />} />
+          <Route path='/jalabs/:id' element={<Single_Jalab sessionId={sessionId} />} />
+          <Route path='/jalabs/new' element={<AddJalabsForm />} />
+          <Route path='/jalabs/cart' element={<Cart sessionId={sessionId} />} />
+          <Route path='/checkout' element={<Checkout sessionId={sessionId} />} />
+          <Route path='/edit/:id' element={<EditEachForm />} />
+          <Route path='/blog' element={<BlogPage />} />
+          <Route path='/brand' element={<BrandPage />} />
+          <Route path='/writeblog' element={<WritingBlogMessage />} />
+          <Route path='/sendmessage' element={<SendMessagePage />} />
+        </Routes>
+      </BrowserRouter>
     </CartProvider>
   );
 }
-
 
 export default App;

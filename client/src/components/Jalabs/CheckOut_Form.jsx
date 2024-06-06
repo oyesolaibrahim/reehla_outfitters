@@ -70,7 +70,7 @@ const PaystackCheckoutForm = ({total}) => {
   const userEmail = sessionStorage.getItem("email")
   console.log(userEmail)
   return (
-    <div className="flex justify-center items-center sm:w-full md:w-1/2 mx-auto mt-10 rounded-lg py-10 bg-yellow-100">
+    <div className="flex justify-center items-center sm:w-full md:w-1/2 mx-auto mt-10 rounded-lg py-10 bg-red-200">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Pay with Paystack</h2>
         <p className='mb-5'>* Clicking on "Pay Now" will take you to Paystack's secure checkout page to complete your order.</p>

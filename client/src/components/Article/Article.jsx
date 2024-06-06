@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
-import Asad from "../../assets/shared/asad.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BestForm from "../Home/BestForm";
 import Swal from 'sweetalert2';
+import { Link } from "react-router-dom";
 
 const Article = () => {
     const [objects, setObjects] = useState([]);
@@ -13,7 +12,9 @@ const Article = () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/bestseller`);
                 console.log('Best sellers fetched successfully:', response);
-                setObjects(response.data.jalab);
+                const jalabs = response.data.jalab;
+
+                setObjects(jalabs);
             } catch (error) {
                 console.log('Error fetching best sellers:', error);
             }
@@ -30,7 +31,7 @@ const Article = () => {
             console.log('Error deleting best seller:', error);
         }
     };
-    
+
     const handleClearBestSellers = () => {
         Swal.fire({
             title: 'Are you sure you want to clear All?',
@@ -65,9 +66,9 @@ const Article = () => {
         <>  
             <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
                 {objects?.map(object => (
-                    <article key={object._id} className={`bg-yellow-100 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
+                    <article key={object._id} className={`bg-red-200 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
                         <Link to={`/jalabs/${object._id}`} state={{ object }}>
-                            <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={`${process.env.REACT_APP_SERVER}/${object.imageUrl}`} alt="jalab-img"/>
+                            <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={object.imageUrl} alt="jalab-img"/>
                         </Link>    
                         <div className="flex items-center justify-between mb-5">
                             <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}</h3>

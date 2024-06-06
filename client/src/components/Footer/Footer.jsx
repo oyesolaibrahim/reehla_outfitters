@@ -2,13 +2,13 @@ import SubscriptionForm from "../Article/SubscriptionForm";
 
 const Footer = () => {
   return (
-    <footer className="bg-yellow-400 overflow-x-hidden py-6 sm:px-5 xs:px-2 flex justify-between xs:flex-col-reverse items-center md:items-center">
+    <footer className="bg-red-400 overflow-x-hidden py-6 sm:px-5 sm:space-x-10 xs:px-2 flex justify-between xs:flex-col-reverse items-center md:items-center">
       <div className="xs:flex xs:flex-col-reverse">
         <div className="flex items-center mb-5 md:mb-0 xs:mt-5">
           <i className="fa fa-copyright sm:fa-2x mr-2" aria-hidden="true"></i>
-          <h3 className="sm:text-lg font-bold xs:text-xs">realbabstore</h3>
+          <h3 className="sm:text-lg font-bold xs:text-xs">reehla's outfitters and fragrance</h3>
         </div>
-        <div className="flex items-center xs:space-x-2 sm:space-x-5 mt-5 md:mt-0">
+        <div className="flex justify-center items-center xs:space-x-2 sm:space-x-5 mt-5 md:mt-0">
           <i className="fa fa-facebook-official fa-2x text-blue-600" aria-hidden="true"></i>
           <i className="fa fa-whatsapp fa-2x text-green-600" aria-hidden="true"></i>
           <i className="fa fa-instagram fa-2x text-pink-600" aria-hidden="true"></i>

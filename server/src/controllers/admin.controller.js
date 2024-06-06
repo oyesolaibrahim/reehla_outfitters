@@ -1,3 +1,4 @@
+const Clients = require("../models/userCheckout.model")
 const Admin = require("../models/admin.model"); 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -56,9 +57,47 @@ const login = (req, res) => {
         res.status(404).json({message: "Admin account not found", error});
     })
 }
+const adminCart = (req, res) => {
+    Clients.find()
+        .then(carts => {
+            if (!carts || carts.length === 0) {
+                return res.status(404).json({ message: "No carts found for this session" });
+            }
+            console.log("Carts Fetched Successfully:", carts);
+            res.status(200).json({ message: "Carts Fetched Successfully", carts });
+        })
+        .catch(error => {
+            console.error("Error Fetching Carts:", error);
+            res.status(500).json({ message: "Error Fetching Carts", error });
+        });
+};
+const deleteOneClient = (req, res) => {
+    const clientId = req.query.clientId
+    console.log(clientId)
+    Clients.findByIdAndDelete(clientId)
+    .then((client) => {
+      res.status(200).json({message: "Client removed successfully", client})
+    })
+    .catch(error => {
+      console.error(error)
+      res.status(404).json({message: "Client failed to be removed", error})
+    })
+  }
+  const deleteAllClients = (req, res) => {
+    Clients.deleteMany()
+    .then((client) => {
+      res.status(200).json({message: "Client deleted successfully", client})
+    })
+    .catch(error => {
+      res.status(404).json({message: "Client failed to be deleted"})
+    })
+  }
   
 
 module.exports = {
     addAdmin,
     login,
-}
+    adminCart,
+    deleteOneClient,
+    deleteAllClients
+};
