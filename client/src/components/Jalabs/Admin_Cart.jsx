@@ -121,11 +121,11 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
                         </article>
                     ))}
                     {myCarts.length === 0 ? (
-                        <div className="bg-yellow-100 mt-10 sm:ml-10 rounded-lg py-5 px-5  sm:w-1/3 uppercase">
+                        <div className="bg-red-200 mt-10 sm:ml-10 rounded-lg py-5 px-5  sm:w-1/3 uppercase">
                             <h3 className="text-2xl font-bold">Sorry, Orders is empty</h3>
                             <div className="relative mt-4 text-center">
                                 <i className="fa fa-shopping-cart fa-4x cursor-pointer mt-auto" aria-hidden="true"></i>
-                                <div className="bg-red-800 rounded-full absolute top-0 left-1/2">
+                                <div className="bg-amber-800 rounded-full absolute top-0 left-1/2">
                                     <p className="text-white text-center px-3 py-1">0</p>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
 
                 <div>
                     <div className="xs:px-5 xs:pt-10 sm:pt-10 sm:px-5">
-                        <div className="bg-yellow-100 p-5 lg:fixed right-10 md:w-1/3 md:static lg:w-1/6 top-1/3 flex m-auto rounded-lg">
+                        <div className="bg-red-200 p-5 lg:fixed right-10 md:w-1/3 md:static lg:w-1/6 top-1/3 flex m-auto rounded-lg">
                             <form>
                                 <div className="mb-3">
                                     <h3 className="mb-3">CART SUMMARY</h3>

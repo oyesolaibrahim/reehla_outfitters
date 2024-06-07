@@ -73,12 +73,12 @@ const UserLogin = () => {
             <Header/>
             <main className="bg-gray-700 py-10 xs:h-full">
                 <h3 className="error"></h3>
-                <div className="text-white md:mb-24 xs:pt-10 xs:mb-10 sm:mb-10">
+                <div className="text-white md:mb-24 xs:pt-10 sm:mb-10">
                 </div>
                 <div>
-                {error && <h3 className="bg-red-600 text-white w-1/3 py-3 px-5 m-auto rounded-lg uppercase text-center mb-5">{error}</h3>}
-                    <div className="bg-red-200 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
+                      <div className="bg-red-200 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
                         <form onSubmit={(e)=>Login(e)}>
+                            <i class="fa flex justify-center text-8xl fa-user-circle-o text-amber-800" aria-hidden="true"></i>
                             <div className="mb-10 flex justify-center pt-10">
                                 <label htmlFor="email">
                                 </label>
@@ -89,7 +89,7 @@ const UserLogin = () => {
                                 </label>
                                 <input className="rounded-lg w-96 py-4 px-10" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </div>
-                            <button type="SUBMIT" className="cursor-pointer font-bold rounded-lg bg-red-800 py-3 px-5 text-white" onClick={(e) => {Login(e)}}>Login</button> 
+                            <button type="SUBMIT" className="cursor-pointer font-bold rounded-lg bg-amber-800 py-3 px-5 text-white" onClick={(e) => {Login(e)}}>Login</button> 
                         </form>
                     </div>
                 </div>

@@ -77,6 +77,7 @@ const SendMessageForm = () => {
           <input
             type="file"
             id="attachment"
+            name="attachment"
             onChange={handleFileChange}
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
           />

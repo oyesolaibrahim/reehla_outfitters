@@ -44,7 +44,7 @@ useEffect(() => {
     return (
         <>  
             <Header sessionId={sessionId} myCarts={myCarts}/>
-            <main className="bg-gray-700 pb-16">
+            <main className="bg-gray-700 pb-16 min-h-screen">
                 {adminToken ? <Admin_Cart myOrders={myCarts}/> : <Article_Cart sessionId={sessionId} />}
             </main>
             <Footer/>

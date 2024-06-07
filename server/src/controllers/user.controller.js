@@ -7,6 +7,9 @@ const axios = require('axios');
 const Subscription = require('../models/subscription.model'); 
 const sendEmail = require('../services/emailService.services'); // Adjust the path as necessary
 require('dotenv').config();
+const { uploadFileToFirebase, db } = require('../../firebaseAdmin'); 
+const { storage, bucketName } = require('../../firebaseAdmin'); 
+const path = require("path");
 
 
 const addUser = (req, res) => {
@@ -168,20 +171,24 @@ const sendMessageToSubscribers = async (req, res) => {
       return res.status(200).json({ message: 'No subscribers to send messages to' });
     }
 
-    // If attachment is a file, process it directly
-    if (attachment && attachment.mimetype.startsWith('image')) {
-      const emailPromises = subscribers.map(subscriber =>
-        sendEmailWithAttachment(subscriber.email, subject, message, attachment.buffer)
-      );
-      await Promise.all(emailPromises);
-    }
-    // If attachment is a URL, download the image and send it as an attachment
-    else if (attachment) {
-      const response = await axios.get(attachment);
-      const imageBuffer = Buffer.from(response.data, 'binary');
-      const emailPromises = subscribers.map(subscriber =>
-        sendEmailWithAttachment(subscriber.email, subject, message, imageBuffer)
-      );
+    if (attachment) {
+      let emailPromises;
+      
+      // Check if the attachment is a file
+      if (attachment instanceof Buffer) {
+        // Attachment is a file buffer
+        emailPromises = subscribers.map(subscriber =>
+          sendEmailWithAttachment(subscriber.email, subject, message, attachment)
+        );
+      } else {
+        // Attachment is a URL, download the image and send it as an attachment
+        const response = await axios.get(attachment, { responseType: 'arraybuffer' });
+        const imageBuffer = Buffer.from(response.data, 'binary');
+        emailPromises = subscribers.map(subscriber =>
+          sendEmailWithAttachment(subscriber.email, subject, message, imageBuffer)
+        );
+      }
+
       await Promise.all(emailPromises);
     }
 

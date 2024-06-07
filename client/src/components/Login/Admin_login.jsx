@@ -76,10 +76,10 @@ const AdminLogin = () => {
                     <h2 className="flex sm:text-6xl justify-center">Admin Login</h2>
                 </div>
                 <div>
-                   {error && <h3 className="bg-red-600 text-white w-1/3 py-3 px-5 m-auto rounded-lg uppercase text-center mb-5">{error}</h3>}
-                    <div className="bg-red-200 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
+                           <div className="bg-red-200 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
                         <form onSubmit={(e)=>Login(e)}>
-                            <div className="mb-10 flex justify-center">
+                          <i class="fa flex justify-center text-8xl fa-user-circle-o text-amber-800" aria-hidden="true"></i>
+                            <div className="mb-10 pt-10 flex justify-center">
                                 <label htmlFor="email">
                                 </label>
                                 <input className="rounded-lg w-96 py-4 px-10" type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
@@ -89,7 +89,7 @@ const AdminLogin = () => {
                                 </label>
                                 <input className="rounded-lg w-96 py-4 px-10" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </div>
-                            <button type="SUBMIT" className="fcursor-pointer font-bold rounded-lg bg-red-800 py-3 px-5 text-white" onClick={(e) => {Login(e)}}>Login</button> 
+                            <button type="SUBMIT" className="fcursor-pointer font-bold rounded-lg bg-amber-800 py-3 px-5 text-white" onClick={(e) => {Login(e)}}>Login</button> 
                         </form>
                     </div>
                 </div>

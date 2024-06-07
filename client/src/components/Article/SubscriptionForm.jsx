@@ -18,7 +18,7 @@ const SubscriptionForm = () => {
       setEmail('');
     } catch (error) {
       console.error('Error subscribing:', error.message);
-      setError('Error subscribing. Please try again later.');
+      setError('Error subscribing. Please try again later.!!!');
       setSuccessMessage('');
     } finally {
       setSubmitting(false);
@@ -41,7 +41,7 @@ const SubscriptionForm = () => {
       >
         {submitting ? 'Submitting...' : 'Subscribe'}
       </button>
-      {error && <p className="text-red-600 ml-4">{error}</p>}
+      {error && <p className="text-red-600 font-extrabold bg-white px-3 py-2 rounded-lg">{error}</p>}
       {successMessage && <p className="text-green-600 ml-4">{successMessage}</p>}
     </form>
   );

@@ -70,10 +70,10 @@ const UserSignUp = () => {
                 <div className="text-white md:mb-24 xs:pt-10 xs:mb-10">
                 </div>
                 <div>
-                {error && <h3 className="bg-red-600 text-white w-1/3 py-3 px-5 m-auto rounded-lg uppercase text-center mb-5">{error}</h3>}
-                    <div className="bg-red-200 md:w-3/5 sm:w-screen xs:w-screen md:flex m-auto rounded-2xl pb-10 px-10">
+                    <div className="bg-red-200 md:w-3/5 sm:w-screen py-10 xs:w-screen md:flex m-auto rounded-2xl pb-10 px-10">
                         <form onSubmit={(e) => {Signup(e)}}>
-                            <div className="pt-20 mb-10 flex">
+                        <i class="fa flex justify-center text-8xl fa-user-circle-o text-amber-800" aria-hidden="true"></i>
+                            <div className="pt-10 mb-10 flex">
                                 <label htmlFor="firstname">
                                 </label>
                                 <input className="rounded-lg w-96 py-4 px-10 m-auto" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
@@ -93,7 +93,7 @@ const UserSignUp = () => {
                                 </label>
                                 <input className="rounded-lg w-96 py-4 px-10" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </div>
-                            <button type="SUBMIT" className="fcursor-pointer font-bold rounded-lg bg-red-800 py-3 px-5 text-white" onClick={(e) => {Signup(e)}}>Signup</button> 
+                            <button type="SUBMIT" className="fcursor-pointer font-bold rounded-lg bg-amber-800 py-3 px-5 text-white" onClick={(e) => {Signup(e)}}>Signup</button> 
                         </form>
                     </div>
                 </div>

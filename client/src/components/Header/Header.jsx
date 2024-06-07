@@ -35,10 +35,12 @@ const Header = ({ myCarts = [] }) => {
     };
 
     return (
-        <header className="bg-red-400 sm:px-10 xs:px-1 sticky md:-top-20 lg:-top-40 py-2 top top2 sm:-top-24 z-10">
-            <div className="flex md:justify-center -pt-40 xs:mb-8 sm:justify-center items-center">
+        <header className="bg-red-400 sm:px-10 xs:px-1 sticky md:-top-32 lg:-top-40 py-2 top top2 sm:-top-24 z-10">
+            <div className="flex md:justify-center -pt-40 xs:mb-4 sm:justify-center items-center">
                 <div className="">
-                    <img className="lg:w-3/5" src={logo} alt="logo-img" />
+                    <Link to="/">
+                        <img className="lg:w-3/5" src={logo} alt="logo-img" />
+                    </Link>
                 </div>
                 <div className="flex items-center lg:mr-20 md:mr-0 sm:mr-20 xs:mr-16 space-x-2">
                     <input
@@ -50,12 +52,12 @@ const Header = ({ myCarts = [] }) => {
                     <i className="fa fa-search sm:text-3xl xs:text-2xl" aria-hidden="true"></i>
                 </div>
                 <div className="sm:flex md:flex-row lg:flex-row lg:space-x-5 md:space-x-0 sm:items-start md:items-center">
-                    <div className={`md:flex-row md:flex sm:flex sm:flex-col lg:flex lg:flex-row xs:items-start sm:items-start md:p-0 xs:pt-36 sm:pt-36 xs:fixed sm:fixed sm:z xs:pl-10 sm:pl-10 xs:h-screen sm:h-screen md:h-1/6 xs:w-1/2 sm:w-1/2 xs:top-0 sm:top-0 md:static md:bg-transparent xs:bg-yellow-100 sm:bg-yellow-100 transition-all duration-1000 md:-space-x-12 md:items-center ${right ? "right" : "negative-right"}`}>
+                    <div className={`md:flex-row md:flex sm:flex sm:flex-col lg:flex lg:flex-row xs:items-start sm:items-start md:p-0 xs:pt-36 sm:pt-36 xs:fixed sm:fixed sm:z xs:pl-10 sm:pl-10 xs:h-screen sm:h-screen md:h-1/6 xs:w-1/2 sm:w-1/2 xs:top-0 sm:top-0 md:static md:bg-transparent xs:bg-red-200 sm:bg-red-200 transition-all duration-1000 md:-space-x-12 md:items-center ${right ? "right" : "negative-right"}`}>
                         <div className="md:flex-row md:flex lg:flex lg:flex-row sm:flex-col sm:items-start md:items-center md:-space-x-5">
                             <Link to="/">
                                 <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:px-0 sm:hover:text-amber-900 md:hover:text-white">Home</h3>
                             </Link>
-                            <Link to="/">
+                            <Link to="">
                                 <h3 className="cursor-pointer min-w-32 font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:hover:text-amber-900 md:hover:text-white">About Us</h3>
                             </Link>
                             <Link to="/blog">

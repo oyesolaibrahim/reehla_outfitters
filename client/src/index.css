@@ -11,6 +11,32 @@ body {
 .inline-block {
   display: inline-block;
 }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.show {
+  animation: fadeIn 1s forwards;
+}
+
+.hide {
+  animation: fadeOut 1s forwards;
+  opacity: 0;
+  position: absolute;
+}
+
+.typing-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
 .width {
   width: 30%;
 }
@@ -34,6 +60,7 @@ body {
 }
 .text-container {
   font-family: "Dancing Script", cursive;
+  height: 30vh;
 }
 .typing-container {
   display: inline-block;
@@ -66,7 +93,7 @@ body {
   position: absolute;
   border-width: 10px;
   border-style: solid;
-  border-color: transparent transparent transparent #960018;
+  border-color: transparent transparent transparent brown;
   top: 50%;
   right: -11%;
   transform: translateY(-50%);
@@ -101,7 +128,9 @@ body {
   }
 }
 @media screen and (max-width:450px) {
-
+  .background {
+    height: 70vh;
+  }
   .xsvh {
     max-height: 35vh;
     min-height: 35vh;

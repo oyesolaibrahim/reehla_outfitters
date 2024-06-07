@@ -107,17 +107,17 @@ const Single_Jalab = ({ sessionId }) => {
                                 <h2 className="text-4xl font-extrabold">{object?.name || object?.productName}<span className="text-xl ml-2">({object?.category})</span></h2>
                                 <p className="mt-20">{object?.description}</p>
                                 <div className="mt-12 flex sm:space-x-10 md:space-x-10 xs:justify-center xs:-space-x-32">
-                                    <input className="font-bold text-2xl outline-none bg-yellow-100" readOnly value={`₦${totalPrice}`} />
+                                    <input className="font-bold text-2xl outline-none bg-red-200" readOnly value={`₦${totalPrice}`} />
                                     <p className="text-2xl font-extralight line-through">₦{object?.oldPrice}</p>
                                 </div>
                             </div>
                             <div className="flex items-center mt-16 sm:space-x-20 xs:space-x-5">
-                                <div className="flex items-center sm:space-x-10 md:space-x-10 bg-red-800 sm:w-48 md:w-48 py-3 px-5 text-white justify-center rounded-lg">
+                                <div className="flex items-center sm:space-x-10 md:space-x-10 bg-amber-800 sm:w-48 md:w-48 py-3 px-5 text-white justify-center rounded-lg">
                                     <i className="fa fa-minus cursor-pointer" aria-hidden="true" onClick={minus}></i>
-                                    <input className="w-16 bg-red-800 text-center outline-none" value={quantity} readOnly />
+                                    <input className="w-16 bg-amber-800 text-center outline-none" value={quantity} readOnly />
                                     <i className="fa fa-plus cursor-pointer" aria-hidden="true" onClick={plus}></i>
                                 </div>
-                                <button type="submit" className="bg-red-800 text-white text-center cursor-pointer w-36 py-3 px-5 rounded-lg">
+                                <button type="submit" className="bg-amber-800 text-white text-center cursor-pointer w-36 py-3 px-5 rounded-lg">
                                     Add to Cart
                                 </button>
                             </div>
