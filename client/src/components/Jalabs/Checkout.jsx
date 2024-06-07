@@ -4,7 +4,7 @@ import { useCart } from "../Header/CartContext";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import PaystackCheckoutForm from "./CheckOut_Form";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Swal from 'sweetalert2';
 
 const Checkout = ({ sessionId }) => {
@@ -81,8 +81,8 @@ const Checkout = ({ sessionId }) => {
                 setError("");
                 Swal.fire({
                     icon: 'success',
-                    title: successfulMsg,
-                    text: result.data.message,
+                    title: result.data.message,
+                    text: "You will receive update in your mail/whatsapp regarding your product's delivery",
                 });
     
             })
@@ -145,7 +145,7 @@ const Checkout = ({ sessionId }) => {
                             </div>
                             <div className="mb-10 flex justify-center">
                                 <label htmlFor="address"></label>
-                                <input className="rounded-lg sm:w-96 py-4 px-10" type="text" placeholder="Home Address" value={address} onChange={(e) => setAddress(e.target.value)} />
+                                <input className="rounded-lg sm:w-96 py-4 px-10" type="text" placeholder="Delivery Address" value={address} onChange={(e) => setAddress(e.target.value)} />
                             </div>
                             <div className="mb-10 flex justify-center">
                                 <label htmlFor="tel"></label>
@@ -174,7 +174,9 @@ const Checkout = ({ sessionId }) => {
                                 />
                                 <label htmlFor="prepay-now">Pre-pay Now</label>
                             </div>
-                            <button onClick={(e) => Proceed(e)} className="mt-10 cursor-pointer font-bold rounded-lg bg-red-800 py-3 px-5 w-1/3 text-white">Proceed</button>
+                           <Link to={`${paymentDiv || "#confirm"}`}>
+                                <button onClick={(e) => Proceed(e)} className="mt-10 cursor-pointer font-bold rounded-lg bg-amber-800 py-3 px-5 w-1/3 text-white">Proceed</button>
+                           </Link> 
                         </div>
                     </div>
                     {paymentDiv && (
@@ -183,7 +185,7 @@ const Checkout = ({ sessionId }) => {
                         </div>
                     )}
                     <div>
-                        <div className="bg-yellow-100 p-5 lg:fixed sm:mt-10 lg:w-1/5 md:justify-center sm:w-4/5 sm:mx-auto xs:mt-10 right-10 top-1/3 flex md:static md:mx-auto md:w-2/3 rounded-lg">
+                        <div className="bg-red-200 p-5 lg:fixed sm:mt-10 lg:w-1/5 md:justify-center sm:w-4/5 sm:mx-auto xs:mt-10 right-10 top-1/3 flex md:static md:mx-auto md:w-2/3 rounded-lg">
                             <div>
                                 <div className="mb-3">
                                     <h3 className="mb-3 font-extrabold">Order Summary</h3>
@@ -204,7 +206,7 @@ const Checkout = ({ sessionId }) => {
                                     <h4 className="font-extrabold">₦{total}</h4>
                                 </div>
                                 <hr className="mb-3" />
-                                <button onClick={(e) => Confirm(e)} className="cursor-pointer font-bold rounded-lg bg-red-800 py-3 px-5 text-white">CONFIRM ORDER</button>
+                                <button id="confirm" onClick={(e) => Confirm(e)} className="cursor-pointer font-bold rounded-lg bg-amber-800 py-3 px-5 text-white">CONFIRM ORDER</button>
                             </div>
                         </div>
                     </div>

@@ -73,10 +73,10 @@ const UserSignUp = () => {
                     <div className="bg-red-200 md:w-3/5 sm:w-screen py-10 xs:w-screen md:flex m-auto rounded-2xl pb-10 px-10">
                         <form onSubmit={(e) => {Signup(e)}}>
                         <i class="fa flex justify-center text-8xl fa-user-circle-o text-amber-800" aria-hidden="true"></i>
-                            <div className="pt-10 mb-10 flex">
+                            <div className="my-10 flex justify-center">
                                 <label htmlFor="firstname">
                                 </label>
-                                <input className="rounded-lg w-96 py-4 px-10 m-auto" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+                                <input className="rounded-lg w-96 py-4 px-10 mx-auto" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
                             </div>
                             <div className="mb-10 flex justify-center">
                                 <label htmlFor="lastname">

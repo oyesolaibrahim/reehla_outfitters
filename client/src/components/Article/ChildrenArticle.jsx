@@ -57,7 +57,7 @@ const ChildrenArticle = ({ childrenJalabs }) => {
 
     return (
         <>
-            <div className="flex flex-wrap space-y-6 xs:justify-center sm:justify-center md:justify-between sm:items-center md:items-center">
+            <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
                 {objects?.map(jalab => (
                     <article key={jalab._id} className={`bg-red-200 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
                         <Link to={`/jalabs/${jalab._id}`} state={{ jalab }}>

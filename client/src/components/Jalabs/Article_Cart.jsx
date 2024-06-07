@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
-import { useCart } from '../Header/CartContext';
-import { getDownloadURL, ref } from 'firebase/storage';
-import { storage } from '../Firebase';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link, useLocation } from "react-router-dom";
+import { useCart } from "../Header/CartContext";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../Firebase";
 import Swal from 'sweetalert2';
 
 const Article_Cart = ({ sessionId }) => {
-  const { cartItems, cartValue, removeItemFromCart, clearCart, setCartValue } = useCart();
+  const { cartValue, removeItemFromCart, setCartValue } = useCart(); // Import removeItemFromCart from CartContext
   const [myCarts, setMyCarts] = useState([]);
   const location = useLocation();
   const [subTotal, setSubTotal] = useState(0);
-  const adminToken = sessionStorage.getItem('adminToken');
+  const adminToken = sessionStorage.getItem("adminToken");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +29,7 @@ const Article_Cart = ({ sessionId }) => {
               },
             };
           } catch (error) {
-            console.error('Error getting image URL:', error.message);
+            console.error("Error getting image URL:", error.message);
             return myCart;
           }
         }));
@@ -47,26 +47,33 @@ const Article_Cart = ({ sessionId }) => {
     setSubTotal(totalPrice);
   }, [myCarts]);
 
-  useEffect(() => {
-    // Update local state when cartValue changes
-    setSubTotal(cartValue);
-  }, [cartValue]);
-
-  const removeJalab = async (jalabId) => {
-    const fetching = {
-      method: 'DELETE',
-      url: `${process.env.REACT_APP_SERVER}/api/delete?jalabId=${jalabId}`,
-    };
-  
-    axios(fetching)
-      .then((response) => {
-        setMyCarts(myCarts.filter(jalab => jalab._id !== jalabId));
-        console.log('Jalab deleted successfully:', response);
-      })
-      .catch((error) => {
-        console.log('Error deleting jalab:', error);
-      });
+  const removeJalab = async (jalabId, quantity) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_SERVER}/api/delete?jalabId=${jalabId}`);
+      const updatedCarts = myCarts.filter(jalab => jalab._id !== jalabId);
+      console.log(updatedCarts);
+      setMyCarts(updatedCarts);
+      const quantity = updatedCarts.reduce((acc, item) => acc + item.quantity, 0);
+      console.log(quantity)
+      removeItemFromCart(jalabId, quantity)
+      console.log('Jalab deleted successfully');
+    } catch (error) {
+      console.error('Error deleting jalab:', error);
+    }
   };
+
+  const clearCart = async () => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_SERVER}/api/deleteAll`);
+      setMyCarts([]);
+      setCartValue(0);
+      console.log('Cart cleared successfully');
+      Swal.fire('Deleted!', 'Your Cart has been deleted.');
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+    }
+  };
+
   const handleClearCart = () => {
     Swal.fire({
       title: 'Are you sure you want to clear All?',
@@ -76,13 +83,9 @@ const Article_Cart = ({ sessionId }) => {
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, cancel!',
       reverseButtons: true,
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        await axios.delete(`${process.env.REACT_APP_SERVER}/api/deleteAll`);
-        setMyCarts([]);
         clearCart();
-        console.log('Cart cleared successfully');
-        Swal.fire('Deleted!', 'Your Cart has been deleted.');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelled', 'Your cart is safe', 'error');
       }
@@ -93,6 +96,7 @@ const Article_Cart = ({ sessionId }) => {
     <>
       <div className="md:flex justify-between xs:min-h-screen">
         <div className="flex flex-col space-y-3 justify-between">
+          
           {myCarts.map(myCart => (
             <div key={myCart._id} className="bg-red-200 max-h-62 min-h-62 sm:max-w-2/3 md:w-3/4 sm:min-w-36 md:min-w-36 p-10 m-5">
               <article className="relative sm:flex md:flex justify-between sm:items-center md:items-center">
@@ -106,14 +110,14 @@ const Article_Cart = ({ sessionId }) => {
                   </div>
                 </div>
               </article>
-              <button onClick={() => removeJalab(myCart._id)} className="xs:mt-5 md:bottom-0 md:right-1/3 text-white mb-3 bg-amber-800 py-3 px-5 rounded-lg">Remove Jalab</button>
+              <button onClick={() => removeJalab(myCart._id, myCart.quantity)} className="xs:mt-5 md:bottom-0 md:right-1/3 text-white mb-3 bg-amber-800 py-3 px-5 rounded-lg">Remove Jalab</button>
             </div>
           ))}
           {myCarts.length > 0 && (
             <button onClick={handleClearCart} className="text-white sm:w-1/6 xs:w-1/2 ml-5 mb-3 bg-amber-800 py-3 px-5 rounded-lg">Clear Cart</button>
           )}
           {myCarts.length === 0 && (
-            <div className="bg-red-200 mt-10 sm:ml-10 md:ml-10 lg:ml-10 xs:mx-auto xs:w-4/5 rounded-lg py-5 px-5 lg:px-5 uppercase">
+            <div className="bg-yellow-100 mt-10 sm:mx-auto md:ml-10 lg:ml-10 xs:mx-auto xs:w-4/5 rounded-lg py-5 px-5 lg:px-5 uppercase">
               <h3 className="text-2xl font-bold text-center">Sorry, Your Cart is empty</h3>
               <div className="relative mt-4 text-center">
                 <i className="fa fa-shopping-cart fa-4x cursor-pointer mt-auto" aria-hidden="true"></i>
