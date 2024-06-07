@@ -75,7 +75,7 @@ const Header = ({ myCarts = [] }) => {
                     </div>
                     <div className="flex sm:z-50 xs:absolute xs:top-5 sm:absolute xs:right-5 sm:right-5">
                         <i onClick={navOpen} className={`fa fa-2x fa-bars hidden cursor-pointer ${right ? "hidden" : "xs:inline-block sm:inline-block"}`} aria-hidden="true"></i>
-                        <i onClick={navClose} className={`fa xs:z-50 fa-2x fa-times hidden cursor-pointer ${right ? "xs:inline-block sm:inline-block" : "hidden"}`} aria-hidden="true"></i>
+                        <i onClick={navClose} className={`fa xs:z-50 fa-2x fa-times fixed right-5 hidden cursor-pointer ${right ? "xs:inline-block sm:inline-block" : "hidden"}`} aria-hidden="true"></i>
                     </div>
                 </div>
             </div>

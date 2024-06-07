@@ -17,7 +17,6 @@ const WritingBlogMessage = ({ blogData }) => {
 
   const location = useLocation();
   const isEditPage = !location.pathname.includes("/writeblog");
-console.log(isEditPage);
   useEffect(() => {
     if (isEditPage && blogData) {
       setSubject(blogData.subject);
@@ -51,7 +50,7 @@ console.log(isEditPage);
       const payload = { subject, message, imageUrl: finalImageUrl };
 
       if (isEditPage) {
-        await axios.put(`${process.env.REACT_APP_SERVER}/api/blogs/${blogData._id}`, payload);
+        await axios.put(`${process.env.REACT_APP_SERVER}/api/updateblog?blogId=${blogData._id}`, payload);
         setSuccessMessage('Blog updated successfully');
       } else {
         await axios.post(`${process.env.REACT_APP_SERVER}/api/blogs`, payload);

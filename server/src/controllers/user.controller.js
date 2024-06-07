@@ -150,7 +150,7 @@ const Subscribe = async (req, res) => {
     const newSubscription = new Subscription({ email });
     await newSubscription.save();
 
-    await sendEmail(email, 'Welcome to RealBabStore', 'Thank you for subscribing to our newsletter!');
+    await sendEmail(email, 'Welcome to Reehla\'s Outfitters and Fragrance', 'Thank you for subscribing to our newsletter!');
 
     res.status(201).json({ message: 'Subscription successful' });
   } catch (error) {
@@ -159,8 +159,8 @@ const Subscribe = async (req, res) => {
   }
 };
 const sendMessageToSubscribers = async (req, res) => {
-  const { subject, message, attachment } = req.body;
-
+  const { subject, message } = req.body;
+let {imageUrl} = ""
   if (!subject || !message) {
     return res.status(400).json({ message: 'Subject and message are required' });
   }
@@ -171,7 +171,7 @@ const sendMessageToSubscribers = async (req, res) => {
       return res.status(200).json({ message: 'No subscribers to send messages to' });
     }
 
-    if (attachment) {
+    if (req.file) {
       let emailPromises;
       
       // Check if the attachment is a file

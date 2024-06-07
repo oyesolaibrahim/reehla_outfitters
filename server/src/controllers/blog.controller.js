@@ -61,7 +61,7 @@ const editBlogPage = (req, res) => {
 const updateBlog = async (req, res) => {
   const { blogId } = req.query;
   const { subject, message } = req.body;
-  let { imageUrl } = req.body;
+  let { imageUrl } = "";
 
   try {
       if (!blogId || !message ){
@@ -77,7 +77,7 @@ const updateBlog = async (req, res) => {
 
       return res.status(200).json({ message: "Blog Updated Successfully" });
   } catch (error) {
-      console.error("Error updating brand:", error);
+      console.error("Error updating blog:", error);
       return res.status(500).json({ message: "Server error", error: error.message });
   }
 };

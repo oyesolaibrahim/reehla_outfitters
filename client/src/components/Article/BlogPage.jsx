@@ -6,7 +6,6 @@ import Footer from '../Footer/Footer';
 
 const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
-
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -19,7 +18,6 @@ const BlogPage = () => {
 
     fetchBlogs();
   }, []);
-
   return (
     <>
     <Header/>
