@@ -56,16 +56,21 @@ const NewArrivalsForm = ({ arrivalData }) => {
                 imageUrl = await getDownloadURL(snapshot.ref);
             }
 
-            const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/newarrival`, {
+            const postData = {
                 productName: formData.productName,
                 category: formData.category,
                 description: formData.description,
                 price: formData.price,
                 oldPrice: formData.oldPrice,
                 imageUrl: imageUrl,
-            });
+            };
 
-            console.log(response.data);
+            // Post to the first endpoint
+            await axios.post(`${process.env.REACT_APP_SERVER}/api/newarrival`, postData);
+
+            // Post to the second endpoint
+            await axios.post(`${process.env.REACT_APP_SERVER}/api/jalab`, postData);
+
             setFormData({
                 productName: '',
                 category: 'Male',
@@ -85,30 +90,36 @@ const NewArrivalsForm = ({ arrivalData }) => {
             setSubmitting(false);
         }
     };
+
     const handleUpdate = async (e) => {
         e.preventDefault();
         setSubmitting(true);
-    
+
         try {
             let imageUrl = formData.imageUrl;
-    
+
             if (formData.imageFile) {
                 const file = formData.imageFile;
                 const storageRef = ref(storage, `images/${file.name}`);
                 const snapshot = await uploadBytes(storageRef, file);
                 imageUrl = await getDownloadURL(snapshot.ref);
             }
-    
-            const response = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatearrival?arrivalId=${arrivalData._id}`, {
+
+            const updateData = {
                 productName: formData.productName,
                 category: formData.category,
                 description: formData.description,
                 price: formData.price,
                 oldPrice: formData.oldPrice,
                 imageUrl: imageUrl,
-            });
-    
-            console.log(response.data);
+            };
+
+            // Update the first endpoint
+            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatearrival?arrivalId=${arrivalData._id}`, updateData);
+
+            // Update the second endpoint
+            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesinglejalab?jalabId=${arrivalData._id}`, updateData);
+
             setSuccessfulMsg("Updated Successfully");
             setError('');
         } catch (error) {
@@ -119,12 +130,11 @@ const NewArrivalsForm = ({ arrivalData }) => {
             setSubmitting(false);
         }
     };
-    
 
     const location = useLocation();
 
     return (
-        <form className='bg-yellow-100 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={handleSubmit}>
+        <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 xs:ml-0' onSubmit={handleSubmit}>
             <label>
                 <input
                     className='w-full mb-5 p-3 rounded-lg'
@@ -208,15 +218,15 @@ const NewArrivalsForm = ({ arrivalData }) => {
             </label>
             <br />
             
-        {location.pathname === "/" ? (
-          <button onClick={handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-            {submitting ? 'Submitting...' : 'Submit'}
-          </button>
-        ) : (
-          <button onClick={handleUpdate} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-            {submitting ? 'Updating...' : 'Update'}
-          </button>
-        )}
+            {location.pathname === "/" ? (
+                <button onClick={handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+                    {submitting ? 'Submitting...' : 'Submit'}
+                </button>
+            ) : (
+                <button onClick={handleUpdate} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+                    {submitting ? 'Updating...' : 'Update'}
+                </button>
+            )}
             {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}
             {successfulMsg && <p className='bg-green-600 w-1/2 text-white mt-5 rounded-lg py-3 px-5'>{successfulMsg}</p>}
         </form>

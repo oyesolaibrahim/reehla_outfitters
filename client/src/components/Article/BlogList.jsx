@@ -50,16 +50,19 @@ const BlogList = ({ blogs }) => {
           <div key={blog.id} className="bg-red-200 py-10 my-8 flex items-start xs:flex-col sm:flex-row sm:space-x-20">
               <img src={blog.imageUrl} alt="Blog" className="sm:w-1/3 xs:w-full px-3 xs:mb-10" />
             <div>
+            <div>
               <h3 className="text-xl font-semibold xs:flex xs:justify-center mb-2 xs:mx-auto xs:text-center">{blog.subject}</h3>
               <p className="text-gray-600 xs:px-3 xs:text-center">{blog.message}</p>
             </div>
             {adminToken && (
-              <div className='pl-0 space-x-5 py-3 xs:mx-auto'>
+              <div className='flex justify-center space-x-5 py-3 mx-auto'>
                 <button onClick={() => removeBlog(blog._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-5 xs:py-2" type="button">Remove Blog</button>
                 <Link to={`/edit/${blog._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-5 xs:py-2" type="button">Edit Blog</button></Link>
               </div>
             )
-            }
+          }
+            </div>
+            
           </div>
         ))}
       </div>

@@ -1,46 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../Firebase';
 
-const AddFragranceForm = ({ jalabData }) => {
+const AddFragranceForm = ({ fragranceData }) => {
   const [formData, setFormData] = useState({
-    name: '',
+    productName: '',
     category: 'Male',
-    imageFile: null, 
-    imageUrl: '',
     description: '',
     price: '',
-    oldPrice: ''
+    oldPrice: '',
+    imageUrl: '',
+    imageFile: null,
+    brandName: '' 
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [successfulMsg, setSuccessfulMsg] = useState('');
-  const location = useLocation();
 
   useEffect(() => {
-    if (jalabData) {
+    if (fragranceData) {
       setFormData({
-        name: jalabData.name || '',
-        description: jalabData.description || '',
-        price: jalabData.price || '',
-        oldPrice: jalabData.oldPrice || '',
-        imageUrl: jalabData.imageUrl || '',
-        category: jalabData.category || 'Male'
+        productName: fragranceData.productName || '',
+        category: fragranceData.category || 'Male',
+        description: fragranceData.description || '',
+        price: fragranceData.price || '',
+        oldPrice: fragranceData.oldPrice || '',
+        imageUrl: fragranceData.imageUrl || '',
+        imageFile: null,
+        brandName: fragranceData.brandName || '' 
       });
     }
-  }, [jalabData]);
+  }, [fragranceData]);
 
-  const isEditPage = location.pathname.includes("/edit");
-  console.log (isEditPage)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, imageFile: e.target.files[0] });
+    const file = e.target.files[0];
+    setFormData({ ...formData, imageFile: file, imageUrl: '' }); // Clear imageUrl when a file is selected
   };
 
   const handleSubmit = async (e) => {
@@ -48,7 +49,7 @@ const AddFragranceForm = ({ jalabData }) => {
     setSubmitting(true);
 
     try {
-      let imageUrl = '';
+      let imageUrl = formData.imageUrl;
 
       if (formData.imageFile) {
         const file = formData.imageFile;
@@ -57,26 +58,38 @@ const AddFragranceForm = ({ jalabData }) => {
         imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      const result = await axios.post(`${process.env.REACT_APP_SERVER}/api/jalab`, {
-        ...formData,
-        imageUrl
-      });
-      
+      const postData = {
+        productName: formData.productName,
+        category: formData.category,
+        description: formData.description,
+        price: formData.price,
+        oldPrice: formData.oldPrice,
+        imageUrl: imageUrl,
+        brandName: formData.brandName // Include brandName in post data
+      };
+
+      // Post to first collection
+      await axios.post(`${process.env.REACT_APP_SERVER}/api/fragrance`, postData);
+
+      // Post to second collection
+      await axios.post(`${process.env.REACT_APP_SERVER}/api/secondcollection`, postData);
+
       setFormData({
-        name: '',
-        imageFile: null,
-        imageUrl: '',
+        productName: '',
         category: 'Male',
         description: '',
         price: '',
-        oldPrice: ''
+        oldPrice: '',
+        imageUrl: '',
+        imageFile: null,
+        brandName: '' // Reset brandName field
       });
-      setError('');
       setSuccessfulMsg("Added Successfully");
+      setError('');
     } catch (error) {
-      console.error('Error adding Jalab:', error.message);
-      setError('Error adding Jalab. Please try again later.');
-      setSuccessfulMsg("");
+      console.error('Error adding fragrance:', error.message);
+      setSuccessfulMsg('');
+      setError('Error adding fragrance. Please try again later.');
     } finally {
       setSubmitting(false);
     }
@@ -96,56 +109,80 @@ const AddFragranceForm = ({ jalabData }) => {
         imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      const result = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesinglejalab?jalabId=${jalabData._id}`, {
-        ...formData,
-        imageUrl
-      });
+      const postData = {
+        productName: formData.productName,
+        category: formData.category,
+        description: formData.description,
+        price: formData.price,
+        oldPrice: formData.oldPrice,
+        imageUrl: imageUrl,
+        brandName: formData.brandName // Include brandName in update data
+      };
+
+      // Update first collection
+      await axios.put(`${process.env.REACT_APP_SERVER}/api/updatefragrance?fragranceId=${fragranceData._id}`, postData);
+
+      // Update second collection
+      await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesecondcollection?fragranceId=${fragranceData._id}`, postData);
 
       setSuccessfulMsg("Updated Successfully");
       setError('');
     } catch (error) {
-      console.error('Error updating Jalab:', error.message);
-      setError('Error updating Jalab. Please try again later.');
-      setSuccessfulMsg("");
+      console.error('Error updating fragrance:', error.message);
+      setSuccessfulMsg('');
+      setError('Error updating fragrance. Please try again later.');
     } finally {
       setSubmitting(false);
     }
   };
 
+  const location = useLocation();
+
   return (
-    <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={isEditPage ? handleUpdate : handleSubmit}>
+    <form className='bg-yellow-100 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/add-fragrance" ? handleSubmit : handleUpdate}>
       <label>
-        Name of Jalab:
         <input
           className='w-full mb-5 p-3 rounded-lg'
-          placeholder='Name of Jalab'
+          placeholder='Name of Fragrance'
           type="text"
-          name="name"
-          value={formData.name}
+          name="productName"
+          value={formData.productName}
           onChange={handleChange}
           required
         />
       </label>
       <br />
       <label>
-        Upload Image:
+        Brand Name: {/* Added brandName input field */}
+        <input
+          className='w-full mb-5 p-3 rounded-lg'
+          placeholder='Brand Name'
+          type="text"
+          name="brandName"
+          value={formData.brandName}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <br />
+      <label>
+        Image URL or Upload Image:
+        <input
+          className='w-full mb-5 p-3 rounded-lg'
+          placeholder='Image URL'
+          type="text"
+          name="imageUrl"
+          value={formData.imageUrl}
+          onChange={handleChange}
+        />
+      </label>
+      <br />
+      <label>
         <input
           className='w-full mb-5 p-3 rounded-lg'
           type="file"
           onChange={handleFileChange}
           accept="image/*"
-        />
-      </label>
-      <br />
-      <label>
-        or Enter Image URL:
-        <input
-          className='w-full mb-5 p-3 rounded-lg'
-          type="text"
-          name="imageUrl"
-          placeholder='Image URL'
-          value={formData.imageUrl}
-          onChange={handleChange}
         />
       </label>
       <br />
@@ -165,10 +202,9 @@ const AddFragranceForm = ({ jalabData }) => {
       </label>
       <br />
       <label>
-        Description of Jalab:
         <textarea
           className='w-full mb-5 p-3 rounded-lg'
-          placeholder='Description of Jalab'
+          placeholder='Description of Fragrance'
           name="description"
           value={formData.description}
           onChange={handleChange}
@@ -177,10 +213,9 @@ const AddFragranceForm = ({ jalabData }) => {
       </label>
       <br />
       <label>
-        Price of Jalab:
         <input
           className='w-full mb-5 p-3 rounded-lg'
-          placeholder='Price of Jalab'
+          placeholder='Price of Fragrance'
           type="number"
           name="price"
           value={formData.price}
@@ -190,10 +225,9 @@ const AddFragranceForm = ({ jalabData }) => {
       </label>
       <br />
       <label>
-        Old Price:
         <input
           className='w-full mb-5 p-3 rounded-lg'
-          placeholder='Old Price'
+          placeholder='Old Price of Fragrance'
           type="number"
           name="oldPrice"
           value={formData.oldPrice}
@@ -202,10 +236,15 @@ const AddFragranceForm = ({ jalabData }) => {
       </label>
       <br />
       
-      <button className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-        {submitting ? (isEditPage ? 'Updating...' : 'Submitting...') : (isEditPage ? 'Update' : 'Submit')}
-      </button>
-      
+      {location.pathname === "/add-fragrance" ? (
+        <button onClick={handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+          {submitting ? 'Submitting...' : 'Submit'}
+        </button>
+      ) : (
+        <button onClick={handleUpdate} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+          {submitting ? 'Updating...' : 'Update'}
+        </button>
+      )}
       {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}
       {successfulMsg && <p className='bg-green-600 w-1/2 text-white mt-5 rounded-lg py-3 px-5'>{successfulMsg}</p>}
     </form>

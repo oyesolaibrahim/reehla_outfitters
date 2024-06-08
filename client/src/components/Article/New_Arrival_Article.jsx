@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import NewArrivalsForm from "../Home/New_Arrivals_Form";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../Firebase";
+import ArrivalsFragranceForm from "../Fragrances/Forms/ArrivalForm";
 
 const New_Arrival_Article = () => {
     const [objects, setObjects] = useState([]);
@@ -111,7 +112,12 @@ const New_Arrival_Article = () => {
                     <button onClick={handleClearBrand} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
                 </div>
             )}
-            {adminToken && <NewArrivalsForm />}
+            {adminToken &&
+            <div className="flex md:justify-between xs:flex xs:flex-col xs:space-y-5 md:mx-10">
+                <NewArrivalsForm />
+                <ArrivalsFragranceForm/>
+            </div>
+            }
         </>
     );
 };

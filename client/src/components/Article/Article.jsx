@@ -3,6 +3,7 @@ import axios from "axios";
 import BestForm from "../Home/BestForm";
 import Swal from 'sweetalert2';
 import { Link } from "react-router-dom";
+import BestFragranceForm from "../Fragrances/Forms/Best";
 
 const Article = () => {
     const [objects, setObjects] = useState([]);
@@ -100,7 +101,12 @@ const Article = () => {
                     <button onClick={handleClearBestSellers} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
                 </div>
             )} 
-            {adminToken && <BestForm />}
+            {adminToken &&
+            <div className="flex md:justify-between xs:flex xs:flex-col xs:space-y-5 md:mx-10">
+                <BestForm />
+                <BestFragranceForm/>
+            </div>  
+            }
         </>
     );
 };

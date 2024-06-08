@@ -58,16 +58,21 @@ const BestForm = ({ bestSellerData }) => {
         imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/bestseller`, {
+      const postData = {
         productName: formData.productName,
         category: formData.category,
         description: formData.description,
         price: formData.price,
         oldPrice: formData.oldPrice,
         imageUrl: imageUrl,
-      });
+      };
 
-      console.log(response.data);
+      // Post to the first collection
+      await axios.post(`${process.env.REACT_APP_SERVER}/api/jalab`, postData);
+
+      // Post to the second collection
+      await axios.post(`${process.env.REACT_APP_SERVER}/api/bestseller`, postData);
+
       setFormData({
         productName: '',
         category: 'Male',
@@ -102,16 +107,21 @@ const BestForm = ({ bestSellerData }) => {
         imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      const response = await axios.put(`${process.env.REACT_APP_SERVER}/api/updatebestseller?bestSellerId=${bestSellerData._id}`, {
+      const postData = {
         productName: formData.productName,
         category: formData.category,
         description: formData.description,
         price: formData.price,
         oldPrice: formData.oldPrice,
         imageUrl: imageUrl,
-      });
+      };
 
-      console.log(response.data);
+      // Update the first collection
+      await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesinglejalab?jalabId=${bestSellerData._id}`, postData);
+
+      // Update the second collection
+      await axios.put(`${process.env.REACT_APP_SERVER}/api/updatebestseller?bestSellerId=${bestSellerData._id}`, postData);
+
       setSuccessfulMsg("Updated Successfully");
     } catch (error) {
       console.error('Error updating best seller:', error.message);
@@ -124,7 +134,7 @@ const BestForm = ({ bestSellerData }) => {
   const location = useLocation();
 
   return (
-    <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/" ? handleSubmit : handleUpdate}>
+    <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 xs:ml-0' onSubmit={location.pathname === "/add-jalab" ? handleSubmit : handleUpdate}>
       <label>
         <input
           className='w-full mb-5 p-3 rounded-lg'
@@ -208,12 +218,12 @@ const BestForm = ({ bestSellerData }) => {
       </label>
       <br />
       
-      {location.pathname === "/" ? (
-        <button onClick={handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+      {location.pathname === "/add-jalab" ? (
+        <button className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
           {submitting ? 'Submitting...' : 'Submit'}
         </button>
       ) : (
-        <button onClick={handleUpdate} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+        <button className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
           {submitting ? 'Updating...' : 'Update'}
         </button>
       )}
