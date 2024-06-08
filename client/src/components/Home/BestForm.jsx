@@ -218,7 +218,7 @@ const BestForm = ({ bestSellerData }) => {
       </label>
       <br />
       
-      {location.pathname === "/add-jalab" ? (
+      {location.pathname === "/" ? (
         <button className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
           {submitting ? 'Submitting...' : 'Submit'}
         </button>
