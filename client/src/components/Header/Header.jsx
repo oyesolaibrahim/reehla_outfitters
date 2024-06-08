@@ -113,9 +113,15 @@ const Header = ({ myCarts = [] }) => {
                             <h3 className="xs:text-xs">Fragrances</h3>
                             <i className="fa fa-chevron-down cursor-pointer" aria-hidden="true" onClick={fragranceMenuDisplay}></i>
                             <div className={`sm:-z-10 xs:-z-10 absolute  transition-all duration-1000 animate-popUp  sm:top-10 xs:top-12 md:-right-36 sm:-left-16 xs:-left-5 rounded-lg bg-teal-900 sm:w-52 md:w-52 xs:w-36 py-3 px-5 text-gray-200 ${fragranceMenu ? "inline-block" : "hidden"}`}>
-                                <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Male</h3>
-                                <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Female</h3>
-                                <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Unisex</h3>
+                                <Link to="/male/fragrance">
+                                    <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Male</h3>
+                                </Link>
+                                <Link to="/female/fragrance">
+                                    <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Female</h3>
+                                </Link>
+                                <Link to="/unisex/fragrance">
+                                    <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Unisex</h3>
+                                </Link>
                             </div>
                         </div>
                     </div>

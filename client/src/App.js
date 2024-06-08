@@ -22,6 +22,9 @@ import Female from "./components/Jalabs/Female";
 import Children from "./components/Jalabs/Children";
 import BrandPage from "./components/Jalabs/Brand";
 import About from "./components/About/About";
+import MainMale from "./components/Fragrances/Main/Male";
+import MainFemale from "./components/Fragrances/Main/Female";
+import Unisex from "./components/Fragrances/Main/Unisex";
 
 function App() {
   const [jalabs, setJalabs] = useState([]); 
@@ -95,6 +98,9 @@ function App() {
           <Route path='/brand' element={<BrandPage />} />
           <Route path='/writeblog' element={<WritingBlogMessage />} />
           <Route path='/sendmessage' element={<SendMessagePage />} />
+          <Route path='/male/fragrance' element={<MainMale />} />
+          <Route path='/female/fragrance' element={<MainFemale />} />
+          <Route path='/unisex/fragrance' element={<Unisex />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>
