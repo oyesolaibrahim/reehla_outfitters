@@ -143,7 +143,7 @@ body {
   white-space: wrap;
 }
   }
-  @media screen and (max-height:700px) {
+  @media screen and (max-height:700px)and (max-width:400px) {
    .xsvhsp {
     max-height: 60vh;
     min-height: 60vh;

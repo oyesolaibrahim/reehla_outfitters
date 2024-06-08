@@ -11,7 +11,11 @@ const Header = ({ myCarts = [] }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const { cartValue, changeCartValue } = useCart();
     const adminToken = sessionStorage.getItem("adminToken");
-
+    const Token = sessionStorage.getItem("userToken");
+    const logout = () => {
+        sessionStorage.removeItem("adminToken") ||
+        sessionStorage.removeItem("userToken")
+    }
     useEffect(() => {}, [myCarts]);
 
     const jalabMenuDisplay = () => {
@@ -68,9 +72,13 @@ const Header = ({ myCarts = [] }) => {
                             <Link to="/signup">
                                 <h3 className="cursor-pointer font-bold xs:mb-6 sm:mb-5 md:mb-0 hover:rounded-lg hover:bg-amber-900 py-3 px-5 xs:-ml-5 lg:mr-3 md:mr-3 hover:text-white">Signup</h3>
                             </Link>
-                            <Link to="/login">
-                                <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-900 py-3 px-5 xs:-ml-5 text-white">Login</h3>
+                            <div>
+                             <Link to="/login">
+                                <h3 className={`cursor-pointer ${adminToken && "hidden"} ${Token && "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-900 py-3 px-5 xs:-ml-5 text-white`}>Login</h3>
+                                <h3 className={`cursor-pointer ${adminToken ? "inline-block" : "hidden"} ${Token ? "inline-block" : "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-900 py-3 px-5 xs:-ml-5 text-white`} onClick={logout}>Logout</h3>
                             </Link>
+
+                            </div>
                         </div>
                     </div>
                     <div className="flex sm:z-50 xs:absolute xs:top-5 sm:absolute xs:right-5 sm:right-5">
