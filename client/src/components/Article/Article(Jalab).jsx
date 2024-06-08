@@ -70,11 +70,11 @@ console.log(jalabs)
         {objects.map(jalab => (
           <article key={jalab._id} className={`bg-red-200 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
             <Link to={`/jalabs/${jalab._id}`} state={{ jalab }}>
-              <img className="xs:flex xs:p-3 xs:justify-center" src={jalab.imageUrl} alt="jalab-img"/>
+              <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={jalab.imageUrl} alt="jalab-img"/>
             </Link>
-            <div className="flex sm:justify-between md:justify-between xs:justify-center space-x-4 xs:py-5 mt-10">
-              <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-10 font-semibold sm:text-xl md:text-xl xs:text-xs">{jalab.name}</h3>
-              <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-10 font-semibold sm:text-xl md:text-xl xs:text-xs">₦{jalab.price}</h3>
+            <div className="flex lg:flex-row items-center justify-between xs:flex-col xs:space-y-3">
+              <h3 className="font-semibold xs:text-sm">{jalab.name}</h3>
+              <h3 className="font-semibold xs:text-sm">₦{jalab.price}</h3>
             </div>
             {adminToken && (
               <div className="flex lg:flex-row xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 my-3">
