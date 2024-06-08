@@ -9,12 +9,20 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const sendEmail = async (to, subject, text) => {
+const sendEmail = async (to, subject, text, imageUrl) => {
+  const htmlContent = `
+    <div>
+      <h2>${subject}</h2>
+      ${imageUrl ? `<img src="${imageUrl}" alt="Image" style="max-width: 100%; height: auto;" />` : ''}
+      <p>${text}</p>
+    </div>
+  `;
+
   const mailOptions = {
     from: "IB_Dan Tech",
     to,
     subject,
-    text
+    html: htmlContent
   };
 
   try {

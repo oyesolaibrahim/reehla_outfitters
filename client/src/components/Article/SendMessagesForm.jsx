@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../Firebase';
 
 const SendMessageForm = () => {
   const [subject, setSubject] = useState('');
@@ -19,17 +21,17 @@ const SendMessageForm = () => {
     setSending(true);
 
     try {
-      const formData = new FormData();
-      formData.append('subject', subject);
-      formData.append('message', message);
+      let imageUrl = '';
       if (attachment) {
-        formData.append('attachment', attachment);
+        const storageRef = ref(storage, `images/${attachment.name}`);
+        const snapshot = await uploadBytes(storageRef, attachment);
+        imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/send-messages`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/send-messages`, {
+        subject,
+        message,
+        imageUrl
       });
 
       setSuccessMessage('Message sent successfully');

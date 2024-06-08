@@ -14,6 +14,9 @@ const SubscriptionForm = () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/subscribe`, { email });
       setSuccessMessage('Subscription successful!');
+      setTimeout(() => {
+        setSuccessMessage("")
+      }, 1000)
       setError('');
       setEmail('');
     } catch (error) {
@@ -42,7 +45,7 @@ const SubscriptionForm = () => {
         {submitting ? 'Submitting...' : 'Subscribe'}
       </button>
       {error && <p className="text-red-600 font-extrabold bg-white px-3 py-2 rounded-lg">{error}</p>}
-      {successMessage && <p className="text-green-600 ml-4">{successMessage}</p>}
+      {successMessage && <p className="text-green-600 font-extrabold bg-white px-3 py-2 rounded-lg">{successMessage}</p>}
     </form>
   );
 };

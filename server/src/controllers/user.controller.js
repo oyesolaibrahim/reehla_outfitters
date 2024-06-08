@@ -159,8 +159,8 @@ const Subscribe = async (req, res) => {
   }
 };
 const sendMessageToSubscribers = async (req, res) => {
-  const { subject, message } = req.body;
-let {imageUrl} = ""
+  const { subject, message, imageUrl } = req.body;
+
   if (!subject || !message) {
     return res.status(400).json({ message: 'Subject and message are required' });
   }
@@ -171,33 +171,18 @@ let {imageUrl} = ""
       return res.status(200).json({ message: 'No subscribers to send messages to' });
     }
 
-    if (req.file) {
-      let emailPromises;
-      
-      // Check if the attachment is a file
-      if (attachment instanceof Buffer) {
-        // Attachment is a file buffer
-        emailPromises = subscribers.map(subscriber =>
-          sendEmailWithAttachment(subscriber.email, subject, message, attachment)
-        );
-      } else {
-        // Attachment is a URL, download the image and send it as an attachment
-        const response = await axios.get(attachment, { responseType: 'arraybuffer' });
-        const imageBuffer = Buffer.from(response.data, 'binary');
-        emailPromises = subscribers.map(subscriber =>
-          sendEmailWithAttachment(subscriber.email, subject, message, imageBuffer)
-        );
-      }
+    const emailPromises = subscribers.map(subscriber => 
+      sendEmail(subscriber.email, subject, message, imageUrl)
+    );
 
-      await Promise.all(emailPromises);
-    }
+    await Promise.all(emailPromises);
 
     res.status(200).json({ message: 'Messages sent successfully' });
   } catch (error) {
     console.error('Error sending messages:', error);
     res.status(500).json({ message: 'Error sending messages' });
   }
-};
+}
 const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY;
 
 const createPayment = async (req, res) => {

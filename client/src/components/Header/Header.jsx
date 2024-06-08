@@ -57,7 +57,7 @@ const Header = ({ myCarts = [] }) => {
                             <Link to="/">
                                 <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:px-0 sm:hover:text-amber-900 md:hover:text-white">Home</h3>
                             </Link>
-                            <Link to="">
+                            <Link to="/about">
                                 <h3 className="cursor-pointer min-w-32 font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:hover:text-amber-900 md:hover:text-white">About Us</h3>
                             </Link>
                             <Link to="/blog">

@@ -21,6 +21,7 @@ import SendMessagePage from "./components/Article/SendMessagePage";
 import Female from "./components/Jalabs/Female";
 import Children from "./components/Jalabs/Children";
 import BrandPage from "./components/Jalabs/Brand";
+import About from "./components/About/About";
 
 function App() {
   const [jalabs, setJalabs] = useState([]); 
@@ -77,6 +78,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
           <Route path='/signup' element={<UserSignUp />} />
           <Route path='/login' element={<UserLogin />} />
           <Route path='/admin/signup' element={<Admin_signUp />} />

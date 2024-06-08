@@ -185,7 +185,7 @@ const Checkout = ({ sessionId }) => {
                         </div>
                     )}
                     <div>
-                        <div className="bg-red-200 p-5 lg:fixed sm:mt-10 lg:w-1/5 md:justify-center sm:w-4/5 sm:mx-auto xs:mt-10 right-10 top-1/3 flex md:static md:mx-auto md:w-2/3 rounded-lg">
+                        <div className="bg-red-200 p-5 lg:fixed sm:mt-10 lg:w-1/5 md:justify-center sm:w-4/5 sm:mx-auto xs:mt-10 right-10 top-64 flex md:static md:mx-auto md:w-2/3 rounded-lg">
                             <div>
                                 <div className="mb-3">
                                     <h3 className="mb-3 font-extrabold">Order Summary</h3>

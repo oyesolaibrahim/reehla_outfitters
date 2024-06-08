@@ -143,3 +143,13 @@ body {
   white-space: wrap;
 }
   }
+  @media screen and (max-height:700px) {
+   .xsvhsp {
+    max-height: 60vh;
+    min-height: 60vh;
+  }
+  .xsvhs {
+    max-height: 45vh;
+    min-height: 45vh;
+  }
+  }

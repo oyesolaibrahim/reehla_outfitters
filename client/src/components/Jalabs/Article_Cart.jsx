@@ -135,7 +135,7 @@ const Article_Cart = ({ sessionId }) => {
           )}
           {myCarts.length > 0 && (
             <div className="xs:px-5 xs:pt-10 sm:pt-10 sm:px-5">
-              <div className="bg-red-200 p-5 lg:fixed md:w-1/3 lg:w-1/5 right-10 top-1/3 flex m-auto rounded-lg">
+              <div className="bg-red-200 p-5 lg:fixed md:w-1/3 lg:w-1/5 right-10 top-80 flex m-auto rounded-lg">
                 <div>
                   <div className="mb-3">
                     <h3 className="mb-3">CART SUMMARY</h3>

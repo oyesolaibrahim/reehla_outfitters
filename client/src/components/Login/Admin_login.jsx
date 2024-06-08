@@ -77,7 +77,7 @@ const AdminLogin = () => {
                 </div>
                 <div>
                            <div className="bg-red-200 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
-                        <form onSubmit={(e)=>Login(e)}>
+                        <form onSubmit={(e)=>Login(e)} className="mx-auto">
                           <i class="fa flex justify-center text-8xl fa-user-circle-o text-amber-800" aria-hidden="true"></i>
                             <div className="mb-10 pt-10 flex justify-center">
                                 <label htmlFor="email">

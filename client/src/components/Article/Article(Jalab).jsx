@@ -63,7 +63,7 @@ const Article_Jalab = ({ jalabs }) => {
   if (jalabs.length === 0) {
     return <div className="text-white ml-10">No jalabs available.</div>;
   }
-
+console.log(jalabs)
   return (
     <>
       <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">

@@ -9,24 +9,20 @@ import { storage } from "../Firebase";
 const FemaleArticle = ({ femaleJalabs }) => {
     const [objects, setObjects] = useState([]);
     const adminToken = sessionStorage.getItem("adminToken");
-
     useEffect(() => {
-        if (femaleJalabs) {
-            const fetchImages = async () => {
-                try {
-                    const brandsWithImages = await Promise.all(femaleJalabs.map(async (jalab) => {
-                        const imageUrl = await getDownloadURL(ref(storage, jalab.imageUrl));
-                        return { ...jalab, imageUrl };
-                    }));
-                    setObjects(brandsWithImages);
-                } catch (error) {
-                    console.log('Error fetching images:', error);
-                }
-            };
-            fetchImages();
-        }
-    }, [femaleJalabs]);
-
+        const fetchJalabs = async () => {
+          try {
+            const [jalabsResponse] = await Promise.all([
+              axios.get(`${process.env.REACT_APP_SERVER}/api/femalejalab`),
+            ]);
+            setObjects(jalabsResponse.data.jalabs);
+            console.log(objects)
+          } catch (error) {
+            console.error('Error fetching jalabs:', error.message);
+          }
+        };
+        fetchJalabs();
+      }, []);
     const removeJalab = async (jalabId) => {
         try {
             const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletesinglemalejalab?jalabId=${jalabId}`);

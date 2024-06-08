@@ -32,8 +32,8 @@ const AddJalabsForm = ({ jalabData }) => {
     }
   }, [jalabData]);
 
-  const isEditPage = location.pathname === "/edit/:id";
-
+  const isEditPage = location.pathname.includes("/edit");
+  console.log (isEditPage)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

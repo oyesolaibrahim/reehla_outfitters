@@ -71,13 +71,13 @@ const UserLogin = () => {
     return (
         <>
             <Header/>
-            <main className="bg-gray-700 py-10 xs:h-full">
+            <main className="bg-gray-700 min-h-screen py-10 xs:h-full">
                 <h3 className="error"></h3>
                 <div className="text-white md:mb-24 xs:pt-10 sm:mb-10">
                 </div>
                 <div>
                       <div className="bg-red-200 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
-                        <form onSubmit={(e)=>Login(e)}>
+                        <form onSubmit={(e)=>Login(e)} className="mx-auto">
                             <i class="fa flex justify-center text-8xl fa-user-circle-o text-amber-800" aria-hidden="true"></i>
                             <div className="mb-10 flex justify-center pt-10">
                                 <label htmlFor="email">

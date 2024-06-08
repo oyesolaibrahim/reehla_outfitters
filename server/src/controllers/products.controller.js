@@ -325,13 +325,13 @@ const getFromBestSeller_Jalab = async (req, res) => {
         .catch(error => {
             res.status(404).json({ message: "Failed to get Jalab to New Arrival", error });
         });
-};
+}; 
 const getMaleJalab = (req, res) => {
     Jalabs.find({ category: 'Male' })
         .then((jalabs) => {
             const maleJalabsWithImageUrls = jalabs.map((item) => ({
                 ...item._doc,
-                imageUrl: ``,
+                imageUrl: item.imageUrl,
             }));
             res.status(200).json({ message: "Male Jalabs gotten successfully", jalabs: maleJalabsWithImageUrls });
         })
@@ -344,7 +344,7 @@ const getFemaleJalab = (req, res) => {
         .then((jalabs) => {
             const femaleJalabsWithImageUrls = jalabs.map((item) => ({
                 ...item._doc,
-                imageUrl: `https://firebasestorage.googleapis.com/v0/b/${process.env.FIREBASE_STORAGE_BUCKET}/o/images%2F${encodeURIComponent(item.imageUrl)}?alt=media`,
+                imageUrl: item.imageUrl,
             }));
             res.status(200).json({ message: "Female Jalabs gotten successfully", jalabs: femaleJalabsWithImageUrls });
         })
@@ -357,7 +357,7 @@ const getChildrenJalab = (req, res) => {
         .then((jalabs) => {
             const childrenJalabsWithImageUrls = jalabs.map((item) => ({
                 ...item._doc,
-                imageUrl: `https://firebasestorage.googleapis.com/v0/b/${process.env.FIREBASE_STORAGE_BUCKET}/o/images%2F${encodeURIComponent(item.imageUrl)}?alt=media`,
+                imageUrl: item.imageUrl,
             }));
             res.status(200).json({ message: "Children Jalabs gotten successfully", jalabs: childrenJalabsWithImageUrls });
         })
