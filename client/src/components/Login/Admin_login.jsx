@@ -71,7 +71,7 @@ const AdminLogin = () => {
     return (
         <>
             <Header/>
-            <main className="bg-gray-700 pb-16">
+            <main className="bg-gray-700 min-h-screen pb-16">
                 <div className="py-10 text-white">
                     <h2 className="flex sm:text-6xl justify-center">Admin Login</h2>
                 </div>

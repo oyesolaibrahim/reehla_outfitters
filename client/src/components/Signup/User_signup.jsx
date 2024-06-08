@@ -65,7 +65,7 @@ const UserSignUp = () => {
     return (
         <>
             <Header/>
-            <main className="bg-gray-700 py-10">
+            <main className="bg-gray-700 min-h-screen py-10">
                 <h3 className="error"></h3>
                 <div className="text-white md:mb-24 xs:pt-10 xs:mb-10">
                 </div>
