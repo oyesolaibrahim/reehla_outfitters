@@ -13,6 +13,7 @@ const NewArrivalsForm = ({ arrivalData }) => {
         oldPrice: '',
         imageUrl: '',
         imageFile: null,
+        size: '' // Add the size field
     });
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -28,6 +29,7 @@ const NewArrivalsForm = ({ arrivalData }) => {
                 oldPrice: arrivalData.oldPrice || '',
                 imageUrl: arrivalData.imageUrl || '',
                 imageFile: null,
+                size: arrivalData.size || '' // Update size field from arrivalData
             });
         }
     }, [arrivalData]);
@@ -39,7 +41,7 @@ const NewArrivalsForm = ({ arrivalData }) => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setFormData({ ...formData, imageFile: file, imageUrl: '' }); // Clear imageUrl when a file is selected
+        setFormData({ ...formData, imageFile: file, imageUrl: '' }); // Clear imageUrl when a new file is selected
     };
 
     const handleSubmit = async (e) => {
@@ -50,26 +52,15 @@ const NewArrivalsForm = ({ arrivalData }) => {
             let imageUrl = formData.imageUrl;
 
             if (formData.imageFile) {
-                const file = formData.imageFile;
-                const storageRef = ref(storage, `images/${file.name}`);
-                const snapshot = await uploadBytes(storageRef, file);
+                const storageRef = ref(storage, `images/${formData.imageFile.name}`);
+                const snapshot = await uploadBytes(storageRef, formData.imageFile);
                 imageUrl = await getDownloadURL(snapshot.ref);
             }
 
-            const postData = {
-                productName: formData.productName,
-                category: formData.category,
-                description: formData.description,
-                price: formData.price,
-                oldPrice: formData.oldPrice,
-                imageUrl: imageUrl,
-            };
-
-            // Post to the first endpoint
-            await axios.post(`${process.env.REACT_APP_SERVER}/api/newarrival`, postData);
-
-            // Post to the second endpoint
-            await axios.post(`${process.env.REACT_APP_SERVER}/api/jalab`, postData);
+            await axios.post(`${process.env.REACT_APP_SERVER}/api/arrivals`, {
+                ...formData,
+                imageUrl
+            });
 
             setFormData({
                 productName: '',
@@ -79,12 +70,12 @@ const NewArrivalsForm = ({ arrivalData }) => {
                 oldPrice: '',
                 imageUrl: '',
                 imageFile: null,
+                size: '' // Reset the size field
             });
-            setSuccessfulMsg("Added Successfully");
             setError('');
+            setSuccessfulMsg('New Arrival added successfully!');
         } catch (error) {
             console.error('Error adding new arrival:', error.message);
-            setSuccessfulMsg('');
             setError('Error adding new arrival. Please try again later.');
         } finally {
             setSubmitting(false);
@@ -99,72 +90,41 @@ const NewArrivalsForm = ({ arrivalData }) => {
             let imageUrl = formData.imageUrl;
 
             if (formData.imageFile) {
-                const file = formData.imageFile;
-                const storageRef = ref(storage, `images/${file.name}`);
-                const snapshot = await uploadBytes(storageRef, file);
+                const storageRef = ref(storage, `images/${formData.imageFile.name}`);
+                const snapshot = await uploadBytes(storageRef, formData.imageFile);
                 imageUrl = await getDownloadURL(snapshot.ref);
             }
 
-            const updateData = {
-                productName: formData.productName,
-                category: formData.category,
-                description: formData.description,
-                price: formData.price,
-                oldPrice: formData.oldPrice,
-                imageUrl: imageUrl,
-            };
+            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesinglearrival?arrivalId=${arrivalData._id}`, {
+                ...formData,
+                imageUrl
+            });
 
-            // Update the first endpoint
-            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatearrival?arrivalId=${arrivalData._id}`, updateData);
-
-            // Update the second endpoint
-            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesinglejalab?jalabId=${arrivalData._id}`, updateData);
-
-            setSuccessfulMsg("Updated Successfully");
+            setSuccessfulMsg('New Arrival updated successfully!');
             setError('');
         } catch (error) {
-            console.error('Error updating arrival:', error.message);
-            setSuccessfulMsg('');
-            setError('Error updating arrival. Please try again later.');
+            console.error('Error updating new arrival:', error.message);
+            setError('Error updating new arrival. Please try again later.');
         } finally {
             setSubmitting(false);
         }
     };
 
     const location = useLocation();
+    const isEditPage = location.pathname.includes('/edit');
 
     return (
-        <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 xs:ml-0' onSubmit={handleSubmit}>
+        <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={isEditPage ? handleUpdate : handleSubmit}>
             <label>
+                Product Name:
                 <input
                     className='w-full mb-5 p-3 rounded-lg'
-                    placeholder='Name of Jalab'
+                    placeholder='Product Name'
                     type="text"
                     name="productName"
                     value={formData.productName}
                     onChange={handleChange}
                     required
-                />
-            </label>
-            <br />
-            <label>
-                Image URL or Upload Image:
-                <input
-                    className='w-full mb-5 p-3 rounded-lg'
-                    placeholder='Image URL'
-                    type="text"
-                    name="imageUrl"
-                    value={formData.imageUrl}
-                    onChange={handleChange}
-                />
-            </label>
-            <br />
-            <label>
-                <input
-                    className='w-full mb-5 p-3 rounded-lg'
-                    type="file"
-                    onChange={handleFileChange}
-                    accept="image/*"
                 />
             </label>
             <br />
@@ -184,9 +144,10 @@ const NewArrivalsForm = ({ arrivalData }) => {
             </label>
             <br />
             <label>
+                Description:
                 <textarea
                     className='w-full mb-5 p-3 rounded-lg'
-                    placeholder='Description of Jalab'
+                    placeholder='Description'
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
@@ -195,9 +156,10 @@ const NewArrivalsForm = ({ arrivalData }) => {
             </label>
             <br />
             <label>
+                Price:
                 <input
                     className='w-full mb-5 p-3 rounded-lg'
-                    placeholder='Price of Jalab'
+                    placeholder='Price'
                     type="number"
                     name="price"
                     value={formData.price}
@@ -207,9 +169,10 @@ const NewArrivalsForm = ({ arrivalData }) => {
             </label>
             <br />
             <label>
+                Old Price:
                 <input
                     className='w-full mb-5 p-3 rounded-lg'
-                    placeholder='Old Price of Jalab'
+                    placeholder='Old Price'
                     type="number"
                     name="oldPrice"
                     value={formData.oldPrice}
@@ -217,16 +180,46 @@ const NewArrivalsForm = ({ arrivalData }) => {
                 />
             </label>
             <br />
-            
-            {location.pathname === "/" ? (
-                <button onClick={handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-                    {submitting ? 'Submitting...' : 'Submit'}
-                </button>
-            ) : (
-                <button onClick={handleUpdate} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-                    {submitting ? 'Updating...' : 'Update'}
-                </button>
-            )}
+            <label>
+                Size:
+                <input
+                    className='w-full mb-5 p-3 rounded-lg'
+                    placeholder='Size'
+                    type="number"
+                    name="size"
+                    value={formData.size}
+                    onChange={handleChange}
+                    required
+                />
+            </label>
+            <br />
+            <label>
+                Image URL:
+                <input
+                    className='w-full mb-5 p-3 rounded-lg'
+                    type="text"
+                    name="imageUrl"
+                    placeholder='Image URL'
+                    value={formData.imageUrl}
+                    onChange={handleChange}
+                    required={!formData.imageFile} // Only required if imageFile is not set
+                />
+            </label>
+            <br />
+            <label>
+                Or Upload Image:
+                <input
+                    className='w-full mb-5 p-3 rounded-lg'
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    required={!formData.imageUrl} // Only required if imageUrl is not set
+                />
+            </label>
+            <br />
+            <button className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+                {submitting ? (isEditPage ? 'Updating...' : 'Submitting...') : (isEditPage ? 'Update' : 'Submit')}
+            </button>
             {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}
             {successfulMsg && <p className='bg-green-600 w-1/2 text-white mt-5 rounded-lg py-3 px-5'>{successfulMsg}</p>}
         </form>

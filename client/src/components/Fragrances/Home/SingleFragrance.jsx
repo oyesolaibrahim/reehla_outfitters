@@ -14,7 +14,7 @@ const Single_Fragrance = ({ sessionId }) => {
     const [successfulMessage, setSuccessfulMessage] = useState("");
     const [quantity, setQuantity] = useState(1);
     const location = useLocation();
-    const { fragrance, object } = location.state || {};
+    const { fragrance, object, brand } = location.state || {};
     const [totalPrice, setTotalPrice] = useState(fragrance?.price || object?.price || 0);
     const [pricePerQuantity, setPricePerQuantity] = useState(fragrance?.price || object?.price || 0);
     const [imageUrl, setImageUrl] = useState("");

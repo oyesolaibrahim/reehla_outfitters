@@ -6,6 +6,7 @@ const bestSellersSchema = new mongoose.Schema({
     category: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
+    size: { type: Number, required: true },
     oldPrice: { type: Number, required: true },
 }, { timestamps: true });
 

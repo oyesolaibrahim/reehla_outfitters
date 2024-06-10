@@ -165,7 +165,6 @@ app.put("/api/updatebrand", upload.single("imageFile"), updateBrand);
 app.put("/api/updatearrival", upload.single("imageFile"), updateArrival);
 app.put("/api/updatebestseller", upload.single("imageFile"), updateBestSeller);
 app.put("/api/updatesinglejalab", upload.single("imageFile"), updatesinglejalab);
-app.put("/api/updatesinglejalab", upload.single("imageFile"), updatesinglejalab);
 app.put("/api/updateblog", upload.single("imageFile"), updateBlog);
 app.put("/api/updatebestfragrance", upload.single("imageFile"), updateBestFragrance);
 app.put("/api/updatearrivalfragrance", upload.single("imageFile"), updateArrivalFragrance);

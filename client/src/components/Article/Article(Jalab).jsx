@@ -73,7 +73,7 @@ console.log(jalabs)
               <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={jalab.imageUrl} alt="jalab-img"/>
             </Link>
             <div className="flex lg:flex-row items-center justify-between xs:flex-col xs:space-y-3">
-              <h3 className="font-semibold xs:text-sm">{jalab.name}</h3>
+              <h3 className="font-semibold xs:text-sm">{jalab.name}<span className="text-xl font-normal mt-1">({jalab?.size || 52})</span></h3>
               <h3 className="font-semibold xs:text-sm">₦{jalab.price}</h3>
             </div>
             {adminToken && (

@@ -70,7 +70,7 @@ const Best_Article = () => {
             <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
                 {loading ? (
                     <div className="flex justify-center items-center w-full h-full">
-                        <i className="fas fa-spinner fa-spin text-4xl"></i>
+                        <i className="fas fa-spinner text-white fa-spin text-4xl"></i>
                     </div>
                 ) : (
                     objects?.map(object => (

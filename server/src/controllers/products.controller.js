@@ -135,11 +135,11 @@ const createToArrivalFragrance = async(req, res) => {
 }
 
 const createJalab = async(req, res) => {
-    const { name, description, category, price, oldPrice } = req.body;
+    const { name, description, size, category, price, oldPrice } = req.body;
 
     try {
         // Validate required fields
-        if (!name || !price || !oldPrice || !description || !category) {
+        if (!name || !price || !oldPrice || !size || !description || !category) {
             return res.status(400).json({ message: "One or more required fields are missing" });
         }
 
@@ -163,7 +163,8 @@ const createJalab = async(req, res) => {
             category,
             price,
             oldPrice,
-            imageUrl
+            imageUrl,
+            size
         };
 
         const savedJalab = await Jalabs.create(jalabData);
@@ -210,10 +211,10 @@ const jalabsToCart = async (req, res) => {
         const cart = new Cart(cartDetails);
         await cart.save();
 
-        res.status(200).json({ message: "Jalab added to cart successfully", cart });
+        res.status(200).json({ message: "Product added to cart successfully", cart });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Failed to add jalab to cart", error });
+        res.status(500).json({ message: "Failed to add Product to cart", error });
     }
 };
 
@@ -300,11 +301,11 @@ const createToTopBrand = async (req, res) => {
     }
 };
 const createToNewArrival_Jalab = async (req, res) => {
-    const { productName, description, category, price, oldPrice } = req.body;
+    const { productName, description, size, category, price, oldPrice } = req.body;
 
     try {
         // Validate required fields
-        if (!productName || !price || !oldPrice || !description || !category) {
+        if (!productName || !price || !oldPrice || !size || !description || !category) {
             return res.status(400).json({ message: "One or more required fields are missing" });
         }
 
@@ -328,6 +329,7 @@ const createToNewArrival_Jalab = async (req, res) => {
             category,
             price,
             oldPrice,
+            size,
             imageUrl
         };
 
@@ -341,11 +343,11 @@ const createToNewArrival_Jalab = async (req, res) => {
 };
 
 const createToBestSeller_Jalab = async (req, res) => {
-    const { productName, description, category, price, oldPrice } = req.body;
+    const { productName, description, size, category, price, oldPrice } = req.body;
 
     try {
         // Validate required fields
-        if (!productName || !price || !oldPrice || !description || !category) {
+        if (!productName || !price || !oldPrice || !size || !description || !category) {
             return res.status(400).json({ message: "One or more required fields are missing" });
         }
 
@@ -369,6 +371,7 @@ const createToBestSeller_Jalab = async (req, res) => {
             category,
             price,
             oldPrice,
+            size,
             imageUrl
         };
 
@@ -558,7 +561,7 @@ const updateArrival = async (req, res) => {
     const arrivalId = req.query.arrivalId;
 
     try {
-        const { productName, description, category, price, oldPrice } = req.body;
+        const { productName, size, description, category, price, oldPrice } = req.body;
 
         if (!['Male', 'Female', 'Children'].includes(category)) {
             return res.status(400).json({ message: "Invalid category" });
@@ -578,6 +581,7 @@ const updateArrival = async (req, res) => {
             imageUrl,
             description,
             price,
+            size,
             oldPrice,
             category
         };
@@ -867,7 +871,7 @@ const updateBestFragrance = async (req, res) => {
      const updateBestSeller = async (req, res) => {
             const bestSellerId = req.query.bestSellerId;
             try {
-                const { productName, description, category, price, oldPrice } = req.body;
+                const { productName, size, description, category, price, oldPrice } = req.body;
         
                 if (!['Male', 'Female', 'Children'].includes(category)) {
                     return res.status(400).json({ message: "Invalid category" });
@@ -888,6 +892,7 @@ const updateBestFragrance = async (req, res) => {
                     description,
                     price,
                     oldPrice,
+                    size,
                     category
                 };
         

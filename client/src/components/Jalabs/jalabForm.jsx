@@ -12,7 +12,8 @@ const AddJalabsForm = ({ jalabData }) => {
     imageUrl: '',
     description: '',
     price: '',
-    oldPrice: ''
+    oldPrice: '',
+    size: '' // Add the size field
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -27,13 +28,14 @@ const AddJalabsForm = ({ jalabData }) => {
         price: jalabData.price || '',
         oldPrice: jalabData.oldPrice || '',
         imageUrl: jalabData.imageUrl || '',
-        category: jalabData.category || 'Male'
+        category: jalabData.category || 'Male',
+        size: jalabData.size || '' // Update size field from jalabData
       });
     }
   }, [jalabData]);
 
   const isEditPage = location.pathname.includes("/edit");
-  console.log (isEditPage)
+  console.log(isEditPage);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -69,7 +71,8 @@ const AddJalabsForm = ({ jalabData }) => {
         category: 'Male',
         description: '',
         price: '',
-        oldPrice: ''
+        oldPrice: '',
+        size: '' // Reset the size field
       });
       setError('');
       setSuccessfulMsg("Added Successfully");
@@ -201,11 +204,22 @@ const AddJalabsForm = ({ jalabData }) => {
         />
       </label>
       <br />
-      
+      <label>
+        Size:
+        <input
+          className='w-full mb-5 p-3 rounded-lg'
+          placeholder='Size'
+          type="number"
+          name="size"
+          value={formData.size}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <br />
       <button className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
         {submitting ? (isEditPage ? 'Updating...' : 'Submitting...') : (isEditPage ? 'Update' : 'Submit')}
       </button>
-      
       {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}
       {successfulMsg && <p className='bg-green-600 w-1/2 text-white mt-5 rounded-lg py-3 px-5'>{successfulMsg}</p>}
     </form>

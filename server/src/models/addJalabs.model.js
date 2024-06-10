@@ -21,6 +21,10 @@ const jalabsSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  size: {
+    type: Number,
+    required: true,
+  },
   oldPrice: {
     type: Number,
     required: true,

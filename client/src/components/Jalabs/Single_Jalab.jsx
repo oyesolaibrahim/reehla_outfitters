@@ -29,8 +29,7 @@ const Single_Jalab = ({ sessionId }) => {
 
     const addToCart = (e) => {
         e.preventDefault();
-        if (!object) return; // Check if object is defined
-
+        if (!object) return; 
         const fetching = {
             method: 'POST',
             url: `${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`,

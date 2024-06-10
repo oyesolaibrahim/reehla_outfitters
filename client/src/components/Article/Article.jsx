@@ -18,10 +18,10 @@ const Article = () => {
                 const jalabs = response.data.jalab;
 
                 setObjects(jalabs);
-                setLoading(false); // Set loading to false when data is fetched
+                setLoading(false); 
             } catch (error) {
                 console.log('Error fetching best sellers:', error);
-                setLoading(false); // Set loading to false in case of error
+                setLoading(false); 
             }
         };
         fetchBestSellers();
@@ -82,7 +82,7 @@ const Article = () => {
                                 <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={object.imageUrl} alt="jalab-img"/>
                             </Link>    
                             <div className="flex items-center justify-between mb-5">
-                                <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}</h3>
+                                <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}<span className="text-xl font-normal mt-1">({object?.size || 52})</span></h3>
                             </div>
                             <div className="flex lg:flex-row items-center justify-between xs:flex-col xs:space-y-3">
                                 <h3 className="font-semibold xs:text-sm">₦{object.price}</h3>
