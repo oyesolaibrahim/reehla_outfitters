@@ -27,9 +27,11 @@ const cartSchema = new mongoose.Schema({
     itemDetails: { 
       type: {
         name: { type: String, required: true },
+        brandName: { type: String },
         category: { type: String, required: true },
         price: { type: Number, required: true },
         oldPrice: { type: Number },
+        size: { type: Number },
         description: { type: String, required: true },
         imageUrl: { type: String, required: true },
       },

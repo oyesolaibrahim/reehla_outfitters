@@ -9,105 +9,107 @@ import { storage } from "../../Firebase";
 import Swal from 'sweetalert2';
 
 const Single_Fragrance = ({ sessionId }) => {
-    const { cartValue, changeCartValue } = useCart();
     const { addItemToCart } = useCart();
     const [error, setError] = useState("");
-    const [successfulMessage, setSuccesfulMessage] = useState("");
-    const [quantity, setQuantity] = useState(0);
+    const [successfulMessage, setSuccessfulMessage] = useState("");
+    const [quantity, setQuantity] = useState(1);
     const location = useLocation();
-    let { fragrance } = location.state || {};
-    console.log(location.state);
-    const [totalPrice, setTotalPrice] = useState(fragrance?.price || 0);
-    const [pricePerQuantity, setPricePerQuantity] = useState(fragrance?.price || 0);
+    const { fragrance, object } = location.state || {};
+    const [totalPrice, setTotalPrice] = useState(fragrance?.price || object?.price || 0);
+    const [pricePerQuantity, setPricePerQuantity] = useState(fragrance?.price || object?.price || 0);
     const [imageUrl, setImageUrl] = useState("");
 
-    const plus = () => setQuantity(prevState => parseInt(prevState, 10) + 1);
-    const minus = () => setQuantity(prevState => (prevState > 0 ? prevState - 1 : prevState));
+    const plus = () => setQuantity(prevState => prevState + 1);
+    const minus = () => setQuantity(prevState => (prevState > 1 ? prevState - 1 : prevState));
 
-    const calculateTotalPrice = () => setTotalPrice(quantity * pricePerQuantity);
+    const calculateTotalPrice = () => {
+        setTotalPrice(quantity * pricePerQuantity);
+    };
 
-    const addToCart = (e) => {
+    const addToCart = async (e) => {
         e.preventDefault();
-        if (!fragrance) return; 
-        const fetching = {
-            method: 'POST',
-            url: `${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`,
-            data: {
-                pricePerQuantity: pricePerQuantity,
-                totalPrice: totalPrice,
-                quantity: quantity,
-                itemDetails: {
-                    productName: fragrance.productName,
-                    brandName: fragrance.brandName,
-                    category: fragrance.category,
-                    price: fragrance.price,
-                    oldPrice: fragrance.oldPrice,
-                    description: fragrance.description,
-                    imageUrl: fragrance.imageUrl
-                }
-            }
+        if (!fragrance && !object) return;
+
+        const itemDetails = {
+            name: fragrance?.productName || object?.productName,
+            brandName: fragrance?.brandName || object?.brandName,
+            category: fragrance?.category || object?.category,
+            price: fragrance?.price || object?.price,
+            oldPrice: fragrance?.oldPrice || object?.oldPrice,
+            description: fragrance?.description || object?.description,
+            imageUrl: fragrance?.imageUrl || object?.imageUrl
         };
 
-        axios(fetching)
-            .then((result) => {
-                setSuccesfulMessage(result.data.message);
-                setError("");
-                setTimeout(() => setSuccesfulMessage(""), 10000);
-
-                const item = { ...fragrance, quantity, totalPrice };
-                addItemToCart(item);
-                Swal.fire({
-                    icon: 'success',
-                    title: successfulMessage,
-                    text: result.data.message,
-                });
-
-            })
-            .catch((error) => {
-                setError(error.response ? error.response.data.message : "An error occurred while adding to cart");
-                setSuccesfulMessage("");
-                Swal.fire({
-                    icon: 'error',
-                    text: error.response.data.message,
-                });
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`, {
+                pricePerQuantity,
+                totalPrice,
+                quantity,
+                itemDetails
             });
+
+            setSuccessfulMessage(response.data.message);
+            setError("");
+            setTimeout(() => setSuccessfulMessage(""), 10000);
+
+            const item = { ...itemDetails, quantity, totalPrice };
+            addItemToCart(item);
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Added to Cart',
+                text: response.data.message,
+            });
+
+        } catch (error) {
+            const errorMsg = error.response ? error.response.data.message : "An error occurred while adding to cart";
+            setError(errorMsg);
+            setSuccessfulMessage("");
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: errorMsg,
+            });
+        }
     };
 
     useEffect(() => calculateTotalPrice(), [quantity]);
-    useEffect(() => setTotalPrice(fragrance?.price || 0), [sessionId]);
-
     useEffect(() => {
-        if (!fragrance) return;
-        const getImageUrl = async () => {
-            try {
-                const storageRef = ref(storage, fragrance.imageUrl);
-                const url = await getDownloadURL(storageRef);
-                setImageUrl(url);
-            } catch (error) {
-                console.error("Error getting image URL:", error.message);
-                setError("Error getting image URL");
-            }
-        };
-        getImageUrl();
-    }, [fragrance?.imageUrl]);
+        if (fragrance?.imageUrl || object?.imageUrl) {
+            const getImageUrl = async () => {
+                try {
+                    const storageRef = ref(storage, fragrance?.imageUrl || object?.imageUrl);
+                    const url = await getDownloadURL(storageRef);
+                    setImageUrl(url);
+                } catch (error) {
+                    console.error("Error getting image URL:", error.message);
+                    setError("Error getting image URL");
+                }
+            };
+            getImageUrl();
+        }
+    }, [fragrance?.imageUrl, object?.imageUrl]);
 
     return (
         <>
             <Header />
-            <main className="bg-gray-700  overflow-x-hidden">
+            <main className="bg-gray-700 overflow-x-hidden">
                 <div className="md:flex relative bg-red-200 sm:p-20 md:p-20 xs:py-10 xs:px-5">
                     <div>
-                        <img className="rounded-lg" src={fragrance.imageUrl} alt="jalab-img" />
+                        <img className="rounded-lg" src={imageUrl || fragrance?.imageUrl || object?.imageUrl} alt="fragrance-img" />
                     </div>
                     <div className="sm:py-10 xs:py-10 xs:px-5 md:ml-36">
                         <form onSubmit={addToCart}>
                             <div>
-                                <h2 className="text-4xl font-extrabold">{fragrance?.productName}<span className="text-xl ml-2">({fragrance?.category})</span></h2>
-                                <h2 className="text-2xl mt-5 font-bold">{fragrance?.brandName}</h2>
-                                <p className="mt-20">{fragrance?.description}</p>
+                                <h2 className="text-4xl font-extrabold">{fragrance?.productName || object?.productName}
+                                    <span className="text-xl ml-2">({fragrance?.category || object?.category})</span>
+                                </h2>
+                                <h2 className="text-2xl mt-5 font-bold">{fragrance?.brandName || object?.brandName}</h2>
+                                <p className="mt-20">{fragrance?.description || object?.description}</p>
                                 <div className="mt-12 flex sm:space-x-10 md:space-x-10 xs:justify-center xs:-space-x-32">
                                     <input className="font-bold text-2xl outline-none bg-red-200" readOnly value={`₦${totalPrice}`} />
-                                    <p className="text-2xl font-extralight line-through">₦{fragrance?.oldPrice}</p>
+                                    <p className="text-2xl font-extralight line-through">₦{fragrance?.oldPrice || object?.oldPrice}</p>
                                 </div>
                             </div>
                             <div className="flex items-center mt-16 sm:space-x-20 xs:space-x-5">
