@@ -81,8 +81,8 @@ const Article = () => {
                             <Link to={`/jalabs/${object._id}`} state={{ object }}>
                                 <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={object.imageUrl} alt="jalab-img"/>
                             </Link>    
-                            <div className="flex items-center justify-between mb-3">
-                                <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}</h3>
+                            <div className="flex items-center justify-between mb-2">
+                                <h3 className="sm:mt-10 md:mt-10 xs:mt-3 font-semibold sm:text-3xl md:text-3xl">{object.productName}</h3>
                             </div>
                             <h3 className="my-1">size: {object?.size || 52}</h3>
                             <div className="flex lg:flex-row items-center justify-between xs:flex-col xs:space-y-3">
