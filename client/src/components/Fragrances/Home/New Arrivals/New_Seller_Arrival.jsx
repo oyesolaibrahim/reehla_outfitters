@@ -2,42 +2,31 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../Firebase";
+// import { getDownloadURL, ref } from "firebase/storage";
+// import { storage } from "../Firebase";
 import ArrivalsFragranceForm from "../../Forms/ArrivalForm";
 
-const Arrival_Article = () => {
+const Arrival_Fragrance = () => {
     const [objects, setObjects] = useState([]);
-    const [loading, setLoading] = useState(true); // Add loading state
-
+    const [loading, setLoading] = useState(true); 
+    
     useEffect(() => {
-        const fetchBrandsWithImages = async () => {
+        const fetchNewArrival = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/newarrival`);
-                const brands = response.data.jalab;
-                const brandsWithImages = await Promise.all(brands.map(async (brand) => {
-                    try {
-                        const storageRef = ref(storage, brand.imageUrl);
-                        const downloadUrl = await getDownloadURL(storageRef);
-                        return {
-                            ...brand,
-                            imageUrl: downloadUrl
-                        };
-                    } catch (error) {
-                        console.error("Error getting image URL:", error.message);
-                        return { ...brand, imageUrl: '' };
-                    }
-                }));
-                setObjects(brandsWithImages);
-                setLoading(false); // Set loading to false when data is fetched
+                const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/getarrivalfragrance`);
+                console.log('New Arrival fragrances fetched successfully:', response);
+    
+                setObjects(response.data.fragrance);
+                setLoading(false); 
             } catch (error) {
-                console.log('Error getting brands with images:', error);
-                setLoading(false); // Set loading to false in case of error
+                console.log('Error fetching New Arrival fragrances:', error);
+                setLoading(false); 
             }
         };
-        fetchBrandsWithImages();
-    }, []);
-
+    
+        fetchNewArrival();
+    }, [])
+    
     const removeBrand = async (newArrivalId) => {
         try {
             const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletenewarrival?newArrivalId=${newArrivalId}`);
@@ -108,12 +97,12 @@ const Arrival_Article = () => {
             </div>
             {adminToken && objects.length > 0 && (
                 <div className="flex justify-between space-x-5 mt-3 pl-20">
-                    <button onClick={handleClearBrand} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
+                    <button onClick={handleClearBrand} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Fragrance Products</button>
                 </div>
             )}
-            {adminToken && <ArrivalsFragranceForm />}
+            {/* {adminToken && <ArrivalsFragranceForm />} */}
         </>
     );
 };
 
-export default Arrival_Article;
+export default Arrival_Fragrance;

@@ -69,10 +69,10 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
             };
 
             // Post to first collection
-            await axios.post(`${process.env.REACT_APP_SERVER}/api/newarrival`, postData);
+            await axios.post(`${process.env.REACT_APP_SERVER}/api/arrivalfragrance`, postData);
 
             // Post to second collection
-            await axios.post(`${process.env.REACT_APP_SERVER}/api/secondcollection`, postData);
+            await axios.post(`${process.env.REACT_APP_SERVER}/api/fragrance`, postData);
 
             setFormData({
                 productName: '',
@@ -123,7 +123,7 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
             await axios.put(`${process.env.REACT_APP_SERVER}/api/updatearrival?arrivalId=${arrivalData._id}`, postData);
 
             // Update second collection
-            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesecondcollection?arrivalId=${arrivalData._id}`, postData);
+            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatefragrance?arrivalId=${arrivalData._id}`, postData);
 
             setSuccessfulMsg("Updated Successfully");
             setError('');

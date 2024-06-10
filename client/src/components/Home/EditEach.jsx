@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import NewArrivalsForm from './New_Arrivals_Form';
 import AddJalabsForm from '../Jalabs/jalabForm';
 import WritingBlogMessage from '../Article/WriteBlog';
+import AddFragranceForm from '../Fragrances/Forms/Male';
 
 const EditForm = () => {
   const { id } = useParams();
@@ -16,6 +17,9 @@ const EditForm = () => {
   const [bestSellerData, setBestSellerData] = useState(null);
   const [jalabData, setJalabData] = useState(null);
   const [blogData, setBlogData] = useState(null);
+  const [fragranceData, setFragranceData] = useState(null);
+  const [bestSellerFragranceData, setBestSellerFragranceData] = useState(null);
+  const [arrivalFragranceData, setNewArrivalFragranceData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,12 +30,15 @@ const EditForm = () => {
       setLoading(true);
       setError(null);
       try {
-        const [brandResponse, arrivalResponse, bestSellerResponse, jalabResponse, blogResponse] = await Promise.all([
+        const [brandResponse, arrivalResponse, bestSellerResponse, jalabResponse, blogResponse, fragranceResponse] = await Promise.all([
           axios.get(`${process.env.REACT_APP_SERVER}/api/toponebrand?brandId=${id}`),
           axios.get(`${process.env.REACT_APP_SERVER}/api/toponearrival?arrivalId=${id}`),
           axios.get(`${process.env.REACT_APP_SERVER}/api/toponebestseller?bestSellerId=${id}`),
           axios.get(`${process.env.REACT_APP_SERVER}/api/editsinglejalab?jalabId=${id}`),
-          axios.get(`${process.env.REACT_APP_SERVER}/api/editblog?blogId=${id}`)
+          axios.get(`${process.env.REACT_APP_SERVER}/api/editblog?blogId=${id}`),
+          axios.get(`${process.env.REACT_APP_SERVER}/api/editgeneralfragrance?fragranceId=${id}`),
+          axios.get(`${process.env.REACT_APP_SERVER}/api/editbestfragrance?fragranceId=${id}`),
+          axios.get(`${process.env.REACT_APP_SERVER}/api/editarrivalfragrance?fragranceId=${id}`)
         ]);
 
         setBrandData(brandResponse.data.brand);
@@ -39,6 +46,7 @@ const EditForm = () => {
         setBestSellerData(bestSellerResponse.data.bestSeller);
         setJalabData(jalabResponse.data.jalab);
         setBlogData(blogResponse.data.blog);
+        setFragranceData(fragranceResponse.data.fragrance);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('Failed to load data. Please try again later.');
@@ -69,6 +77,9 @@ console.log(blogData)
         {bestSellerData && <BestForm bestSellerData={bestSellerData} />}
         {jalabData && <AddJalabsForm jalabData={jalabData} />}
         {blogData && <WritingBlogMessage blogData={blogData} />}
+        {fragranceData && <AddFragranceForm fragranceData={fragranceData} />}
+        {bestSellerFragranceData && <BestForm bestSellerData={bestSellerData} />}
+        {arrivalFragranceData && <NewArrivalsForm arrivalData={arrivalData} />}
       </main>
       <Footer />
     </>

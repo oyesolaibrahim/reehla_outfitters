@@ -12,7 +12,7 @@ const Brand_Article = () => {
     const [imageUrl, setImageUrl] = useState("");
     const [description, setDescription] = useState("");
     const [id, setId] = useState("");
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true);
 
     const removeBrand = async (brandId) => {
         try {
@@ -61,9 +61,6 @@ const Brand_Article = () => {
                 
                 const brandsWithFullImageUrl = await Promise.all(response.data.brands.map(async (brand) => {
                     try {
-                        // Construct the full image URL by concatenating the base URL of Firebase Storage with the relative image path
-                        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_FIREBASE_STORAGE_BUCKET}/o/${encodeURIComponent(brand.imageUrl)}?alt=media`;
-                        
                         const storageRef = ref(storage, brand.imageUrl);
                         const downloadUrl = await getDownloadURL(storageRef);
                         console.log(`Successfully retrieved image URL for brand ${brand.name}:`, downloadUrl);
@@ -88,25 +85,25 @@ const Brand_Article = () => {
         fetchBrands();
     }, []);
     
-    
     const adminToken = sessionStorage.getItem("adminToken");
+
     return (
         <>  
             <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
                 {loading ? (
-                    <div className="flex justify-center items-center w-full h-full">
-                        <i className="fas fa-spinner fa-spin text-4xl"></i>
+                    <div className="flex flex-col justify-center items-center w-full h-full">
+                        <i className="fas fa-spinner fa-spin text-4xl text-white"></i>
+                        <p className="text-white">Loading...</p>
                     </div>
                 ) : (
                     objects?.map(object => (
                         <article key={object._id} className={`bg-red-200 xs:my-3 width vh ${adminToken ? "xsvhs" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
-                            <Link to="/brand">
+                            <Link to="/brand" state={{  object }}>
                                 <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={object.imageUrl} alt="brand-img"/>
                             </Link>    
                             <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.brandName}</h3>
-                            {/* <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-5 font-semibold text-center p-width">{object.description}</h3> */}
                             {adminToken && (
-                                <div className="flex xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:flex-row lg:justify-between lg:space-x-5 md:space-x-5 my-3">
+                                <div className="flex xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:flex-row lg:justify-between lg:space-x-5 my-3">
                                     <button onClick={() => removeBrand(object._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Brand</button>
                                     <Link to={`/edit/${object._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Brand</button></Link>
                                 </div>

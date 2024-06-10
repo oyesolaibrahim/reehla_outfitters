@@ -39,11 +39,11 @@ const Header = ({ myCarts = [] }) => {
     };
 
     return (
-        <header className="bg-red-400 sm:px-10 xs:px-1 sticky md:-top-32 lg:-top-40 py-2 top top2 sm:-top-24 z-10">
+        <header className="bg-red-400 sm:px-10 xs:px-1 sticky md:px-2 lg:px-10 md:-top-20 lg:-top-40 py-2 top top2 sm:-top-28 z-10">
             <div className="flex md:justify-center -pt-40 xs:mb-4 sm:justify-center items-center">
                 <div className="">
                     <Link to="/">
-                        <img className="lg:w-3/5" src={logo} alt="logo-img" />
+                        <img className="lg:w-3/5 sm:w-1/3 md:w-full" src={logo} alt="logo-img" />
                     </Link>
                 </div>
                 <div className="flex items-center lg:mr-20 md:mr-0 sm:mr-20 xs:mr-16 space-x-2">
@@ -75,7 +75,7 @@ const Header = ({ myCarts = [] }) => {
                             <div>
                              <Link to="/login">
                                 <h3 className={`cursor-pointer ${adminToken && "hidden"} ${Token && "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-900 py-3 px-5 xs:-ml-5 text-white`}>Login</h3>
-                                <h3 className={`cursor-pointer ${adminToken ? "inline-block" : "hidden"} ${Token ? "inline-block" : "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-900 py-3 px-5 xs:-ml-5 text-white`} onClick={logout}>Logout</h3>
+                                <h3 className={`cursor-pointer ${adminToken ? "inline-block" : "hidden"} ${Token ? "inline-block" : "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-800 py-3 px-5 xs:-ml-5 text-white`} onClick={logout}>Logout</h3>
                             </Link>
 
                             </div>
@@ -128,7 +128,7 @@ const Header = ({ myCarts = [] }) => {
                 </div>
                 {adminToken ? (
                     <Link to="/jalabs/cart">
-                        <button className={`cursor-pointer orders ${right ? "sm:-z-10 xs:-z-10" : ""} font-bold md:mb-0 rounded-lg bg-red-800 sm:py-3 sm:px-5 text-white sm:absolute sm:right-10 md:static xs:absolute`}>
+                        <button className={`cursor-pointer orders ${right ? "sm:-z-10 xs:-z-10" : ""} font-bold md:mb-0 rounded-lg bg-amber-800 sm:py-3 sm:px-5 text-white sm:absolute sm:right-10 md:static xs:absolute`}>
                             Orders
                         </button>
                     </Link>

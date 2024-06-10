@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BestForm from "../Home/BestForm";
 import Swal from 'sweetalert2';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import BestFragranceForm from "../Fragrances/Forms/Best";
+import Best_Article from "../Fragrances/Home/Best Sellers/Best_Seller_Article";
 
 const Article = () => {
     const [objects, setObjects] = useState([]);
     const [loading, setLoading] = useState(true); // Add loading state
-
+    const location = useLocation()
     useEffect(() => {
         const fetchBestSellers = async () => {
             try {
@@ -70,9 +71,10 @@ const Article = () => {
         <>  
             <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
                 {loading ? (
-                    <div className="flex justify-center items-center w-full h-full">
-                        <i className="fas fa-spinner fa-spin text-4xl"></i>
-                    </div>
+                <div className="flex flex-col justify-center items-center w-full h-full">
+                    <i className="fas fa-spinner fa-spin text-4xl text-white"></i>
+                    <p className="text-white">Loading...</p>
+                </div>
                 ) : (
                     objects?.map(object => (
                         <article key={object._id} className={`bg-red-200 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
@@ -87,7 +89,7 @@ const Article = () => {
                                 <h3 className="font-semibold xs:text-sm">({object.category})</h3>
                             </div> 
                             {adminToken && (
-                                <div className="flex lg:flex-row items-center md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 my-3 xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3">
+                                <div className="flex lg:flex-row items-center md:justify-between lg:justify-between lg:space-x-5 my-3 xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3">
                                     <button onClick={() => removeBestSeller(object._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Product</button>
                                     <Link to={`/edit/${object._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Product</button></Link>  
                                 </div>
@@ -98,12 +100,14 @@ const Article = () => {
             </div>
             {adminToken && objects.length > 0 && (
                 <div className="flex justify-between space-x-5 mt-3 pl-20">
-                    <button onClick={handleClearBestSellers} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
+                    <button onClick={handleClearBestSellers} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Jalab Products</button>
                 </div>
             )} 
+            <Best_Article/>
             {adminToken &&
             <div className="flex md:justify-between xs:flex xs:flex-col xs:space-y-5 md:mx-10">
                 <BestForm />
+                {/* {location.pathname=== "/" || <BestFragranceForm/>} */}
                 <BestFragranceForm/>
             </div>  
             }

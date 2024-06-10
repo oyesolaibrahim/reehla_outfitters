@@ -117,7 +117,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
                                     </div>
                                 </div>
                             ))}
-                            <button onClick={() => { removeJalab(myCart._id) }} className="md:absolute xs:mt-5 md:-bottom-2 md:right-1/3 text-white mb-3 bg-red-800 py-3 px-5 rounded-lg">Remove Client</button>
+                            <button onClick={() => { removeJalab(myCart._id) }} className="md:absolute xs:mt-5 md:-bottom-2 md:right-1/3 text-white mb-3 bg-amber-800 py-3 px-5 rounded-lg">Remove Client</button>
                         </article>
                     ))}
                     {myCarts.length === 0 ? (
@@ -131,7 +131,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
                             </div>
                         </div>
                     ) : ""}
-                    {myCarts.length === 0 ? "" : (<button onClick={handleClearCart} className="ml-5 inline justify-center items-center sm:w-1/5 md:w-1/6 xs:w-1/2 text-white bg-red-800 py-3 px-5 rounded-lg">Clear Cart</button>)}
+                    {myCarts.length === 0 ? "" : (<button onClick={handleClearCart} className="ml-5 inline justify-center items-center sm:w-1/5 md:w-1/6 xs:w-1/2 text-white bg-amber-800 py-3 px-5 rounded-lg">Clear Cart</button>)}
                 </div>
 
                 <div>

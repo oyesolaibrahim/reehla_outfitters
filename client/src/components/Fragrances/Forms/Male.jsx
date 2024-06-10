@@ -33,31 +33,30 @@ const AddFragranceForm = ({ fragranceData }) => {
       });
     }
   }, [fragranceData]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFormData({ ...formData, imageFile: file, imageUrl: '' }); // Clear imageUrl when a file is selected
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-
+    
     try {
       let imageUrl = formData.imageUrl;
-
+      
       if (formData.imageFile) {
         const file = formData.imageFile;
         const storageRef = ref(storage, `images/${file.name}`);
         const snapshot = await uploadBytes(storageRef, file);
         imageUrl = await getDownloadURL(snapshot.ref);
       }
-
+      
       const postData = {
         productName: formData.productName,
         category: formData.category,
@@ -67,13 +66,13 @@ const AddFragranceForm = ({ fragranceData }) => {
         imageUrl: imageUrl,
         brandName: formData.brandName // Include brandName in post data
       };
-
+      
       // Post to first collection
       await axios.post(`${process.env.REACT_APP_SERVER}/api/fragrance`, postData);
-
+      
       // Post to second collection
-      await axios.post(`${process.env.REACT_APP_SERVER}/api/secondcollection`, postData);
-
+      //   await axios.post(`${process.env.REACT_APP_SERVER}/api/secondcollection`, postData);
+      
       setFormData({
         productName: '',
         category: 'Male',
@@ -94,21 +93,21 @@ const AddFragranceForm = ({ fragranceData }) => {
       setSubmitting(false);
     }
   };
-
+  
   const handleUpdate = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-
+    
     try {
       let imageUrl = formData.imageUrl;
-
+      
       if (formData.imageFile) {
         const file = formData.imageFile;
         const storageRef = ref(storage, `images/${file.name}`);
         const snapshot = await uploadBytes(storageRef, file);
         imageUrl = await getDownloadURL(snapshot.ref);
       }
-
+      
       const postData = {
         productName: formData.productName,
         category: formData.category,
@@ -118,13 +117,9 @@ const AddFragranceForm = ({ fragranceData }) => {
         imageUrl: imageUrl,
         brandName: formData.brandName // Include brandName in update data
       };
-
+      
       // Update first collection
       await axios.put(`${process.env.REACT_APP_SERVER}/api/updatefragrance?fragranceId=${fragranceData._id}`, postData);
-
-      // Update second collection
-      await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesecondcollection?fragranceId=${fragranceData._id}`, postData);
-
       setSuccessfulMsg("Updated Successfully");
       setError('');
     } catch (error) {
@@ -135,11 +130,12 @@ const AddFragranceForm = ({ fragranceData }) => {
       setSubmitting(false);
     }
   };
-
+  
   const location = useLocation();
-
+  const isEditPage = location.pathname.includes("/edit")
+  
   return (
-    <form className='bg-yellow-100 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/add-fragrance" ? handleSubmit : handleUpdate}>
+    <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/add-fragrance" ? handleSubmit : handleUpdate}>
       <label>
         <input
           className='w-full mb-5 p-3 rounded-lg'
@@ -236,12 +232,12 @@ const AddFragranceForm = ({ fragranceData }) => {
       </label>
       <br />
       
-      {location.pathname === "/add-fragrance" ? (
-        <button onClick={handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+      {!isEditPage ? (
+        <button onClick={handleSubmit} className='bg-amber-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
           {submitting ? 'Submitting...' : 'Submit'}
         </button>
       ) : (
-        <button onClick={handleUpdate} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+        <button onClick={handleUpdate} className='bg-amber-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
           {submitting ? 'Updating...' : 'Update'}
         </button>
       )}

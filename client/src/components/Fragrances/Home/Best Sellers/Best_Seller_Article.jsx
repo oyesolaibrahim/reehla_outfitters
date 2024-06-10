@@ -6,23 +6,23 @@ import BestFragranceForm from "../../Forms/Best";
 
 const Best_Article = () => {
     const [objects, setObjects] = useState([]);
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
-        const fetchBestSellers = async () => {
+        const fetchBestFragrance = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/bestseller`);
-                console.log('Best sellers fetched successfully:', response);
-                const jalabs = response.data.jalab;
-
-                setObjects(jalabs);
-                setLoading(false); // Set loading to false when data is fetched
+                const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/getbestfragrance`);
+                console.log('Best fragrances fetched successfully:', response);
+    
+                setObjects(response.data.fragrance);
+                setLoading(false); 
             } catch (error) {
-                console.log('Error fetching best sellers:', error);
-                setLoading(false); // Set loading to false in case of error
+                console.log('Error fetching best fragrances:', error);
+                setLoading(false); 
             }
         };
-        fetchBestSellers();
+    
+        fetchBestFragrance();
     }, []);
 
     const removeBestSeller = async (bestId) => {
@@ -97,10 +97,10 @@ const Best_Article = () => {
             </div>
             {adminToken && objects.length > 0 && (
                 <div className="flex justify-between space-x-5 mt-3 pl-20">
-                    <button onClick={handleClearBestSellers} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
+                    <button onClick={handleClearBestSellers} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Fragrance Products</button>
                 </div>
             )} 
-            {adminToken && <BestFragranceForm />}
+            {/* {adminToken && <BestFragranceForm />} */}
         </>
     );
 };

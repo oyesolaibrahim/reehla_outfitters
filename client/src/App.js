@@ -25,6 +25,7 @@ import About from "./components/About/About";
 import MainMale from "./components/Fragrances/Main/Male";
 import MainFemale from "./components/Fragrances/Main/Female";
 import Unisex from "./components/Fragrances/Main/Unisex";
+import Single_Fragrance from "./components/Fragrances/Home/SingleFragrance";
 
 function App() {
   const [jalabs, setJalabs] = useState([]); 
@@ -90,6 +91,7 @@ function App() {
           <Route path='/female/jalabs' element={<Female femaleJalabs={femaleJalabs} />} />
           <Route path='/children/jalabs' element={<Children childrenJalabs={childrenJalabs} />} />
           <Route path='/jalabs/:id' element={<Single_Jalab sessionId={sessionId} />} />
+          <Route path='/fragrances/:id' element={<Single_Fragrance sessionId={sessionId} />} />
           <Route path='/jalabs/new' element={<AddJalabsForm />} />
           <Route path='/jalabs/cart' element={<Cart sessionId={sessionId} />} />
           <Route path='/checkout' element={<Checkout sessionId={sessionId} />} />

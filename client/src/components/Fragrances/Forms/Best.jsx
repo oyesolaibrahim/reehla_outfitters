@@ -69,10 +69,10 @@ const BestFragranceForm = ({ bestSellerData }) => {
       };
 
       // Post to first collection
-      await axios.post(`${process.env.REACT_APP_SERVER}/api/bestseller`, postData);
+      await axios.post(`${process.env.REACT_APP_SERVER}/api/bestfragrance`, postData);
 
       // Post to second collection
-      await axios.post(`${process.env.REACT_APP_SERVER}/api/secondcollection`, postData);
+      await axios.post(`${process.env.REACT_APP_SERVER}/api/fragrance`, postData);
 
       setFormData({
         productName: '',

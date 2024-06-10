@@ -37,6 +37,21 @@ const {
   deleteAllBestSellers,
   deleteSingleMaleJalab,
   deleteAllMaleJalabs,
+  createToBestFragrance,
+  createToArrivalFragrance,
+  getMaleFragrance,
+  getFemaleFragrance,
+  getUnisexFragrance,
+  getFragrance,
+  getBestFragrance,
+  getarrivalfragrance,
+  updateFragrance,
+  updateArrivalFragrance,
+  updateBestFragrance,
+  editGeneralFragrance,
+  editBestFragrance,
+  editArrivalFragrance,
+  getBrands,
 } = require("./controllers/products.controller");
 const {
   addUser,
@@ -116,10 +131,22 @@ app.get("/api/toponebestseller", editBestSellerPage);
 app.get("/api/editsinglejalab", editJalabPage);
 app.get("/api/editblog", editBlogPage);
 app.get("/api/blogs", getAllBlogs);
+app.get("/api/brands", getBrands);
 app.get("/verify-payment/:reference", verifyPayment);
+app.get("/api/generalfragrance", getFragrance);
+app.get("/api/malefragrance", getMaleFragrance);
+app.get("/api/femalefragrance", getFemaleFragrance);
+app.get("/api/unisexfragrance", getUnisexFragrance);
+app.get("/api/getbestfragrance", getBestFragrance);
+app.get("/api/getarrivalfragrance", getarrivalfragrance);
+app.get("/api/editgeneralfragrance", editGeneralFragrance);
+app.get("/api/editbestfragrance", editBestFragrance);
+app.get("/api/editarrivalfragrance", editArrivalFragrance);
 
 app.post("/api/blogs", createBlogMessage);
-app.post("/api/fragrance", createFragrance);
+app.post("/api/fragrance", upload.single("imageFile"), createFragrance);
+app.post("/api/bestfragrance", upload.single("imageFile"), createToBestFragrance);
+app.post("/api/arrivalfragrance", upload.single("imageFile"), createToArrivalFragrance);
 app.post("/api/cart", jalabsToCart);
 app.post("/api/jalab", upload.single("imageFile"), createJalab);
 app.post("/api/admin/signup", addAdmin);
@@ -132,7 +159,7 @@ app.post("/api/newarrival", upload.single("imageFile"), createToNewArrival_Jalab
 app.post("/api/topbrand", upload.single("imageFile"), createToTopBrand);
 app.post("/initialize-payment", createPayment);
 app.post("/api/subscribe", Subscribe);
-app.post("/api/send-messages", upload.single("attachment"), sendMessageToSubscribers);
+app.post("/api/send-messages", upload.single("imageFile"), sendMessageToSubscribers);
 
 app.put("/api/updatebrand", upload.single("imageFile"), updateBrand);
 app.put("/api/updatearrival", upload.single("imageFile"), updateArrival);
@@ -140,6 +167,9 @@ app.put("/api/updatebestseller", upload.single("imageFile"), updateBestSeller);
 app.put("/api/updatesinglejalab", upload.single("imageFile"), updatesinglejalab);
 app.put("/api/updatesinglejalab", upload.single("imageFile"), updatesinglejalab);
 app.put("/api/updateblog", upload.single("imageFile"), updateBlog);
+app.put("/api/updatebestfragrance", upload.single("imageFile"), updateBestFragrance);
+app.put("/api/updatearrivalfragrance", upload.single("imageFile"), updateArrivalFragrance);
+app.put("/api/updatefragrance", upload.single("imageFile"), updateFragrance);
 
 app.delete("/api/delete", deleteJalabFromCart);
 app.delete("/api/deleteAll", deleteAllJalabsFromCart);

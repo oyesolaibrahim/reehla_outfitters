@@ -6,6 +6,7 @@ import NewArrivalsForm from "../Home/New_Arrivals_Form";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../Firebase";
 import ArrivalsFragranceForm from "../Fragrances/Forms/ArrivalForm";
+import Arrival_Fragrance from "../Fragrances/Home/New Arrivals/New_Seller_Arrival";
 
 const New_Arrival_Article = () => {
     const [objects, setObjects] = useState([]);
@@ -81,8 +82,9 @@ const New_Arrival_Article = () => {
         <>  
             <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
                 {loading ? (
-                    <div className="flex justify-center items-center w-full h-full">
-                        <i className="fas fa-spinner fa-spin text-4xl"></i>
+                    <div className="flex flex-col justify-center items-center w-full h-full">
+                        <i className="fas fa-spinner fa-spin text-4xl text-white"></i>
+                        <p className="text-white">Loading...</p>
                     </div>
                 ) : (
                     objects?.map(object => (
@@ -98,7 +100,7 @@ const New_Arrival_Article = () => {
                                 <h3 className="font-semibold xs:text-sm">({object.category})</h3>
                             </div> 
                             {adminToken && (
-                                <div className="flex lg:flex-row xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 mt-3">
+                                <div className="flex lg:flex-row xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:justify-between lg:space-x-5 mt-3">
                                     <button onClick={() => removeBrand(object._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Product</button>
                                     <Link to={`/edit/${object._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Product</button></Link>  
                                 </div>
@@ -109,9 +111,10 @@ const New_Arrival_Article = () => {
             </div>
             {adminToken && objects.length > 0 && (
                 <div className="flex justify-between space-x-5 mt-3 pl-20">
-                    <button onClick={handleClearBrand} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
+                    <button onClick={handleClearBrand} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Jalab Products</button>
                 </div>
             )}
+            <Arrival_Fragrance/>
             {adminToken &&
             <div className="flex md:justify-between xs:flex xs:flex-col xs:space-y-5 md:mx-10">
                 <NewArrivalsForm />

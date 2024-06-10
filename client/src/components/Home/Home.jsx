@@ -33,8 +33,8 @@ const Home = () => {
                 hideText(currentElement);
                 setTimeout(() => {
                     displayTextSequence(elements, nextIndex);
-                }, 1000); // Time to allow fade-out before showing the next text
-            }, 3000); // Display each text for 3 seconds
+                }, 1000); 
+            }, 3000); 
         }
 
         displayTextSequence(Array.from(textElements));

@@ -3,34 +3,64 @@ import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import BrandList from './BrandList';
-import BlogList from './BrandList';
+import { useLocation } from 'react-router-dom';
 
 const BrandPage = () => {
-  const [blogs, setBlogs] = useState([]);
+  const location = useLocation();
+  const [brands, setBrands] = useState([]);
+  const [message, setMessage] = useState(''); // State to hold the message
+  const object = location.state?.object; // Access the object from the state
 
   useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/blogs`);
-        setBlogs(response.data);
-      } catch (error) {
-        console.error('Error fetching blogs:', error);
+    const fetchBrands = async () => {
+      if (!object || object.length === 0) {
+        setMessage("This Brand is not Available");
+        return;
+      }
+
+      if (object && object.brandName) {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/brands?brandName=${object.brandName}`);
+          if (response.data.brands && response.data.brands.length > 0) {
+            setBrands(response.data.brands); // Ensure the response data is an array
+          } else {
+            setMessage("This Brand is not Available");
+          }
+        } catch (error) {
+          console.error('Error fetching brands:', error);
+          setMessage("Error fetching brands. Please try again later.");
+        }
       }
     };
 
-    fetchBlogs();
-  }, []);
-
+    fetchBrands();
+  }, [object]); 
   return (
     <>
-    <Header/>
-    <main>
-        <div className='bg-blue-800 py-10'>
-          <BlogList blogs={blogs} />
+      <Header />
+      <main className='bg-gray-800 min-h-screen overflow-x-hidden py-10'>
+        <div className="md:flex justify-between xs:min-h-screen">
+          <div className="flex flex-col space-y-3 justify-between">
+            {message ? (
+              <div className="text-center text-white ml-10">{message}</div>
+            ) : (
+              brands.map(brand => (
+                <div key={brand._id} className="bg-red-200 max-h-62 min-h-62 sm:max-w-2/3 md:w-3/4 sm:min-w-36 md:min-w-36 p-10 m-5">
+                  <article className="relative xs:flex xs:flex-col sm:flex md:flex xs:justify-between sm:justify-between md:justify-start md:space-x-10 sm:items-center md:items-center">
+                    <img className="sm:w-1/3 mb-5 xs:w-full" src={brand.imageUrl} alt="brand-img" />
+                    <div className=''>
+                      <h3 className="sm:flex xs:flex xs:justify-center md:flex justify-center mt-10 font-semibold text-3xl">{brand.productName}</h3>
+                      <h3 className="sm:flex xs:flex xs:justify-center md:flex justify-center mt-10 font-bold">{brand.brandName}</h3>
+                      <h3 className="max-w-96 xs:flex xs:justify-center my-5 sm:text-center md:text-center">{brand.description}</h3>
+                    </div>
+                  </article>
+                </div>
+              ))
+            )}
+          </div>
         </div>
-    </main>
-    <Footer/>
-    
+      </main>
+      <Footer />
     </>
   );
 };

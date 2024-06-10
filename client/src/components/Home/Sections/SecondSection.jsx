@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Article from "../../Article/Article"
+import Best_Article from "../../Fragrances/Home/Best Sellers/Best_Seller_Article";
 
 const SecondSection = () => {
 const [visible, setVisible] = useState(false);

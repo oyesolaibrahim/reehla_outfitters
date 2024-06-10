@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const fragranceSchema = new mongoose.Schema({
+const bestSchema = new mongoose.Schema({
   productName: {
     type: String,
     required: true,
@@ -31,6 +31,5 @@ const fragranceSchema = new mongoose.Schema({
   },
 });
 
-const Fragrance = mongoose.model('Product', fragranceSchema);
-
-module.exports = Fragrance;
+const bestModel = mongoose.model("Best", bestSchema);
+module.exports = bestModel;

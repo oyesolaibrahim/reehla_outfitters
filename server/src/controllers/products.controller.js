@@ -7,25 +7,132 @@ const topBrands = require('../models/topBrands.model');
 const Jalabs = require('../models/addJalabs.model');
 const bestSellers = require('../models/bestSellers.Model');
 const Cart = require("../models/cart.Model")
+const Arrival = require("../models/arrivalFragrance.model")
+const Best = require("../models/bestFragrance.model")
 
+const createFragrance = async(req, res) => {
+    const { productName, brandName, description, category, price, oldPrice } = req.body;
 
-const createFragrance = (req, res) => {
-    const { name, description, price } = req.body;
+    try {
+        // Validate required fields
+        if (!productName || !brandName || !price || !oldPrice || !description || !category) {
+            return res.status(400).json({ message: "One or more required fields are missing" });
+        }
 
-    if (!name || !description || !price) {
-        return res.status(400).json({ message: "A required field is missing" });
+        let imageUrl = ''; // Initialize imageUrl
+
+        // Check if imageUrl or imageFile is provided
+        if (req.body.imageUrl) {
+            imageUrl = req.body.imageUrl; // Use provided imageUrl
+        } else if (req.file) {
+            // Upload image to Firebase Storage
+            const file = req.file;
+            const storageRef = ref(storage, `images/${file.originalname}`);
+            const snapshot = await uploadBytes(storageRef, file.buffer);
+            imageUrl = await getDownloadURL(snapshot.ref);
+        }
+
+        // Create NewArrival document
+        const fragranceData = {
+            productName,
+            description,
+            category,
+            brandName,
+            price,
+            oldPrice,
+            imageUrl
+        };
+
+        const savedFragrance = await Fragrance.create(fragranceData);
+
+        return res.status(201).json({ message: "Fragrance Created Successfully", fragrance: savedFragrance });
+    } catch (error) {
+        console.error("Error creating new arrival:", error);
+        return res.status(500).json({ message: "Server error", error: error.message });
     }
+}
+const createToBestFragrance = async(req, res) => {
+    const { productName, brandName, description, category, price, oldPrice } = req.body;
 
-    const fragranceData = { name, description, price };
+    try {
+        // Validate required fields
+        if (!productName || !brandName || !price || !oldPrice || !description || !category) {
+            return res.status(400).json({ message: "One or more required fields are missing" });
+        }
 
-    db.collection('fragrances').add(fragranceData)
-        .then(() => {
-            res.status(201).json({ message: "New Fragrance Created Successfully" });
-        })
-        .catch(error => {
-            res.status(500).json({ message: "Server error", error });
-        });
-};
+        let imageUrl = ''; // Initialize imageUrl
+
+        // Check if imageUrl or imageFile is provided
+        if (req.body.imageUrl) {
+            imageUrl = req.body.imageUrl; // Use provided imageUrl
+        } else if (req.file) {
+            // Upload image to Firebase Storage
+            const file = req.file;
+            const storageRef = ref(storage, `images/${file.originalname}`);
+            const snapshot = await uploadBytes(storageRef, file.buffer);
+            imageUrl = await getDownloadURL(snapshot.ref);
+        }
+
+        // Create NewArrival document
+        const fragranceData = {
+            productName,
+            description,
+            category,
+            brandName,
+            price,
+            oldPrice,
+            imageUrl
+        };
+
+        const savedFragrance = await Best.create(fragranceData);
+
+        return res.status(201).json({ message: "Fragrance Created Successfully", fragrance: savedFragrance });
+    } catch (error) {
+        console.error("Error creating new arrival:", error);
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+const createToArrivalFragrance = async(req, res) => {
+    const { productName, brandName, description, category, price, oldPrice } = req.body;
+
+    try {
+        // Validate required fields
+        if (!productName || !brandName || !price || !oldPrice || !description || !category) {
+            return res.status(400).json({ message: "One or more required fields are missing" });
+        }
+
+        let imageUrl = ''; // Initialize imageUrl
+
+        // Check if imageUrl or imageFile is provided
+        if (req.body.imageUrl) {
+            imageUrl = req.body.imageUrl; // Use provided imageUrl
+        } else if (req.file) {
+            // Upload image to Firebase Storage
+            const file = req.file;
+            const storageRef = ref(storage, `images/${file.originalname}`);
+            const snapshot = await uploadBytes(storageRef, file.buffer);
+            imageUrl = await getDownloadURL(snapshot.ref);
+        }
+
+        // Create NewArrival document
+        const fragranceData = {
+            productName,
+            description,
+            category,
+            brandName,
+            price,
+            oldPrice,
+            imageUrl
+        };
+
+        const savedFragrance = await Arrival.create(fragranceData);
+
+        return res.status(201).json({ message: "Fragrance Created Successfully", fragrance: savedFragrance });
+    } catch (error) {
+        console.error("Error creating new arrival:", error);
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
 
 const createJalab = async(req, res) => {
     const { name, description, category, price, oldPrice } = req.body;
@@ -365,6 +472,87 @@ const getChildrenJalab = (req, res) => {
             res.status(404).json({ message: "Failed to get Children Jalabs", error });
 });
 }
+const getFragrance = (req, res) => {
+    Fragrance.find()
+        .then((fragrance) => {
+            const femaleJalabsWithImageUrls = fragrance.map((item) => ({
+                ...item._doc,
+                imageUrl: item.imageUrl,
+            }));
+            res.status(200).json({ message: "General Fragrance gotten successfully", fragrance: femaleJalabsWithImageUrls });
+        })
+        .catch(error => {
+            res.status(404).json({ message: "Failed to get General Fragrance", error });
+        });
+};
+
+const getBestFragrance = (req, res) => {
+    Best.find()
+        .then((fragrance) => {
+            const femaleJalabsWithImageUrls = fragrance.map((item) => ({
+                ...item._doc,
+                imageUrl: item.imageUrl,
+            }));
+            res.status(200).json({ message: "Best Fragrance gotten successfully", fragrance: femaleJalabsWithImageUrls });
+        })
+        .catch(error => {
+            res.status(404).json({ message: "Best to get Female Fragrance", error });
+        });
+};
+
+const getarrivalfragrance = (req, res) => {
+    Arrival.find()
+        .then((fragrance) => {
+            const femaleJalabsWithImageUrls = fragrance.map((item) => ({
+                ...item._doc,
+                imageUrl: item.imageUrl,
+            }));
+            res.status(200).json({ message: "Arrival Fragrance gotten successfully", fragrance: femaleJalabsWithImageUrls });
+        })
+        .catch(error => {
+            res.status(404).json({ message: "Failed to get Arrival Fragrance", error });
+        });
+};
+
+const getMaleFragrance = (req, res) => {
+    Fragrance.find({ category: 'Male' })
+        .then((fragrance) => {
+            const maleFragranceWithImageUrls = fragrance.map((item) => ({
+                ...item._doc,
+                imageUrl: item.imageUrl,
+            }));
+            res.status(200).json({ message: "Male Fragrance gotten successfully", fragrance: maleFragranceWithImageUrls });
+        })
+        .catch(error => {
+            res.status(404).json({ message: "Failed to get Male Fragrance", error });
+        });
+};
+const getFemaleFragrance = (req, res) => {
+    Fragrance.find({ category: 'Female' })
+        .then((fragrance) => {
+            const femaleFragranceWithImageUrls = fragrance.map((item) => ({
+                ...item._doc,
+                imageUrl: item.imageUrl,
+            }));
+            res.status(200).json({ message: "Female Fragrance gotten successfully", fragrance: femaleFragranceWithImageUrls });
+        })
+        .catch(error => {
+            res.status(404).json({ message: "Failed to get Female Fragrance", error });
+        });
+};
+const getUnisexFragrance = (req, res) => {
+    Fragrance.find({ category: 'Unisex' })
+        .then((fragrance) => {
+            const unisexFragranceWithImageUrls = fragrance.map((item) => ({
+                ...item._doc,
+                imageUrl: item.imageUrl,
+            }));
+            res.status(200).json({ message: "Unisex Fragrance gotten successfully", fragrance: unisexFragranceWithImageUrls });
+        })
+        .catch(error => {
+            res.status(404).json({ message: "Failed to get Unisex Fragrance", error });
+});
+}
     
 const updateArrival = async (req, res) => {
     const arrivalId = req.query.arrivalId;
@@ -448,6 +636,129 @@ const updatesinglejalab = async (req, res) => {
         return res.status(500).json({ message: "Failed to update jalab", error: error.message });
     }
 };
+const updateFragrance = async (req, res) => {
+    const fragranceId = req.query.fragranceId;
+
+    try {
+        const { productName, description, brandName, category, price, oldPrice } = req.body;
+
+        if (!['Male', 'Female', 'Unisex'].includes(category)) {
+            return res.status(400).json({ message: "Invalid category" });
+        }
+
+        let imageUrl = req.body.imageUrl; // Use existing imageUrl if provided
+
+        if (req.file) {
+            const file = req.file;
+            const storageRef = ref(storage, `images/${file.originalname}`);
+            const snapshot = await uploadBytes(storageRef, file.buffer);
+            imageUrl = await getDownloadURL(snapshot.ref);
+        }
+
+        const fragranceData = {
+            productName,
+            brandName,
+            imageUrl,
+            description,
+            price,
+            oldPrice,
+            category
+        };
+
+        const updatedFragrance = await Fragrance.findByIdAndUpdate(fragranceId, fragranceData, { new: true });
+
+        if (!updatedFragrance) {
+            return res.status(404).json({ message: "Failed to update fragrance" });
+        }
+
+        return res.status(200).json({ message: "Edited", fragrance: updatedFragrance });
+    } catch (error) {
+        console.error("Error updating arrival:", error.message);
+        return res.status(500).json({ message: "Failed to update fragrance", error: error.message });
+    }
+};
+const updateArrivalFragrance = async (req, res) => {
+    const fragranceId = req.query.fragranceId;
+
+    try {
+        const { productName, description, brandName, category, price, oldPrice } = req.body;
+
+        if (!['Male', 'Female', 'Unisex'].includes(category)) {
+            return res.status(400).json({ message: "Invalid category" });
+        }
+
+        let imageUrl = req.body.imageUrl; // Use existing imageUrl if provided
+
+        if (req.file) {
+            const file = req.file;
+            const storageRef = ref(storage, `images/${file.originalname}`);
+            const snapshot = await uploadBytes(storageRef, file.buffer);
+            imageUrl = await getDownloadURL(snapshot.ref);
+        }
+
+        const fragranceData = {
+            productName,
+            brandName,
+            imageUrl,
+            description,
+            price,
+            oldPrice,
+            category
+        };
+
+        const updatedFragrance = await Fragrance.findByIdAndUpdate(fragranceId, fragranceData, { new: true });
+
+        if (!updatedFragrance) {
+            return res.status(404).json({ message: "Failed to update fragrance" });
+        }
+
+        return res.status(200).json({ message: "Edited", fragrance: updatedFragrance });
+    } catch (error) {
+        console.error("Error updating arrival:", error.message);
+        return res.status(500).json({ message: "Failed to update fragrance", error: error.message });
+    }
+};
+const updateBestFragrance = async (req, res) => {
+    const fragranceId = req.query.fragranceId;
+
+    try {
+        const { productName, description, brandName, category, price, oldPrice } = req.body;
+
+        if (!['Male', 'Female', 'Unisex'].includes(category)) {
+            return res.status(400).json({ message: "Invalid category" });
+        }
+
+        let imageUrl = req.body.imageUrl; // Use existing imageUrl if provided
+
+        if (req.file) {
+            const file = req.file;
+            const storageRef = ref(storage, `images/${file.originalname}`);
+            const snapshot = await uploadBytes(storageRef, file.buffer);
+            imageUrl = await getDownloadURL(snapshot.ref);
+        }
+
+        const fragranceData = {
+            productName,
+            brandName,
+            imageUrl,
+            description,
+            price,
+            oldPrice,
+            category
+        };
+
+        const updatedFragrance = await Fragrance.findByIdAndUpdate(fragranceId, fragranceData, { new: true });
+
+        if (!updatedFragrance) {
+            return res.status(404).json({ message: "Failed to update fragrance" });
+        }
+
+        return res.status(200).json({ message: "Edited", fragrance: updatedFragrance });
+    } catch (error) {
+        console.error("Error updating arrival:", error.message);
+        return res.status(500).json({ message: "Failed to update fragrance", error: error.message });
+    }
+};
 
     const editJalabPage = (req, res) => {
         const jalabId = req.query.jalabId
@@ -519,7 +830,41 @@ const updatesinglejalab = async (req, res) => {
             }
         };
         
-        const updateBestSeller = async (req, res) => {
+    const editGeneralFragrance = (req, res) => {
+        const fragranceId = req.query.fragranceId
+       Fragrance.findById({_id: fragranceId})
+         .then((fragrance) => {
+             res.status(200).json({message: "Edited", fragrance})
+         })
+         .catch(error => {
+             res.status(404).json({message: "Failed to be Edited", error})
+         })
+     }
+     
+     const editBestFragrance = (req, res) => {
+        const fragranceId = req.query.fragranceId
+       Best.findById({_id: fragranceId})
+         .then((fragrance) => {
+             res.status(200).json({message: "Edited", fragrance})
+         })
+         .catch(error => {
+             res.status(404).json({message: "Failed to be Edited", error})
+         })
+     }
+
+     const editArrivalFragrance = (req, res) => {
+        const fragranceId = req.query.fragranceId
+       Arrival.findById({_id: fragranceId})
+         .then((fragrance) => {
+             res.status(200).json({message: "Edited", fragrance})
+         })
+         .catch(error => {
+             res.status(404).json({message: "Failed to be Edited", error})
+         })
+     }
+     
+     
+     const updateBestSeller = async (req, res) => {
             const bestSellerId = req.query.bestSellerId;
             try {
                 const { productName, description, category, price, oldPrice } = req.body;
@@ -655,8 +1000,21 @@ const updatesinglejalab = async (req, res) => {
         })
     }
     
+    const getBrands = (req, res) => {
+        const { brandName } = req.query;
+    
+        Fragrance.find({ brandName: brandName })
+        .then((brands) => {
+            res.status(200).json({ message: "Brands gotten", brands });
+        })
+        .catch((error) => {
+            res.status(500).json({ message: "Error fetching Brands", error: error.message });
+        });
+    }    
 module.exports = {
     createFragrance,
+    createToArrivalFragrance,
+    createToBestFragrance,
     createJalab,
     jalabsToCart,
     jalabsInCart,
@@ -672,6 +1030,12 @@ module.exports = {
     getMaleJalab,
     getFemaleJalab,
     getChildrenJalab,
+    getMaleFragrance,
+    getFemaleFragrance,
+    getUnisexFragrance,
+    getFragrance,
+    getBestFragrance,
+    getarrivalfragrance,
     updateArrival,
     updateBestSeller,
     updateBrand,
@@ -687,5 +1051,12 @@ module.exports = {
     deleteAllBrands,
     deleteAllMaleJalabs,
     deleteAllNewArrivals,
-    deleteSingleMaleJalab
+    deleteSingleMaleJalab,
+    editGeneralFragrance,
+    editBestFragrance,
+    editArrivalFragrance,
+    updateFragrance,
+    updateBestFragrance,
+    updateArrivalFragrance,
+    getBrands
 };

@@ -37,6 +37,7 @@ const leftSlide = useRef(null);
                     <h1 className="flex sm:text-6xl md:text-6xl xs:text-4xl justify-center">New Arrivals</h1>
                 </div>
                 <New_Arrival_Article/>
+                {/* <New_S */}
             </section>
         </>
     )
