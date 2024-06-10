@@ -90,7 +90,7 @@ const Male_Fragrance = () => {
           <button onClick={clearCart} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
         </div>
       )}
-      <AddFragranceForm />
+     {adminToken && <AddFragranceForm />}
     </>
   );
 };
