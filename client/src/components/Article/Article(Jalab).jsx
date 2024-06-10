@@ -74,7 +74,7 @@ console.log(jalabs)
             </Link>
             <div className="flex lg:flex-row items-center justify-between xs:flex-col xs:space-y-3">
               <h3 className="font-semibold xs:text-sm">{jalab.name}</h3>
-              <h3 className="text-xl font-normal mt-1">size: {jalab?.size || 52}</h3><h3 className="font-semibold xs:text-sm">₦{jalab.price}</h3>
+              <h3 className="my-1">size: {jalab?.size || 52}</h3><h3 className="font-semibold xs:text-sm">₦{jalab.price}</h3>
             </div>
             {adminToken && (
               <div className="flex lg:flex-row xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:justify-between lg:space-x-5 my-3">
