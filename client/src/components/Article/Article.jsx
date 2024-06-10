@@ -82,11 +82,12 @@ const Article = () => {
                                 <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={object.imageUrl} alt="jalab-img"/>
                             </Link>    
                             <div className="flex items-center justify-between mb-5">
-                                <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}<span className="text-xl font-normal mt-1">({object?.size || 52})</span></h3>
+                                <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}</h3>
                             </div>
+                            <h3 className="text-xl font-normal my-1">({object?.size || 52})</h3>
                             <div className="flex lg:flex-row items-center justify-between xs:flex-col xs:space-y-3">
                                 <h3 className="font-semibold xs:text-sm">₦{object.price}</h3>
-                                <h3 className="font-semibold xs:text-sm">({object.category})</h3>
+                                <h3 className="font-semibold xs:text-sm">size: {object.category}</h3>
                             </div> 
                             {adminToken && (
                                 <div className="flex lg:flex-row items-center md:justify-between lg:justify-between lg:space-x-5 my-3 xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3">
