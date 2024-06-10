@@ -76,7 +76,7 @@ const Best_Article = () => {
                     objects?.map(object => (
                         <article key={object._id} className={`bg-red-200 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
                             <Link to={`/jalabs/${object._id}`} state={{ object }}>
-                                <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={object.imageUrl} alt="jalab-img"/>
+                                <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={object.imageUrl} alt="fragrance-img"/>
                             </Link>    
                             <div className="flex items-center justify-between mb-5">
                                 <h3 className="sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.productName}</h3>
