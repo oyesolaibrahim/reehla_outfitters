@@ -3,7 +3,7 @@ const Admin = require("../models/admin.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const jwtDecode = require("jwt-decode");
-
+const Delivery = require("../models/addDeliveryFee.model")
 
 
 const addAdmin = (req, res) => {
@@ -18,7 +18,6 @@ const addAdmin = (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        deliveryFee: req.body.deliveryFee,
         password: hashPassword
     }
     Admin.create(adminData)
@@ -92,12 +91,44 @@ const deleteOneClient = (req, res) => {
       res.status(404).json({message: "Client failed to be deleted"})
     })
   }
-  
-
+const deliveryFee = (req, res) => {
+    const {deliveryFee} = req.body
+    if(!deliveryFee) {
+        return res.status(404).json({message: "Input Delivery Fee"})
+    }
+    Delivery.create({deliveryFee})
+    .then((fee) => {
+        res.status(200).json({message: "Fee Created Successfully", fee})
+        })
+        .catch(error => {
+            res.status(500).json({message: "Error Creating Fee", error})
+    })
+}  
+const getDeliveryFee = (req,res) => {
+    Delivery.find()
+    .then((deliveryFee) => {
+        res.status(200).json({message: "Fee Gotten successfully", deliveryFee})
+    })
+    .catch(error => {
+        res.status(500).json({message: "Error getting fee", error})
+    })
+}
+const deleteFee = (req, res) => {
+    Delivery.deleteMany()
+    .then((deliveryFee) => {
+        res.status(200).json({message: "Fee Deleted successfully"})
+        .catch(error => {
+            res.status(500).json({message: "Error Deleting fee", error})
+        })
+    })
+}
 module.exports = {
     addAdmin,
     login,
     adminCart,
     deleteOneClient,
-    deleteAllClients
+    deleteAllClients,
+    deliveryFee,
+    getDeliveryFee,
+    deleteFee
 };

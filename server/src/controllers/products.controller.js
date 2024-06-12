@@ -1015,7 +1015,98 @@ const updateBestFragrance = async (req, res) => {
         .catch((error) => {
             res.status(500).json({ message: "Error fetching Brands", error: error.message });
         });
-    }    
+    }
+    const fetchAllCollections = async (filter) => {
+        try {
+            const fragrances = await Fragrance.find(filter).exec();
+            const jalabs = await Jalabs.find(filter).exec();
+            const newArrivals = await newArrival.find(filter).exec();
+            const bestSeller = await bestSellers.find(filter).exec();
+    
+            const allData = [
+                ...fragrances,
+                ...jalabs,
+                ...newArrivals,
+                ...bestSeller
+            ];
+    
+            return allData;
+        } catch (error) {
+            console.error('Error fetching collections:', error);
+            return [];
+        }
+    };
+    
+    const collections = async (req, res) => {
+        const { productName } = req.query;
+    
+        const createFilter = (productName) => {
+            if (!productName || typeof productName !== 'string') return {};
+    
+            // Convert input to lowercase and split into unique letters
+            const inputLetters = [...new Set(productName.toLowerCase().split(''))];
+            
+            // Only proceed if there are at least 4 unique letters
+            if (inputLetters.length < 4) return { productName: new RegExp('^$', 'i') }; // No match if less than 4 unique letters
+    
+            // MongoDB regex for matching at least four letters
+            const regexPattern = inputLetters.slice(0, 4).map(letter => `(?=.*${letter})`).join('');
+            const regex = new RegExp(`^${regexPattern}.*`, 'i');
+    
+            return { productName: regex };
+        };
+    
+        const filter = createFilter(productName);
+    
+        try {
+            const allCollectionsData = await fetchAllCollections(filter);
+            res.json(allCollectionsData);
+        } catch (error) {
+            console.error('Error in collections route:', error);
+            res.status(500).json({ error: 'Failed to fetch collections data' });
+        }
+    };
+    ;
+    
+    const deleteSingleBestFragrance = (req, res) => {
+        const bestId = req.query.bestId
+        Best.findByIdAndDelete(bestId)
+        .then((bestFragrance) => {
+            res.status(200).json({message: "Deleted successfully", bestFragrance})
+            .catch(error => {
+                res.status(400).json({message: "Failed to be deleted", error})
+            })
+        })
+    }
+    const deleteBestFragrance = (req, res) => {
+        Best.deleteMany()
+        .then((bestFragrance) => {
+            res.status(200).json({message: "Deleted successfully", bestFragrance})
+            .catch(error => {
+                res.status(400).json({message: "Failed to be deleted", error})
+            })
+        })
+    }
+    
+    const deleteSingleNewFragrance = (req, res) => {
+        const newId = req.query.newId
+        Best.findByIdAndDelete(newId)
+        .then((bestFragrance) => {
+            res.status(200).json({message: "Deleted successfully", bestFragrance})
+            .catch(error => {
+                res.status(400).json({message: "Failed to be deleted", error})
+            })
+        })
+    }
+    const deleteNewFragrance = (req, res) => {
+        Best.deleteMany()
+        .then((bestFragrance) => {
+            res.status(200).json({message: "Deleted successfully", bestFragrance})
+            .catch(error => {
+                res.status(400).json({message: "Failed to be deleted", error})
+            })
+        })
+    }
 module.exports = {
     createFragrance,
     createToArrivalFragrance,
@@ -1063,5 +1154,10 @@ module.exports = {
     updateFragrance,
     updateBestFragrance,
     updateArrivalFragrance,
-    getBrands
+    getBrands,
+    collections,
+    deleteBestFragrance,
+    deleteSingleBestFragrance,
+    deleteNewFragrance,
+    deleteSingleNewFragrance
 };

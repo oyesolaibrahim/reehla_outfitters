@@ -52,6 +52,12 @@ const {
   editBestFragrance,
   editArrivalFragrance,
   getBrands,
+  fetchAllCollections,
+  collections,
+  deleteSingleBestFragrance,
+  deleteSingleNewFragrance,
+  deleteNewFragrance,
+  deleteBestFragrance,
 } = require("./controllers/products.controller");
 const {
   addUser,
@@ -62,7 +68,7 @@ const {
   Subscribe,
   sendMessageToSubscribers,
 } = require("./controllers/user.controller");
-const { addAdmin, login, adminCart, deleteOneClient, deleteAllClients,
+const { addAdmin, login, adminCart, deleteOneClient, deleteAllClients, deliveryFee, getDeliveryFee, deleteFee,
  } = require("./controllers/admin.controller");
 const { getAllBlogs, createBlogMessage, removeBlog, deleteAllBlogs, editBlogPage, updateBlog } = require("./controllers/blog.controller");
 require("dotenv").config();
@@ -72,6 +78,9 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Database connected successfully!");
+    // const allCollectionsData = await fetchAllCollections();
+    // console.log('Fetched Data:', allCollectionsData);
+
   })
   .catch((err) => {
     console.log("Error connecting to DB:", err.message);
@@ -142,8 +151,11 @@ app.get("/api/getarrivalfragrance", getarrivalfragrance);
 app.get("/api/editgeneralfragrance", editGeneralFragrance);
 app.get("/api/editbestfragrance", editBestFragrance);
 app.get("/api/editarrivalfragrance", editArrivalFragrance);
+app.get("/api/getdelivery", getDeliveryFee)
+app.get("/api/collections", collections);
 
 app.post("/api/blogs", createBlogMessage);
+app.post("/api/delivery", deliveryFee);
 app.post("/api/fragrance", upload.single("imageFile"), createFragrance);
 app.post("/api/bestfragrance", upload.single("imageFile"), createToBestFragrance);
 app.post("/api/arrivalfragrance", upload.single("imageFile"), createToArrivalFragrance);
@@ -183,7 +195,11 @@ app.delete("/api/deleteallmalejalabs", deleteAllMaleJalabs);
 app.delete("/api/deleteoneclient", deleteOneClient);
 app.delete("/api/deleteallclients", deleteAllClients);
 app.delete("/api/deleteblog", removeBlog);
-app.delete("/api/deleteallblogs", deleteAllBlogs);
+app.delete("/api/deletedelivery", deleteFee);
+app.delete("/api/deletebestfragrance", deleteSingleBestFragrance);
+app.delete("/api/deleteallbestfragrance", deleteBestFragrance);
+app.delete("/api/deletenewfragrance", deleteSingleNewFragrance);
+app.delete("/api/deleteallnewfragrance", deleteNewFragrance);
 
 const port = process.env.PORT;
 app.listen(port, () => {

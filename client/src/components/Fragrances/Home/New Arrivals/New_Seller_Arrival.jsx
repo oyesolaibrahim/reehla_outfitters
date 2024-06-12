@@ -29,7 +29,7 @@ const Arrival_Fragrance = () => {
     
     const removeBrand = async (newArrivalId) => {
         try {
-            const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletenewarrival?newArrivalId=${newArrivalId}`);
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletenewfragrance?newId=${newArrivalId}`);
             setObjects(objects.filter(object => object._id !== newArrivalId)); 
         } catch (error) {
             console.log('Error deleting brand:', error);
@@ -56,7 +56,7 @@ const Arrival_Fragrance = () => {
 
     const clearBrand = async () => {
         try {
-            await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletenewarrivals`);
+            await axios.delete(`${process.env.REACT_APP_SERVER}/api/deleteallnewfragrance`);
             setObjects([]); 
         } catch (error) {
             console.log('Error clearing brands:', error);

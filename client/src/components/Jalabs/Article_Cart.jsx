@@ -102,7 +102,7 @@ const Article_Cart = ({ sessionId }) => {
               <article className="relative sm:flex md:flex justify-between sm:items-center md:items-center">
                 <img className="w-1/3 mb-5" src={myCart.itemDetails._doc?.imageUrl} alt="perfume-img" />
                 <div>
-                  <h3 className="sm:flex md:flex justify-center mt-10 font-semibold text-3xl">{myCart.itemDetails._doc?.name || myCart.itemDetails._doc?.productName}<span className="text-xl font-normal mt-1">({myCart.itemDetails._doc?.size || myCart.itemDetails._doc?.brandName})</span></h3>
+                  <h3 className="sm:flex md:flex justify-center mt-10 font-semibold text-3xl">{myCart.itemDetails._doc?.name || myCart.itemDetails._doc?.productName}<span className="text-xl font-normal mt-1">({myCart.itemDetails._doc?.size || myCart.itemDetails._doc?.brandName || 52})</span></h3>
                   <h3 className="w-96 m-5 sm:text-center md:text-center">{myCart.description}</h3>
                   <div className="flex sm:space-x-10 sm:justify-center md:justify-between xs:space-x-20">
                     <h3 className="font-bold text-center">Qty: {myCart.quantity}</h3>

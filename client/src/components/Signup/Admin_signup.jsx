@@ -13,7 +13,6 @@ const Admin_signUp = () => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [deliveryFee, setDeliveryFee] = useState("");
     const [signup, setSignup] = useState(false);
     const [error, setError] = useState(null)
     
@@ -27,7 +26,6 @@ const Admin_signUp = () => {
           firstName,
           lastName,
           email,
-          deliveryFee,
           password
         }
       }
@@ -92,11 +90,6 @@ const Admin_signUp = () => {
                                 <input className="rounded-lg w-96 py-4 px-10" type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
                             </div>
                             <div className="mb-10 flex justify-center">
-                                <label htmlFor="deliveryFee">
-                                </label>
-                                <input className="rounded-lg w-96 py-4 px-10" type="number" placeholder="Delivery Fee" value={deliveryFee} onChange={(e) => setDeliveryFee(e.target.value)}/>
-                            </div>
-                            <div className="mb-10 flex justify-center">
                                 <label htmlFor="password">
                                 </label>
                                 <input className="rounded-lg w-96 py-4 px-10" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
@@ -105,6 +98,7 @@ const Admin_signUp = () => {
                         </form>
                     </div>
                 </div>
+                     
             </main>
                 
         <Footer/>

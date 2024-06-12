@@ -27,7 +27,7 @@ const Best_Article = () => {
 
     const removeBestSeller = async (bestId) => {
         try {
-            const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletebestseller?bestId=${bestId}`);
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletebestfragrance?bestId=${bestId}`);
             console.log('Best seller deleted successfully:', response);
             setObjects(objects.filter(object => object._id !== bestId)); 
         } catch (error) {
@@ -35,7 +35,7 @@ const Best_Article = () => {
         }
     };
 
-    const handleClearBestSellers = () => {
+    const handleClearBestFragrance = () => {
         Swal.fire({
             title: 'Are you sure you want to clear All?',
             text: 'You won\'t be able to revert this!',
@@ -55,7 +55,7 @@ const Best_Article = () => {
 
     const clearBestSellers = async () => {
         try {
-            await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletebestsellers`);
+            await axios.delete(`${process.env.REACT_APP_SERVER}/api/deleteallbestfragrance`);
             setObjects([]);
             alert('All best sellers deleted successfully');
         } catch (error) {
@@ -97,7 +97,7 @@ const Best_Article = () => {
             </div>
             {adminToken && objects.length > 0 && (
                 <div className="flex justify-between space-x-5 mt-3 pl-20">
-                    <button onClick={handleClearBestSellers} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Fragrance Products</button>
+                    <button onClick={handleClearBestFragrance} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Fragrance Products</button>
                 </div>
             )} 
             {/* {adminToken && <BestFragranceForm />} */}

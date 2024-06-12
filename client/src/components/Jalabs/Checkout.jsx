@@ -97,6 +97,15 @@ const Checkout = ({ sessionId }) => {
             });
     };
     useEffect(() => {
+        const getDeliveryFee = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/getdelivery`);
+                console.log(response.data);
+                // setDeliveryFee(response.data.deliveryFee.deliveryFee)
+            } catch (error) {
+                console.error('Error updating delivery fee:', error);
+            }
+        };
         const fetchCartItems = async () => {
             try {
                 const result = await axios.get(`${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`);
@@ -107,7 +116,7 @@ const Checkout = ({ sessionId }) => {
                 setCartItems([]); 
             }
         };
-    
+        getDeliveryFee()
         fetchCartItems();
        
         const totalPrice = cartItems?.reduce((acc, item) => acc + item.totalPrice, 0);
