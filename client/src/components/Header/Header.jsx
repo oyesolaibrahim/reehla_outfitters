@@ -10,7 +10,6 @@ const Header = ({ myCarts = [] }) => {
     const [fragranceMenu, setFragranceMenu] = useState(false);
     const [right, setRight] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-    const [message, setMessage] = useState("");
     const [brands, setBrands] = useState([]);
     const { cartValue } = useCart();
     const adminToken = sessionStorage.getItem("adminToken");
@@ -33,7 +32,6 @@ const Header = ({ myCarts = [] }) => {
         setFragranceMenu((prevState) => !prevState);
     };
 
-
     const navOpen = () => {
         setRight(true);
     };
@@ -54,11 +52,11 @@ const Header = ({ myCarts = [] }) => {
                     setBrands(response.data);
                     navigate('/search', { state: { brands: response.data } });
                 } else {
-                    setMessage("This Brand is not Available");
+                    navigate('/search', { state: { brands: [], message: "This Product is not Available" } });
                 }
             } catch (error) {
                 console.error('Error fetching collections:', error);
-                setMessage("Error fetching collections. Please try again later.");
+                navigate('/search', { state: { brands: [], message: "Error fetching collections. Please try again later." } });
             }
         }
     };
@@ -91,7 +89,7 @@ const Header = ({ myCarts = [] }) => {
                             <Link to="/">
                                 <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:px-0 sm:hover:text-amber-800 md:hover:text-white">Home</h3>
                             </Link>
-                            <Link to="/">
+                            <Link to="/about">
                                 <h3 className="cursor-pointer min-w-32 font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:hover:text-amber-800 md:hover:text-white">About Us</h3>
                             </Link>
                             <Link to="/blog">
@@ -102,9 +100,13 @@ const Header = ({ myCarts = [] }) => {
                             <Link to="/signup">
                                 <h3 className="cursor-pointer font-bold xs:mb-6 sm:mb-5 md:mb-0 hover:rounded-lg hover:bg-amber-800 py-3 px-5 xs:-ml-5 lg:mr-3 md:mr-3 hover:text-white">Signup</h3>
                             </Link>
-                            <Link to="/login">
-                                <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-800 py-3 px-5 xs:-ml-5 text-white">Login</h3>
-                            </Link>
+                            <div>
+                                <Link to="/login">
+                                    <h3 className={`cursor-pointer ${adminToken && "hidden"} ${userToken && "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-900 py-3 px-5 xs:-ml-5 text-white`}>Login</h3>
+                                    <h3 className={`cursor-pointer ${adminToken ? "inline-block" : "hidden"} ${userToken ? "inline-block" : "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-800 py-3 px-5 xs:-ml-5 text-white`} onClick={logout}>Logout</h3>
+                                </Link>
+                            </div>
+
                         </div>
                     </div>
                     <div className="flex sm:z-50 xs:absolute xs:top-5 sm:absolute xs:right-5 sm:right-5">
@@ -139,16 +141,22 @@ const Header = ({ myCarts = [] }) => {
                             <h3 className="xs:text-xs">Fragrances</h3>
                             <i className="fa fa-chevron-down cursor-pointer" aria-hidden="true" onClick={fragranceMenuDisplay}></i>
                             <div className={`sm:-z-10 xs:-z-10 absolute  transition-all duration-1000 animate-popUp  sm:top-10 xs:top-12 md:-right-36 sm:-left-16 xs:-left-5 rounded-lg bg-teal-900 sm:w-52 md:w-52 xs:w-36 py-3 px-5 text-gray-200 ${fragranceMenu ? "inline-block" : "hidden"}`}>
-                                <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Male</h3>
-                                <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Female</h3>
-                                <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Unisex</h3>
+                                <Link to="/male/fragrance">
+                                    <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Male</h3>
+                                </Link>
+                                <Link to="/female/fragrance">
+                                    <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Female</h3>
+                                </Link>
+                                <Link to="/unisex/fragrance">
+                                    <h3 className="cursor-pointer mb-5 hover:translate-x-3 xs:text-xs transition-all duration-500">Unisex</h3>
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </div>
                 {adminToken ? (
                     <Link to="/jalabs/cart">
-                        <button className={`cursor-pointer orders ${right ? "sm:-z-10 xs:-z-10" : ""} font-bold md:mb-0 rounded-lg bg-red-800 sm:py-3 sm:px-5 text-white sm:absolute sm:right-10 md:static xs:absolute`}>
+                        <button className={`cursor-pointer orders ${right ? "sm:-z-10 xs:-z-10" : ""} font-bold md:mb-0 rounded-lg bg-amber-800 sm:py-3 sm:px-5 text-white sm:absolute sm:right-10 md:static xs:absolute`}>
                             Orders
                         </button>
                     </Link>
@@ -157,7 +165,7 @@ const Header = ({ myCarts = [] }) => {
                         <div>
                             <Link to="/jalabs/cart">
                                 <i className="fa fa-shopping-cart sm:text-6xl md:text-6xl xs:text-5xl cursor-pointer" aria-hidden="true"></i>
-                                <div className="bg-amber-800 rounded-full absolute top-0 left-5">
+                                <div className="bg-amber-900 rounded-full absolute top-0 left-5">
                                     <p className="text-white text-center sm:px-3 md:px-3 xs:px-3 py-1">{cartValue || 0}</p>
                                 </div>
                             </Link>

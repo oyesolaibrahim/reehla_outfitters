@@ -101,7 +101,7 @@ const Checkout = ({ sessionId }) => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/getdelivery`);
                 console.log(response.data);
-                // setDeliveryFee(response.data.deliveryFee.deliveryFee)
+                setDeliveryFee(response.data.deliveryFee.deliveryFee)
             } catch (error) {
                 console.error('Error updating delivery fee:', error);
             }

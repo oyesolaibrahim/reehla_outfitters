@@ -106,21 +106,29 @@ const deliveryFee = (req, res) => {
 }  
 const getDeliveryFee = (req,res) => {
     Delivery.find()
+    .sort({ _id: -1 }) // Sort by ID in descending order
+    .limit(1)          // Limit to 1 result
     .then((deliveryFee) => {
-        res.status(200).json({message: "Fee Gotten successfully", deliveryFee})
+        if (deliveryFee.length > 0) {
+            res.status(200).json({ message: "Fee Gotten successfully", deliveryFee: deliveryFee[0] });
+        } else {
+            res.status(404).json({ message: "No delivery fee found" });
+        }
     })
     .catch(error => {
-        res.status(500).json({message: "Error getting fee", error})
-    })
-}
+        res.status(500).json({ message: "Error getting fee", error });
+    });
+};
+
 const deleteFee = (req, res) => {
     Delivery.deleteMany()
     .then((deliveryFee) => {
         res.status(200).json({message: "Fee Deleted successfully"})
-        .catch(error => {
-            res.status(500).json({message: "Error Deleting fee", error})
-        })
+    }) 
+    .catch(error => {
+        res.status(500).json({message: "Error Deleting fee", error})
     })
+
 }
 module.exports = {
     addAdmin,

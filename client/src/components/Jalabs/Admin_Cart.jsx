@@ -165,7 +165,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
 
             <div>
                 <div className="xs:px-5 xs:pt-10 sm:pt-10 sm:px-5">
-                    <div className="bg-red-200 p-5 lg:fixed right-10 md:w-1/3 md:static lg:w-1/6 top-1/3 flex m-auto rounded-lg">
+                    <div className="bg-red-200 p-5 lg:fixed right-10 md:w-1/3 md:static lg:w-1/6 top-1/2 flex m-auto rounded-lg">
                         <form>
                             <div className="mb-3">
                                 <h3 className="mb-3">CART SUMMARY</h3>
@@ -178,7 +178,7 @@ const Admin_Cart = ({ sessionId, myOrders }) => {
                             <div className="mb-10 flex justify-center">
                                 <label htmlFor="deliveryFee">Delivery Fee:</label>
                                 <input
-                                    className="ml-2 p-2 border rounded"
+                                    className="p-2 border w-full rounded"
                                     type="number"
                                     id="deliveryFee"
                                     placeholder="Delivery Fee"

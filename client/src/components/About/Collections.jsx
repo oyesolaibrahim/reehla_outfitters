@@ -9,11 +9,12 @@ const Collections = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const objects = location.state?.brands;
-    if (objects && objects.length > 0) {
-      setBrands(objects);
+    const { brands, message } = location.state || {};
+    if (brands && brands.length > 0) {
+      setBrands(brands);
+      setMessage('');
     } else {
-      setMessage("This Product is not Available");
+      setMessage(message || "No products found.");
     }
   }, [location.state]);
 
