@@ -9,6 +9,8 @@ import NewArrivalsForm from './New_Arrivals_Form';
 import AddJalabsForm from '../Jalabs/jalabForm';
 import WritingBlogMessage from '../Article/WriteBlog';
 import AddFragranceForm from '../Fragrances/Forms/Male';
+import BestFragranceForm from '../Fragrances/Forms/Best';
+import ArrivalsFragranceForm from '../Fragrances/Forms/ArrivalForm';
 
 const EditForm = () => {
   const { id } = useParams();
@@ -23,14 +25,21 @@ const EditForm = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log(id); 
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
       try {
-        const [brandResponse, arrivalResponse, bestSellerResponse, jalabResponse, blogResponse, fragranceResponse] = await Promise.all([
+        const [
+          brandResponse,
+          arrivalResponse,
+          bestSellerResponse,
+          jalabResponse,
+          blogResponse,
+          fragranceResponse,
+          bestFragranceResponse,
+          newFragranceResponse
+        ] = await Promise.all([
           axios.get(`${process.env.REACT_APP_SERVER}/api/toponebrand?brandId=${id}`),
           axios.get(`${process.env.REACT_APP_SERVER}/api/toponearrival?arrivalId=${id}`),
           axios.get(`${process.env.REACT_APP_SERVER}/api/toponebestseller?bestSellerId=${id}`),
@@ -47,6 +56,8 @@ const EditForm = () => {
         setJalabData(jalabResponse.data.jalab);
         setBlogData(blogResponse.data.blog);
         setFragranceData(fragranceResponse.data.fragrance);
+        setBestSellerFragranceData(bestFragranceResponse.data.fragrance);
+        setNewArrivalFragranceData(newFragranceResponse.data.fragrance);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('Failed to load data. Please try again later.');
@@ -67,19 +78,19 @@ const EditForm = () => {
   if (error) {
     return <div>{error}</div>;
   }
-console.log(blogData)
+
   return (
     <>
       <Header />
-      <main className="bg-blue-800 py-20">
+      <main className="bg-gray-800 py-20">
         {brandData && <TopForm brandData={brandData} />}
         {arrivalData && <NewArrivalsForm arrivalData={arrivalData} />}
         {bestSellerData && <BestForm bestSellerData={bestSellerData} />}
         {jalabData && <AddJalabsForm jalabData={jalabData} />}
         {blogData && <WritingBlogMessage blogData={blogData} />}
         {fragranceData && <AddFragranceForm fragranceData={fragranceData} />}
-        {bestSellerFragranceData && <BestForm bestSellerData={bestSellerData} />}
-        {arrivalFragranceData && <NewArrivalsForm arrivalData={arrivalData} />}
+        {bestSellerFragranceData && <BestFragranceForm bestSellerData={bestSellerFragranceData} />}
+        {arrivalFragranceData && <ArrivalsFragranceForm arrivalData={arrivalFragranceData} />}
       </main>
       <Footer />
     </>

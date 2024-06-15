@@ -2,9 +2,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
-// import { getDownloadURL, ref } from "firebase/storage";
-// import { storage } from "../Firebase";
-import ArrivalsFragranceForm from "../../Forms/ArrivalForm";
 
 const Arrival_Fragrance = () => {
     const [objects, setObjects] = useState([]);
@@ -15,7 +12,6 @@ const Arrival_Fragrance = () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/getarrivalfragrance`);
                 console.log('New Arrival fragrances fetched successfully:', response);
-    
                 setObjects(response.data.fragrance);
                 setLoading(false); 
             } catch (error) {
@@ -23,13 +19,12 @@ const Arrival_Fragrance = () => {
                 setLoading(false); 
             }
         };
-    
         fetchNewArrival();
-    }, [])
+    }, []);
     
     const removeBrand = async (newArrivalId) => {
         try {
-            const response = await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletenewfragrance?newId=${newArrivalId}`);
+            await axios.delete(`${process.env.REACT_APP_SERVER}/api/deletenewfragrance?newId=${newArrivalId}`);
             setObjects(objects.filter(object => object._id !== newArrivalId)); 
         } catch (error) {
             console.log('Error deleting brand:', error);
@@ -87,8 +82,8 @@ const Arrival_Fragrance = () => {
                             </div> 
                             {adminToken && (
                                 <div className="flex lg:flex-row xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:justify-between lg:space-x-5 md:space-x-5 mt-3">
-                                    <button onClick={() => removeBrand(object._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Product</button>
-                                    <Link to={`/edit/${object._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Product</button></Link>  
+                                    <button onClick={() => removeBrand(object._id)} className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Product</button>
+                                    <Link to={`/edit/${object._id}`}><button className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Product</button></Link>  
                                 </div>
                             )}
                         </article>
@@ -97,7 +92,7 @@ const Arrival_Fragrance = () => {
             </div>
             {adminToken && objects.length > 0 && (
                 <div className="flex justify-between space-x-5 mt-3 pl-20">
-                    <button onClick={handleClearBrand} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Fragrance Products</button>
+                    <button onClick={handleClearBrand} className="bg-amber-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Fragrance Products</button>
                 </div>
             )}
             {/* {adminToken && <ArrivalsFragranceForm />} */}

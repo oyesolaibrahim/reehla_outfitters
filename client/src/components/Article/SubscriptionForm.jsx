@@ -16,13 +16,16 @@ const SubscriptionForm = () => {
       setSuccessMessage('Subscription successful!');
       setTimeout(() => {
         setSuccessMessage("")
-      }, 1000)
+      }, 10000)
       setError('');
       setEmail('');
     } catch (error) {
       console.error('Error subscribing:', error.message);
       setError('Error subscribing. Please try again later.!!!');
       setSuccessMessage('');
+      setTimeout(() => {
+        setError("")
+      }, 10000)
     } finally {
       setSubmitting(false);
     }

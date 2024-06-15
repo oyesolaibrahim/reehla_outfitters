@@ -66,8 +66,8 @@ const Female_Fragrance = () => {
                         <h3 className="text-center my-2">{fragrance.brandName}</h3>
                         {adminToken && (
                             <div className="flex lg:flex-row xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between md:space-y-0 lg:justify-between lg:space-x-5 md:space-x-5 mt-3">
-                                <button onClick={() => removeFragrance(fragrance._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Fragrance</button>
-                                <Link to={`/edit/${fragrance._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Fragrance</button></Link>
+                                <button onClick={() => removeFragrance(fragrance._id)} className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Fragrance</button>
+                                <Link to={`/edit/${fragrance._id}`}><button className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Fragrance</button></Link>
                             </div>
                         )}
                     </article>
@@ -75,7 +75,7 @@ const Female_Fragrance = () => {
             </div>
             {adminToken && objects.length > 0 && (
                 <div className="flex justify-between space-x-5 mt-3 pl-20">
-                    <button onClick={clearFragrances} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
+                    <button onClick={clearFragrances} className="bg-amber-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
                 </div>
             )}
             {adminToken && <AddFragranceForm />}

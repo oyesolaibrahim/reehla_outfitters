@@ -56,8 +56,8 @@ const BlogList = ({ blogs }) => {
             </div>
             {adminToken && (
               <div className='flex justify-center space-x-5 py-3 mx-auto'>
-                <button onClick={() => removeBlog(blog._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-5 xs:py-2" type="button">Remove Blog</button>
-                <Link to={`/edit/${blog._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-5 xs:py-2" type="button">Edit Blog</button></Link>
+                <button onClick={() => removeBlog(blog._id)} className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-5 xs:py-2" type="button">Remove Blog</button>
+                <Link to={`/edit/${blog._id}`}><button className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-5 xs:py-2" type="button">Edit Blog</button></Link>
               </div>
             )
           }
@@ -68,17 +68,17 @@ const BlogList = ({ blogs }) => {
       </div>
       {adminToken && blogs.length > 0 && (
         <div className="flex sm:justify-between sm:pl-20 xs:justify-center space-x-5 mt-3">
-          <button onClick={handleClearBlogs} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Blogs</button>
+          <button onClick={handleClearBlogs} className="bg-amber-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Blogs</button>
         </div>
       )}
       <div>
         {adminToken && (
           <div className='flex justify-center space-x-5'>
             <Link to="/writeblog">
-              <button className='bg-red-800 mt-20 text-white py-3 px-5 rounded-lg'>Write Blog</button>
+              <button className='bg-amber-800 mt-20 text-white py-3 px-5 rounded-lg'>Write Blog</button>
             </Link>
             <Link to="/sendmessage">
-              <button className='bg-red-800 mt-20 text-white py-3 px-5 rounded-lg'>Send Message</button>
+              <button className='bg-amber-800 mt-20 text-white py-3 px-5 rounded-lg'>Send Message</button>
             </Link>
           </div>
         )}

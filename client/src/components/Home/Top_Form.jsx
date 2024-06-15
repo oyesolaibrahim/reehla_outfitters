@@ -160,7 +160,7 @@ const TopForm = ({ brandData }) => {
                     />
                 </label>
                 <br />
-                <button className='bg-red-800 text-white px-5 py-3 rounded-lg' type='submit' disabled={submitting}>
+                <button className='bg-amber-800 text-white px-5 py-3 rounded-lg' type='submit' disabled={submitting}>
                     {submitting ? (location.pathname === "/" ? 'Submitting...' : 'Updating...') : (location.pathname === "/" ? 'Submit' : 'Update')}
                 </button>
 

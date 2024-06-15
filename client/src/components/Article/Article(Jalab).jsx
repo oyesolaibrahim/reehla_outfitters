@@ -78,8 +78,8 @@ console.log(jalabs)
             </div>
             {adminToken && (
               <div className="flex lg:flex-row xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:justify-between lg:space-x-5 my-3">
-                <button onClick={() => removeJalab(jalab._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Jalab</button>
-                <Link to={`/edit/${jalab._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Jalab</button></Link>
+                <button onClick={() => removeJalab(jalab._id)} className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Jalab</button>
+                <Link to={`/edit/${jalab._id}`}><button className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Jalab</button></Link>
               </div>
             )}
           </article>
@@ -87,7 +87,7 @@ console.log(jalabs)
       </div>
       {adminToken && objects.length > 0 && (
         <div className="flex justify-between space-x-5 mt-3 pl-20">
-          <button onClick={clearCart} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
+          <button onClick={clearCart} className="bg-amber-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Products</button>
         </div>
       )}
       {adminToken && <AddJalabsForm />}

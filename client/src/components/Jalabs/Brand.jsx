@@ -22,7 +22,7 @@ const BrandPage = () => {
         try {
           const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/brands?brandName=${object.brandName}`);
           if (response.data.brands && response.data.brands.length > 0) {
-            setBrands(response.data.brands); // Ensure the response data is an array
+            setBrands(response.data.brands); 
           } else {
             setMessage("This Brand is not Available");
           }
@@ -50,9 +50,10 @@ const BrandPage = () => {
                   <article className="relative xs:flex xs:flex-col sm:flex md:flex xs:justify-between sm:justify-between md:justify-start md:space-x-10 sm:items-center md:items-center">
                     <img className="sm:w-1/3 mb-5 xs:w-full" src={object.imageUrl} alt="brand-img" />
                     <div className=''>
-                      <h3 className="sm:flex xs:flex xs:justify-center md:flex justify-center mt-10 font-semibold text-3xl">{object.productName}</h3>
-                      <h3 className="sm:flex xs:flex xs:justify-center md:flex justify-center mt-10 font-bold">{object.brandName}</h3>
-                      <h3 className="max-w-96 xs:flex xs:justify-center my-5 sm:text-center md:text-center">{object.description}</h3>
+                      <h3 className="sm:flex xs:flex xs:justify-center md:flex justify-center my-5 font-semibold text-3xl">{object.productName}</h3>
+                      <h3 className="sm:flex xs:flex xs:justify-center md:flex justify-center mt-2 font-bold">{object.brandName}</h3>
+                      <h3 className="sm:flex xs:flex xs:justify-center md:flex justify-center mt-2 font-bold">{object.category}</h3>
+                      <h3 className="max-w-96 xs:flex xs:justify-center my-2 sm:text-center md:text-center">₦{object.price}</h3>
                     </div>
                   </article>
                     </Link>

@@ -104,8 +104,8 @@ const Brand_Article = () => {
                             <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.brandName}</h3>
                             {adminToken && (
                                 <div className="flex xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:flex-row lg:justify-between lg:space-x-5 my-3">
-                                    <button onClick={() => removeBrand(object._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Brand</button>
-                                    <Link to={`/edit/${object._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Brand</button></Link>
+                                    <button onClick={() => removeBrand(object._id)} className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Brand</button>
+                                    <Link to={`/edit/${object._id}`}><button className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Brand</button></Link>
                                 </div>
                             )}     
                         </article>
@@ -114,7 +114,7 @@ const Brand_Article = () => {
             </div> 
             {adminToken && objects.length > 0 && (
                 <div className="flex justify-between space-x-5 mt-3 pl-20">
-                    <button onClick={handleClearBrand} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Brands</button>
+                    <button onClick={handleClearBrand} className="bg-amber-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Brands</button>
                 </div> 
             )} 
             {adminToken && (

@@ -13,7 +13,7 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
         oldPrice: '',
         imageUrl: '',
         imageFile: null,
-        brandName: '' 
+        brandName: ''
     });
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -29,7 +29,7 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
                 oldPrice: arrivalData.oldPrice || '',
                 imageUrl: arrivalData.imageUrl || '',
                 imageFile: null,
-                brandName: arrivalData.brandName || '' // Set brandName if available
+                brandName: arrivalData.brandName || ''
             });
         }
     }, [arrivalData]);
@@ -41,12 +41,14 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setFormData({ ...formData, imageFile: file, imageUrl: '' }); // Clear imageUrl when a file is selected
+        setFormData({ ...formData, imageFile: file, imageUrl: '' });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitting(true);
+        setError('');
+        setSuccessfulMsg('');
 
         try {
             let imageUrl = formData.imageUrl;
@@ -65,13 +67,10 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
                 price: formData.price,
                 oldPrice: formData.oldPrice,
                 imageUrl: imageUrl,
-                brandName: formData.brandName // Include brandName in post data
+                brandName: formData.brandName
             };
 
-            // Post to first collection
             await axios.post(`${process.env.REACT_APP_SERVER}/api/arrivalfragrance`, postData);
-
-            // Post to second collection
             await axios.post(`${process.env.REACT_APP_SERVER}/api/fragrance`, postData);
 
             setFormData({
@@ -82,13 +81,11 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
                 oldPrice: '',
                 imageUrl: '',
                 imageFile: null,
-                brandName: '' 
+                brandName: ''
             });
             setSuccessfulMsg("Added Successfully");
-            setError('');
         } catch (error) {
             console.error('Error adding new arrival:', error.message);
-            setSuccessfulMsg('');
             setError('Error adding new arrival. Please try again later.');
         } finally {
             setSubmitting(false);
@@ -98,6 +95,8 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         setSubmitting(true);
+        setError('');
+        setSuccessfulMsg('');
 
         try {
             let imageUrl = formData.imageUrl;
@@ -116,20 +115,15 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
                 price: formData.price,
                 oldPrice: formData.oldPrice,
                 imageUrl: imageUrl,
-                brandName: formData.brandName // Include brandName in update data
+                brandName: formData.brandName
             };
 
-            // Update first collection
-            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatearrival?arrivalId=${arrivalData._id}`, postData);
-
-            // Update second collection
-            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatefragrance?arrivalId=${arrivalData._id}`, postData);
+            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatearrivalfragrance?fragranceId=${arrivalData._id}`, postData);
+            await axios.put(`${process.env.REACT_APP_SERVER}/api/updatefragrance?fragranceId=${arrivalData._id}`, postData);
 
             setSuccessfulMsg("Updated Successfully");
-            setError('');
         } catch (error) {
             console.error('Error updating arrival:', error.message);
-            setSuccessfulMsg('');
             setError('Error updating arrival. Please try again later.');
         } finally {
             setSubmitting(false);
@@ -137,9 +131,10 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
     };
 
     const location = useLocation();
+    const isHome = location.pathname === "/";
 
     return (
-        <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 xs:ml-0' onSubmit={location.pathname === "/" ? handleSubmit : handleUpdate}>
+        <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 xs:ml-0' onSubmit={isHome ? handleSubmit : handleUpdate}>
             <label>
                 <input
                     className='w-full mb-5 p-3 rounded-lg'
@@ -153,7 +148,7 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
             </label>
             <br />
             <label>
-                Brand Name: 
+                Brand Name:
                 <input
                     className='w-full mb-5 p-3 rounded-lg'
                     placeholder='Brand Name'
@@ -197,7 +192,7 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
                 >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-                    <option value="Children">Unisex</option>
+                    <option value="Unisex">Unisex</option>
                 </select>
             </label>
             <br />
@@ -235,16 +230,9 @@ const ArrivalsFragranceForm = ({ arrivalData }) => {
                 />
             </label>
             <br />
-            
-            {location.pathname === "/" ? (
-                <button onClick={handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-                    {submitting ? 'Submitting...' : 'Submit'}
-                </button>
-            ) : (
-                <button onClick={handleUpdate} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-                    {submitting ? 'Updating...' : 'Update'}
-                </button>
-            )}
+            <button className='bg-amber-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+                {submitting ? (isHome ? 'Submitting...' : 'Updating...') : (isHome ? 'Submit' : 'Update')}
+            </button>
             {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}
             {successfulMsg && <p className='bg-green-600 w-1/2 text-white mt-5 rounded-lg py-3 px-5'>{successfulMsg}</p>}
         </form>

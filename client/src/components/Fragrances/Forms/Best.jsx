@@ -18,6 +18,7 @@ const BestFragranceForm = ({ bestSellerData }) => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [successfulMsg, setSuccessfulMsg] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     if (bestSellerData) {
@@ -29,7 +30,7 @@ const BestFragranceForm = ({ bestSellerData }) => {
         oldPrice: bestSellerData.oldPrice || '',
         imageUrl: bestSellerData.imageUrl || '',
         imageFile: null,
-        brandName: bestSellerData.brandName || '' // Set brandName if available
+        brandName: bestSellerData.brandName || '' 
       });
     }
   }, [bestSellerData]);
@@ -41,63 +42,14 @@ const BestFragranceForm = ({ bestSellerData }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData({ ...formData, imageFile: file, imageUrl: '' }); // Clear imageUrl when a file is selected
+    setFormData({ ...formData, imageFile: file, imageUrl: '' }); 
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-
-    try {
-      let imageUrl = formData.imageUrl;
-
-      if (formData.imageFile) {
-        const file = formData.imageFile;
-        const storageRef = ref(storage, `images/${file.name}`);
-        const snapshot = await uploadBytes(storageRef, file);
-        imageUrl = await getDownloadURL(snapshot.ref);
-      }
-
-      const postData = {
-        productName: formData.productName,
-        category: formData.category,
-        description: formData.description,
-        price: formData.price,
-        oldPrice: formData.oldPrice,
-        imageUrl: imageUrl,
-        brandName: formData.brandName // Include brandName in post data
-      };
-
-      // Post to first collection
-      await axios.post(`${process.env.REACT_APP_SERVER}/api/bestfragrance`, postData);
-
-      // Post to second collection
-      await axios.post(`${process.env.REACT_APP_SERVER}/api/fragrance`, postData);
-
-      setFormData({
-        productName: '',
-        category: 'Male',
-        description: '',
-        price: '',
-        oldPrice: '',
-        imageUrl: '',
-        imageFile: null,
-        brandName: '' // Reset brandName field
-      });
-      setSuccessfulMsg("Added Successfully");
-      setError('');
-    } catch (error) {
-      console.error('Error adding best seller:', error.message);
-      setSuccessfulMsg('');
-      setError('Error adding best seller. Please try again later.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
+    setError('');
+    setSuccessfulMsg('');
 
     try {
       let imageUrl = formData.imageUrl;
@@ -119,24 +71,64 @@ const BestFragranceForm = ({ bestSellerData }) => {
         brandName: formData.brandName 
       };
 
-      // Update first collection
-      await axios.put(`${process.env.REACT_APP_SERVER}/api/updatebestseller?bestSellerId=${bestSellerData._id}`, postData);
+      await axios.post(`${process.env.REACT_APP_SERVER}/api/bestfragrance`, postData);
+      await axios.post(`${process.env.REACT_APP_SERVER}/api/fragrance`, postData);
 
-      // Update second collection
-      await axios.put(`${process.env.REACT_APP_SERVER}/api/updatesecondcollection?bestSellerId=${bestSellerData._id}`, postData);
-
-      setSuccessfulMsg("Updated Successfully");
-      setError('');
+      setFormData({
+        productName: '',
+        category: 'Male',
+        description: '',
+        price: '',
+        oldPrice: '',
+        imageUrl: '',
+        imageFile: null,
+        brandName: '' 
+      });
+      setSuccessfulMsg("Added Successfully");
     } catch (error) {
-      console.error('Error updating best seller:', error.message);
-      setSuccessfulMsg('');
-      setError('Error updating best seller. Please try again later.');
+      console.error('Error adding best seller:', error);
+      setError('Error adding best seller. Please try again later.');
     } finally {
       setSubmitting(false);
     }
   };
 
-  const location = useLocation();
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError('');
+    setSuccessfulMsg('');
+
+    try {
+      let imageUrl = formData.imageUrl;
+
+      if (formData.imageFile) {
+        const file = formData.imageFile;
+        const storageRef = ref(storage, `images/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        imageUrl = await getDownloadURL(snapshot.ref);
+      }
+
+      const postData = {
+        productName: formData.productName,
+        category: formData.category,
+        description: formData.description,
+        price: formData.price,
+        oldPrice: formData.oldPrice,
+        imageUrl: imageUrl,
+        brandName: formData.brandName 
+      };
+      await axios.put(`${process.env.REACT_APP_SERVER}/api/updatebestfragrance?fragranceId=${bestSellerData._id}`, postData);
+      await axios.put(`${process.env.REACT_APP_SERVER}/api/updatefragrance?fragranceId=${bestSellerData._id}`, postData);
+
+      setSuccessfulMsg("Updated Successfully");
+    } catch (error) {
+      console.error('Error updating best seller:', error);
+      setError('Error updating best seller. Please try again later.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/best-sellers" ? handleSubmit : handleUpdate}>
@@ -236,15 +228,9 @@ const BestFragranceForm = ({ bestSellerData }) => {
       </label>
       <br />
       
-      {location.pathname === "/" ? (
-        <button onClick={handleSubmit} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-          {submitting ? 'Submitting...' : 'Submit'}
-        </button>
-      ) : (
-        <button onClick={handleUpdate} className='bg-red-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
-          {submitting ? 'Updating...' : 'Update'}
-        </button>
-      )}
+      <button className='bg-amber-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+        {submitting ? (location.pathname === "/best-sellers" ? 'Submitting...' : 'Updating...') : (location.pathname === "/best-sellers" ? 'Submit' : 'Update')}
+      </button>
       {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}
       {successfulMsg && <p className='bg-green-600 w-1/2 text-white mt-5 rounded-lg py-3 px-5'>{successfulMsg}</p>}
     </form>

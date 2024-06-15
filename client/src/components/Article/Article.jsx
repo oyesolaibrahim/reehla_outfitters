@@ -91,8 +91,8 @@ const Article = () => {
                             </div> 
                             {adminToken && (
                                 <div className="flex lg:flex-row items-center md:justify-between lg:justify-between lg:space-x-5 my-3 xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3">
-                                    <button onClick={() => removeBestSeller(object._id)} className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Product</button>
-                                    <Link to={`/edit/${object._id}`}><button className="bg-red-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Product</button></Link>  
+                                    <button onClick={() => removeBestSeller(object._id)} className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Product</button>
+                                    <Link to={`/edit/${object._id}`}><button className="bg-amber-800 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Edit Product</button></Link>  
                                 </div>
                             )}
                         </article>
@@ -101,7 +101,7 @@ const Article = () => {
             </div>
             {adminToken && objects.length > 0 && (
                 <div className="flex justify-between space-x-5 mt-3 pl-20">
-                    <button onClick={handleClearBestSellers} className="bg-red-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Jalab Products</button>
+                    <button onClick={handleClearBestSellers} className="bg-amber-800 text-sm text-white rounded-lg py-3 px-5" type="button">Delete All Jalab Products</button>
                 </div>
             )} 
             <Best_Article/>

@@ -64,14 +64,11 @@ const AddFragranceForm = ({ fragranceData }) => {
         price: formData.price,
         oldPrice: formData.oldPrice,
         imageUrl: imageUrl,
-        brandName: formData.brandName // Include brandName in post data
+        brandName: formData.brandName 
       };
       
-      // Post to first collection
       await axios.post(`${process.env.REACT_APP_SERVER}/api/fragrance`, postData);
       
-      // Post to second collection
-      //   await axios.post(`${process.env.REACT_APP_SERVER}/api/secondcollection`, postData);
       
       setFormData({
         productName: '',
@@ -81,7 +78,7 @@ const AddFragranceForm = ({ fragranceData }) => {
         oldPrice: '',
         imageUrl: '',
         imageFile: null,
-        brandName: '' // Reset brandName field
+        brandName: '' 
       });
       setSuccessfulMsg("Added Successfully");
       setError('');
@@ -115,10 +112,9 @@ const AddFragranceForm = ({ fragranceData }) => {
         price: formData.price,
         oldPrice: formData.oldPrice,
         imageUrl: imageUrl,
-        brandName: formData.brandName // Include brandName in update data
+        brandName: formData.brandName 
       };
       
-      // Update first collection
       await axios.put(`${process.env.REACT_APP_SERVER}/api/updatefragrance?fragranceId=${fragranceData._id}`, postData);
       setSuccessfulMsg("Updated Successfully");
       setError('');

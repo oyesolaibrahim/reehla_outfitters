@@ -567,7 +567,7 @@ const updateArrival = async (req, res) => {
             return res.status(400).json({ message: "Invalid category" });
         }
 
-        let imageUrl = req.body.imageUrl; // Use existing imageUrl if provided
+        let imageUrl = req.body.imageUrl; 
 
         if (req.file) {
             const file = req.file;
@@ -610,7 +610,7 @@ const updatesinglejalab = async (req, res) => {
             return res.status(400).json({ message: "Invalid category" });
         }
 
-        let imageUrl = req.body.imageUrl; // Use existing imageUrl if provided
+        let imageUrl = req.body.imageUrl; 
 
         if (req.file) {
             const file = req.file;
@@ -641,20 +641,28 @@ const updatesinglejalab = async (req, res) => {
     }
 };
 const updateFragrance = async (req, res) => {
-    const fragranceId = req.query.fragranceId;
+    const { fragranceId } = req.query;
 
     try {
+        if (!fragranceId) {
+            return res.status(400).json({ message: "Missing fragranceId in request" });
+        }
+
         const { productName, description, brandName, category, price, oldPrice } = req.body;
+        if (!productName || !description || !brandName || !category || !price || !oldPrice) {
+            return res.status(400).json({ message: "Missing required fields in request body" });
+        }
 
         if (!['Male', 'Female', 'Unisex'].includes(category)) {
             return res.status(400).json({ message: "Invalid category" });
         }
 
-        let imageUrl = req.body.imageUrl; // Use existing imageUrl if provided
+        let imageUrl = req.body.imageUrl;
 
         if (req.file) {
             const file = req.file;
             const storageRef = ref(storage, `images/${file.originalname}`);
+
             const snapshot = await uploadBytes(storageRef, file.buffer);
             imageUrl = await getDownloadURL(snapshot.ref);
         }
@@ -675,23 +683,31 @@ const updateFragrance = async (req, res) => {
             return res.status(404).json({ message: "Failed to update fragrance" });
         }
 
-        return res.status(200).json({ message: "Edited", fragrance: updatedFragrance });
+        return res.status(200).json({ message: "Fragrance updated successfully", fragrance: updatedFragrance });
     } catch (error) {
-        console.error("Error updating arrival:", error.message);
+        console.error("Error updating fragrance:", error.message);
         return res.status(500).json({ message: "Failed to update fragrance", error: error.message });
     }
-};
+}
+
 const updateArrivalFragrance = async (req, res) => {
-    const fragranceId = req.query.fragranceId;
+    const { fragranceId } = req.query;
 
     try {
+        if (!fragranceId) {
+            return res.status(400).json({ message: "Missing fragranceId in request" });
+        }
+
         const { productName, description, brandName, category, price, oldPrice } = req.body;
+        if (!productName || !description || !brandName || !category || !price || !oldPrice) {
+            return res.status(400).json({ message: "Missing required fields in request body" });
+        }
 
         if (!['Male', 'Female', 'Unisex'].includes(category)) {
             return res.status(400).json({ message: "Invalid category" });
         }
 
-        let imageUrl = req.body.imageUrl; // Use existing imageUrl if provided
+        let imageUrl = req.body.imageUrl;
 
         if (req.file) {
             const file = req.file;
@@ -710,57 +726,75 @@ const updateArrivalFragrance = async (req, res) => {
             category
         };
 
-        const updatedFragrance = await Fragrance.findByIdAndUpdate(fragranceId, fragranceData, { new: true });
+        const updatedFragrance = await Arrival.findByIdAndUpdate(fragranceId, fragranceData, { new: true });
+
+        if (!updatedFragrance) {
+            return res.status(404).json({ message: "Failed to update fragrance" });
+        }
+        return res.status(200).json({ message: "Fragrance updated successfully", fragrance: updatedFragrance });
+    } catch (error) {
+        console.error("Error updating arrival fragrance:", error.message);
+        return res.status(500).json({ message: "Failed to update fragrance", error: error.message });
+    }
+}
+
+const updateBestFragrance = async (req, res) => {
+    const { fragranceId } = req.query;
+
+    try {
+        if (!fragranceId) {
+            return res.status(400).json({ message: "Missing fragranceId in request" });
+        }
+
+        const { productName, description, brandName, category, price, oldPrice } = req.body;
+        if (!productName || !description || !brandName || !category || !price || !oldPrice) {
+            return res.status(400).json({ message: "Missing required fields in request body" });
+        }
+
+        if (!['Male', 'Female', 'Unisex'].includes(category)) {
+            return res.status(400).json({ message: "Invalid category" });
+        }
+
+        let imageUrl = req.body.imageUrl;
+
+        if (req.file) {
+            const file = req.file;
+            const storageRef = ref(storage, `images/${file.originalname}`);
+            const snapshot = await uploadBytes(storageRef, file.buffer);
+            imageUrl = await getDownloadURL(snapshot.ref);
+        }
+
+        const fragranceData = {
+            productName,
+            brandName,
+            imageUrl,
+            description,
+            price,
+            oldPrice,
+            category
+        };
+
+        const updatedFragrance = await Best.findByIdAndUpdate(fragranceId, fragranceData, { new: true });
 
         if (!updatedFragrance) {
             return res.status(404).json({ message: "Failed to update fragrance" });
         }
 
-        return res.status(200).json({ message: "Edited", fragrance: updatedFragrance });
+        return res.status(200).json({ message: "Fragrance updated successfully", fragrance: updatedFragrance });
     } catch (error) {
-        console.error("Error updating arrival:", error.message);
+        console.error("Error updating best fragrance:", error.message);
         return res.status(500).json({ message: "Failed to update fragrance", error: error.message });
     }
 };
-const updateBestFragrance = async (req, res) => {
-    const fragranceId = req.query.fragranceId;
 
+const uploadFileAndGetURL = async (file) => {
     try {
-        const { productName, description, brandName, category, price, oldPrice } = req.body;
-
-        if (!['Male', 'Female', 'Unisex'].includes(category)) {
-            return res.status(400).json({ message: "Invalid category" });
-        }
-
-        let imageUrl = req.body.imageUrl; // Use existing imageUrl if provided
-
-        if (req.file) {
-            const file = req.file;
-            const storageRef = ref(storage, `images/${file.originalname}`);
-            const snapshot = await uploadBytes(storageRef, file.buffer);
-            imageUrl = await getDownloadURL(snapshot.ref);
-        }
-
-        const fragranceData = {
-            productName,
-            brandName,
-            imageUrl,
-            description,
-            price,
-            oldPrice,
-            category
-        };
-
-        const updatedFragrance = await Fragrance.findByIdAndUpdate(fragranceId, fragranceData, { new: true });
-
-        if (!updatedFragrance) {
-            return res.status(404).json({ message: "Failed to update fragrance" });
-        }
-
-        return res.status(200).json({ message: "Edited", fragrance: updatedFragrance });
+        const storageRef = ref(storage, `images/${file.originalname}`);
+        const snapshot = await uploadBytes(storageRef, file.buffer);
+        return await getDownloadURL(snapshot.ref);
     } catch (error) {
-        console.error("Error updating arrival:", error.message);
-        return res.status(500).json({ message: "Failed to update fragrance", error: error.message });
+        console.error("Error uploading file:", error.message);
+        return null;
     }
 };
 
@@ -877,7 +911,7 @@ const updateBestFragrance = async (req, res) => {
                     return res.status(400).json({ message: "Invalid category" });
                 }
         
-                let imageUrl = req.body.imageUrl; // Use existing imageUrl if provided
+                let imageUrl = req.body.imageUrl; 
         
                 if (req.file) {
                     const file = req.file;
@@ -1069,42 +1103,39 @@ const updateBestFragrance = async (req, res) => {
     ;
     
     const deleteSingleBestFragrance = (req, res) => {
-        const bestId = req.query.bestId
+        const {bestId} = req.query
         Best.findByIdAndDelete(bestId)
         .then((bestFragrance) => {
             res.status(200).json({message: "Deleted successfully", bestFragrance})
-            .catch(error => {
-                res.status(400).json({message: "Failed to be deleted", error})
-            })
+        }).catch(error => {
+            res.status(400).json({message: "Failed to be deleted", error})
         })
     }
     const deleteBestFragrance = (req, res) => {
         Best.deleteMany()
         .then((bestFragrance) => {
             res.status(200).json({message: "Deleted successfully", bestFragrance})
-            .catch(error => {
-                res.status(400).json({message: "Failed to be deleted", error})
-            })
+        }).catch(error => {
+            res.status(400).json({message: "Failed to be deleted", error})
         })
     }
     
     const deleteSingleNewFragrance = (req, res) => {
-        const newId = req.query.newId
-        Best.findByIdAndDelete(newId)
+        const {newId} = req.query
+        Arrival.findByIdAndDelete(newId)
         .then((bestFragrance) => {
             res.status(200).json({message: "Deleted successfully", bestFragrance})
-            .catch(error => {
-                res.status(400).json({message: "Failed to be deleted", error})
-            })
+        }).catch(error => {
+            res.status(400).json({message: "Failed to be deleted", error})
         })
     }
     const deleteNewFragrance = (req, res) => {
-        Best.deleteMany()
+        Arrival.deleteMany()
         .then((bestFragrance) => {
             res.status(200).json({message: "Deleted successfully", bestFragrance})
-            .catch(error => {
-                res.status(400).json({message: "Failed to be deleted", error})
-            })
+            
+        }).catch(error => {
+            res.status(400).json({message: "Failed to be deleted", error})
         })
     }
 module.exports = {
