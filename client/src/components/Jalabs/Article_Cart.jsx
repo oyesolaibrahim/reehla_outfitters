@@ -98,7 +98,7 @@ const Article_Cart = ({ sessionId }) => {
         <div className="flex flex-col space-y-3 justify-between">
           
           {myCarts.map(myCart => (
-            <div key={myCart._id} className="bg-red-200 max-h-62 min-h-62 sm:max-w-2/3 md:w-3/4 sm:min-w-36 md:min-w-36 p-10 m-5">
+            <div key={myCart._id} className="bg-gray-800 border-2 border-amber-600 max-h-62 min-h-62 sm:max-w-2/3 md:w-3/4 sm:min-w-36 md:min-w-36 p-10 m-5">
               <article className="relative sm:flex md:flex justify-between sm:items-center md:items-center">
                 <img className="w-1/3 mb-5" src={myCart.itemDetails._doc?.imageUrl} alt="perfume-img" />
                 <div>
@@ -110,23 +110,23 @@ const Article_Cart = ({ sessionId }) => {
                   </div>
                 </div>
               </article>
-              <button onClick={() => removeJalab(myCart._id, myCart.quantity)} className="xs:mt-5 md:bottom-0 md:right-1/3 text-white mb-3 bg-amber-800 py-3 px-5 rounded-lg">Remove Jalab</button>
+              <button onClick={() => removeJalab(myCart._id, myCart.quantity)} className="xs:mt-5 md:bottom-0 md:right-1/3 text-white mb-3 bg-amber-600 py-3 px-5 rounded-lg">Remove Jalab</button>
             </div>
           ))}
           {myCarts.length > 0 && (
-            <button onClick={handleClearCart} className="text-white sm:w-1/6 xs:w-1/2 ml-5 mb-3 bg-amber-800 py-3 px-5 rounded-lg">Clear Cart</button>
+            <button onClick={handleClearCart} className="text-gray-100 sm:w-1/6 xs:w-1/2 ml-5 mb-3 bg-amber-600 py-3 px-5 rounded-lg">Clear Cart</button>
           )}
           {myCarts.length === 0 && (
-            <div className="bg-yellow-100 mt-10 sm:mx-auto md:ml-10 lg:ml-10 xs:mx-auto xs:w-4/5 rounded-lg py-5 px-5 lg:px-5 uppercase">
+            <div className="bg-gray-800 border-2 border-amber-600 mt-10 sm:mx-auto md:ml-10 lg:ml-10 xs:mx-auto xs:w-4/5 rounded-lg py-5 px-5 lg:px-5 uppercase">
               <h3 className="text-2xl font-bold text-center">Sorry, Your Cart is empty</h3>
               <div className="relative mt-4 text-center">
-                <i className="fa fa-shopping-cart fa-4x cursor-pointer mt-auto" aria-hidden="true"></i>
-                <div className="bg-amber-800 rounded-full absolute top-0 left-1/2">
-                  <p className="text-white text-center px-3 py-1">0</p>
+                <i className="fa fa-shopping-cart text-gray-500 fa-4x cursor-pointer mt-auto" aria-hidden="true"></i>
+                <div className="bg-gray-100 rounded-full absolute top-0 left-1/2">
+                  <p className="text-amber-600 text-center px-3 py-1">0</p>
                 </div>
               </div>
               <div className="relative mt-4 text-xl">
-                <Link to="/" className="text-amber-800">
+                <Link to="/" className="text-gray-200">
                   <i className="fa fa-hand-o-left mr-5" aria-hidden="true"></i>
                   Continue Shopping
                 </Link>
@@ -135,7 +135,7 @@ const Article_Cart = ({ sessionId }) => {
           )}
           {myCarts.length > 0 && (
             <div className="xs:px-5 xs:pt-10 sm:pt-10 sm:px-5">
-              <div className="bg-red-200 p-5 lg:fixed md:w-1/3 lg:w-1/5 right-10 top-80 flex m-auto rounded-lg">
+              <div className="bg-gray-800 border-2 border-amber-600 p-5 lg:fixed md:w-1/3 lg:w-1/5 right-10 top-80 flex m-auto rounded-lg">
                 <div>
                   <div className="mb-3">
                     <h3 className="mb-3">CART SUMMARY</h3>
@@ -147,7 +147,7 @@ const Article_Cart = ({ sessionId }) => {
                   </div>
                   <hr className="mb-3" />
                   <Link to={"/checkout"} state={{ myCarts }}>
-                    <p className="cursor-pointer font-bold rounded-lg bg-amber-800 py-3 px-5 text-white">CHECKOUT(₦{subTotal})</p>
+                    <p className="cursor-pointer font-bold rounded-lg bg-amber-600 py-3 px-5 text-gray-100">CHECKOUT(₦{subTotal})</p>
                   </Link>
                 </div>
               </div>

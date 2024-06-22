@@ -217,7 +217,7 @@ const AddJalabsForm = ({ jalabData }) => {
         />
       </label>
       <br />
-      <button className='bg-amber-800 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
+      <button className='bg-amber-600 text-white px-5 py-3 rounded-lg' type="submit" disabled={submitting}>
         {submitting ? (isEditPage ? 'Updating...' : 'Submitting...') : (isEditPage ? 'Update' : 'Submit')}
       </button>
       {error && <p className='bg-red-600 text-white mt-5 rounded-lg py-3 px-5'>{error}</p>}

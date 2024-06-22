@@ -46,13 +46,13 @@ body {
 .z {
   z-index: 99;
 }
-.background {
+/* .background {
   background-image: url("../src/assets/shared/background..jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;
-}
+} */
 .text-container {
   font-family: "Dancing Script", cursive;
   height: 30vh;
@@ -104,9 +104,10 @@ body {
   }
 }
 @media screen and (max-width:450px) {
-  .background {
-    height: 70vh;
-  }
+  
+.width {
+  width: 50%;
+}
   .xsvh {
     max-height: 35vh;
     min-height: 35vh;

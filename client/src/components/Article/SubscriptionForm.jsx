@@ -43,12 +43,12 @@ const SubscriptionForm = () => {
       <button
         type="submit"
         disabled={submitting}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-blue-300"
+        className="bg-blue-600 text-gray-100 px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-blue-300"
       >
         {submitting ? 'Submitting...' : 'Subscribe'}
       </button>
-      {error && <p className="text-red-600 font-extrabold bg-white px-3 py-2 rounded-lg">{error}</p>}
-      {successMessage && <p className="text-green-600 font-extrabold bg-white px-3 py-2 rounded-lg">{successMessage}</p>}
+      {error && <p className="text-red-600 font-extrabold bg-gray-100 px-3 py-2 rounded-lg">{error}</p>}
+      {successMessage && <p className="text-green-600 font-extrabold bg-gray-100 px-3 py-2 rounded-lg">{successMessage}</p>}
     </form>
   );
 };

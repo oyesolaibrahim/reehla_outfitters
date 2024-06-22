@@ -74,7 +74,7 @@ const WritingBlogMessage = ({ blogData }) => {
   return (
     <>
       {isEditPage || <Header />}
-      <main className='bg-blue-800 py-10'>
+      <main className='bg-gray-800 py-10'>
         <div className="max-w-md mx-auto p-6 bg-gray-200 rounded-lg">
           <h2 className="text-2xl font-semibold mb-4">{isEditPage ? 'Edit Blog Message' : 'Write Blog Message'}</h2>
           <form onSubmit={handleSubmit}>

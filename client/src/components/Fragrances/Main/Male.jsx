@@ -37,7 +37,7 @@ useEffect(() => {
     return (
         <>  
             <Header/>
-            <main className="bg-gray-700 overflow-x-hidden min-h-screen py-10">
+            <main className="bg-gray-800 overflow-x-hidden min-h-screen py-10">
             <section ref={leftSlide}>
                 <div className={`sm:pt-10 md:pt-36   text-white sm:mb-10 ${visible ? 'animate-slideInRight' : ''}`}>
                     <h1 className="flex sm:text-6xl md:text-6xl xs:text-4xl justify-center text-center mb-3">Available Male Fragrance</h1>

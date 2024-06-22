@@ -128,9 +128,9 @@ const Checkout = ({ sessionId }) => {
     return (
         <>
             <Header />
-            <main className="bg-gray-700 lg:p-16">
+            <main className="bg-gray-800 lg:p-16 text-gray-100">
                 <form className="rounded-lg xs:py-10 lg:ml-10 xs:ml-0 md:py-10 sm:py-10" onSubmit={(e) => Confirm(e)}>
-                    <div className="bg-red-200 xs:p-10 md:flex rounded-2xl lg:px-16 py-4 lg:w-1/2 md:mx-auto md:p-10 sm:p-10 sm:w-4/5 sm:mx-auto md:w-2/3">
+                    <div className="bg-gray-800 border-2 border-amber-600 xs:p-10 md:flex rounded-2xl lg:px-16 py-4 lg:w-1/2 md:mx-auto md:p-10 sm:p-10 sm:w-4/5 sm:mx-auto md:w-2/3">
                         <div className="">
                             <div className="pt-20 mb-10 flex flex-col items-start space-y-3">
                                 <label htmlFor="firstname">{token && "Firstname:"}</label>
@@ -184,7 +184,7 @@ const Checkout = ({ sessionId }) => {
                                 <label htmlFor="prepay-now">Pre-pay Now</label>
                             </div>
                            <Link to={`${paymentDiv || "#confirm"}`}>
-                                <button onClick={(e) => Proceed(e)} className="mt-10 cursor-pointer font-bold rounded-lg bg-amber-800 py-3 px-5 w-1/3 text-white">Proceed</button>
+                                <button onClick={(e) => Proceed(e)} className="mt-10 cursor-pointer font-bold rounded-lg bg-amber-600 py-3 px-5 w-1/3 text-white">Proceed</button>
                            </Link> 
                         </div>
                     </div>
@@ -194,7 +194,7 @@ const Checkout = ({ sessionId }) => {
                         </div>
                     )}
                     <div>
-                        <div className="bg-red-200 p-5 lg:fixed sm:mt-10 lg:w-1/5 md:justify-center sm:w-4/5 sm:mx-auto xs:mt-10 right-10 top-64 flex md:static md:mx-auto md:w-2/3 rounded-lg">
+                        <div className="bg-gray-800 border-2 border-amber-600 p-5 lg:fixed sm:mt-10 lg:w-1/5 md:justify-center sm:w-4/5 sm:mx-auto xs:mt-10 right-10 top-64 flex md:static md:mx-auto md:w-2/3 rounded-lg">
                             <div>
                                 <div className="mb-3">
                                     <h3 className="mb-3 font-extrabold">Order Summary</h3>
@@ -215,7 +215,7 @@ const Checkout = ({ sessionId }) => {
                                     <h4 className="font-extrabold">₦{total}</h4>
                                 </div>
                                 <hr className="mb-3" />
-                                <button id="confirm" onClick={(e) => Confirm(e)} className="cursor-pointer font-bold rounded-lg bg-amber-800 py-3 px-5 text-white">CONFIRM ORDER</button>
+                                <button id="confirm" onClick={(e) => Confirm(e)} className="cursor-pointer font-bold rounded-lg bg-amber-600 py-3 px-5 text-white">CONFIRM ORDER</button>
                             </div>
                         </div>
                     </div>

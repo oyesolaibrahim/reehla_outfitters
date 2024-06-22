@@ -2,7 +2,7 @@ import SubscriptionForm from "../Article/SubscriptionForm";
 
 const Footer = () => {
   return (
-    <footer className="bg-red-400 overflow-x-hidden py-6 sm:px-5 sm:space-x-10 xs:px-2 flex justify-between xs:flex-col-reverse items-center md:items-center">
+    <footer className="bg-amber-600 text-gray-100 overflow-x-hidden py-6 sm:px-5 sm:space-x-10 xs:px-2 flex justify-between xs:flex-col-reverse items-center md:items-center">
       <div className="xs:flex xs:flex-col-reverse">
         <div className="flex items-center mb-5 md:mb-0 xs:mt-5">
           <i className="fa fa-copyright sm:fa-2x mr-2" aria-hidden="true"></i>

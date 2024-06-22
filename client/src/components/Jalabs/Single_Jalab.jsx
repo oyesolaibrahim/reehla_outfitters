@@ -77,8 +77,7 @@ const Single_Jalab = ({ sessionId }) => {
     useEffect(() => setTotalPrice(object?.price || 0), [sessionId]);
 
     useEffect(() => {
-        if (!object) return; // Check if object is defined
-
+        if (!object) return; 
         const getImageUrl = async () => {
             try {
                 const storageRef = ref(storage, object.imageUrl);
@@ -95,8 +94,8 @@ const Single_Jalab = ({ sessionId }) => {
     return (
         <>
             <Header />
-            <main className="bg-gray-700  overflow-x-hidden">
-                <div className="md:flex relative bg-red-200 sm:p-20 md:p-20 xs:py-10 xs:px-5">
+            <main className="bg-gray-800  overflow-x-hidden">
+                <div className="md:flex relative bg-gray-800 text-gray-100 sm:p-20 md:p-20 xs:py-10 xs:px-5">
                     <div>
                         <img className="rounded-lg" src={imageUrl} alt="jalab-img" />
                     </div>
@@ -106,7 +105,7 @@ const Single_Jalab = ({ sessionId }) => {
                                 <h2 className="text-4xl font-extrabold">{object?.name || object?.productName}<span className="text-xl ml-2">({object?.category})</span></h2>
                                 <p className="mt-20">{object?.description}</p>
                                 <div className="mt-12 flex sm:space-x-10 md:space-x-10 xs:justify-center xs:-space-x-32">
-                                    <input className="font-bold text-2xl outline-none bg-red-200" readOnly value={`₦${totalPrice}`} />
+                                    <input className="font-bold text-2xl outline-none bg-gray-800" readOnly value={`₦${totalPrice}`} />
                                     <p className="text-2xl font-extralight line-through">₦{object?.oldPrice}</p>
                                 </div>
                             </div>

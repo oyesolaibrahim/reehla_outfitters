@@ -65,12 +65,12 @@ const UserSignUp = () => {
     return (
         <>
             <Header/>
-            <main className="bg-gray-700 min-h-screen py-10">
+            <main className="bg-gray-800 min-h-screen py-10">
                 <h3 className="error"></h3>
                 <div className="text-white md:mb-24 xs:pt-10 xs:mb-10">
                 </div>
                 <div>
-                    <div className="bg-red-200 md:w-3/5 sm:w-screen py-10 xs:w-screen md:flex m-auto rounded-2xl pb-10 px-10">
+                    <div className="bg-gray-800 border-2 border-amber-600 md:w-3/5 sm:w-screen py-10 xs:w-screen md:flex m-auto rounded-2xl pb-10 px-10">
                         <form onSubmit={(e) => {Signup(e)}} className="mx-auto">
                         <i class="fa flex justify-center text-8xl fa-user-circle-o text-amber-800" aria-hidden="true"></i>
                             <div className="my-10 flex justify-center">

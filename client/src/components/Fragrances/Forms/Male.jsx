@@ -131,7 +131,7 @@ const AddFragranceForm = ({ fragranceData }) => {
   const isEditPage = location.pathname.includes("/edit")
   
   return (
-    <form className='bg-red-200 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/add-fragrance" ? handleSubmit : handleUpdate}>
+    <form className='bg-gray-800 border-2 border-amber-600 mt-20 md:w-1/3 lg:w-1/3 sm:w-2/3 xs:w-screen rounded-lg py-10 px-8 md:ml-10 lg:ml-10 xs:ml-0' onSubmit={location.pathname === "/add-fragrance" ? handleSubmit : handleUpdate}>
       <label>
         <input
           className='w-full mb-5 p-3 rounded-lg'

@@ -71,12 +71,12 @@ const AdminLogin = () => {
     return (
         <>
             <Header/>
-            <main className="bg-gray-700 min-h-screen pb-16">
+            <main className="bg-gray-800 min-h-screen pb-16">
                 <div className="py-10 text-white">
                     <h2 className="flex sm:text-6xl justify-center">Admin Login</h2>
                 </div>
                 <div>
-                           <div className="bg-red-200 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
+                           <div className="bg-gray-800 border-2 border-amber-600 md:w-3/5 xs:w-screen sm:w-screen md:flex m-auto rounded-2xl py-10 px-10">
                         <form onSubmit={(e)=>Login(e)} className="mx-auto">
                           <i class="fa flex justify-center text-8xl fa-user-circle-o text-amber-800" aria-hidden="true"></i>
                             <div className="mb-10 pt-10 flex justify-center">

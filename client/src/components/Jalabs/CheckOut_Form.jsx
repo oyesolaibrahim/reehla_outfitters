@@ -70,12 +70,12 @@ const PaystackCheckoutForm = ({total}) => {
   const userEmail = sessionStorage.getItem("email")
   console.log(userEmail)
   return (
-    <div className="flex justify-center items-center sm:w-full md:w-1/2 mx-auto mt-10 rounded-lg py-10 bg-red-200">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div className="flex justify-center items-center sm:w-full md:w-1/2 mx-auto mt-10 rounded-lg py-10 bg-gray-800 border-2 border-amber-600">
+      <form onSubmit={handleSubmit} className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Pay with Paystack</h2>
         <p className='mb-5'>* Clicking on "Pay Now" will take you to Paystack's secure checkout page to complete your order.</p>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+          <label className="block text-sm font-bold mb-2">Email:</label>
           <input
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
             type="email"
@@ -85,7 +85,7 @@ const PaystackCheckoutForm = ({total}) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Amount:</label>
+          <label className="block text-sm font-bold mb-2">Amount:</label>
           <input
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
             type="number"
@@ -95,7 +95,7 @@ const PaystackCheckoutForm = ({total}) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Payment Method:</label>
+          <label className="block text-sm font-bold mb-2">Payment Method:</label>
           <select
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
             value={paymentMethod}
@@ -106,7 +106,7 @@ const PaystackCheckoutForm = ({total}) => {
           </select>
         </div>
         {paymentMethod === 'bank_transfer' && (
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-sm mb-4">
           <strong>Please make a bank transfer to the following account:</strong><br /><br />
           <strong>Account Name:</strong> Oyesola Ibrahim Omobolaji<br />
           <strong>Account Number:</strong> 0234402662<br />

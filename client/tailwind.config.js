@@ -17,6 +17,7 @@ module.exports = {
     "src/components/Footer/Footer.jsx",
     "src/components/Login/User_login.jsx",
     "src/components/Jalabs/Male.jsx",
+    "src/components/Jalabs/Brand.jsx",
   ],
   theme: {
     extend: {

@@ -9,7 +9,7 @@ const SendMessagePage = () => {
     <>
     <Header/>
     <main>
-        <div className='bg-blue-800 py-10'>
+        <div className='bg-gray-800 py-10'>
           <SendMessageForm />
         </div>
     </main>

@@ -88,7 +88,7 @@ const New_Arrival_Article = () => {
                     </div>
                 ) : (
                     objects?.map(object => (
-                        <article key={object._id} className={`bg-red-200 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
+                        <article key={object._id} className={`bg-gray-800 border-2 border-amber-600 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
                             <Link to={`/jalabs/${object._id}`} state={{ object }}>
                                 <img className="xs:flex xs:p-3 xs:justify-center" src={object.imageUrl} alt="product-img"/>
                             </Link> 
