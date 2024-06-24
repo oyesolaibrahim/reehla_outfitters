@@ -109,16 +109,16 @@ body {
   width: 50%;
 }
   .xsvh {
-    max-height: 40vh;
-    min-height: 40vh;
+    max-height: 45vh;
+    min-height: 45vh;
   }
   .xsvhsp {
     max-height: 50vh;
     min-height: 50vh;
   }
   .xsvhs {
-    max-height: 40vh;
-    min-height: 40vh;
+    max-height: 50vh;
+    min-height: 50vh;
   }
   .search {
     width: 55vw;
