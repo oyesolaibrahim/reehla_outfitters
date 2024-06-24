@@ -109,8 +109,8 @@ body {
   width: 50%;
 }
   .xsvh {
-    max-height: 35vh;
-    min-height: 35vh;
+    max-height: 40vh;
+    min-height: 40vh;
   }
   .xsvhsp {
     max-height: 50vh;
@@ -133,7 +133,7 @@ body {
     left: 30px;
   }
   .width {
-    width: 30%;
+    width: 45%;
   }
   .p-width {
     max-width: 100px;
