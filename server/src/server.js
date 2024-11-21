@@ -52,7 +52,6 @@ const {
   editBestFragrance,
   editArrivalFragrance,
   getBrands,
-  fetchAllCollections,
   collections,
   deleteSingleBestFragrance,
   deleteSingleNewFragrance,

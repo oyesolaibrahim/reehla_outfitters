@@ -128,24 +128,24 @@ const Checkout = ({ sessionId }) => {
     return (
         <>
             <Header />
-            <main className="bg-gray-800 lg:p-16 text-gray-100">
+            <main className="bg-soft-ivory lg:p-16 text-primary-brown">
                 <form className="rounded-lg xs:py-10 lg:ml-10 xs:ml-0 md:py-10 sm:py-10" onSubmit={(e) => Confirm(e)}>
-                    <div className="bg-gray-800 border-2 border-amber-600 xs:p-10 md:flex rounded-2xl lg:px-16 py-4 lg:w-1/2 md:mx-auto md:p-10 sm:p-10 sm:w-4/5 sm:mx-auto md:w-2/3">
+                    <div className="bg-soft-ivory border-2 border-muted-gold xs:p-10 md:flex rounded-2xl lg:px-16 py-4 lg:w-1/2 md:mx-auto md:p-10 sm:p-10 sm:w-4/5 sm:mx-auto md:w-2/3">
                         <div className="">
                             <div className="pt-20 mb-10 flex flex-col items-start space-y-3">
                                 <label htmlFor="firstname">{token && "Firstname:"}</label>
-                                <input className="rounded-lg sm:w-96 py-4 px-10 m-auto" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                <input className="rounded-lg text-black sm:w-96 py-4 px-10 m-auto" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                             </div>
                             <div className="mb-10  flex flex-col items-start space-y-3">
                                 <label htmlFor="lastname">{token && "Lastname:"}</label>
-                                <input className="rounded-lg sm:w-96 py-4 px-10 m-auto" type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                                <input className="rounded-lg sm:w-96 text-black py-4 px-10 m-auto" type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                             </div>
                             <div className="mb-10 flex flex-col items-start space-y-3">
                                 <label htmlFor="email">{token && "Email:"}</label>
-                                <input className="rounded-lg sm:w-96 py-4 px-10 m-auto" type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                <input className="rounded-lg sm:w-96 py-4 text-black px-10 m-auto" type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
                             </div>
                             <div className="mb-10 flex justify-center">
-                                <select className="sm:w-96 py-4 px-10" value={selectedState} onChange={(e) => setSelectedState(e.target.value)}>
+                                <select className="sm:w-96 py-4 px-10 text-black" value={selectedState} onChange={(e) => setSelectedState(e.target.value)}>
                                     <option value="">Select a state</option>
                                     {states.map(state => (
                                         <option key={state} value={state}>{state}</option>
@@ -154,14 +154,14 @@ const Checkout = ({ sessionId }) => {
                             </div>
                             <div className="mb-10 flex justify-center">
                                 <label htmlFor="address"></label>
-                                <input className="rounded-lg sm:w-96 py-4 px-10" type="text" placeholder="Delivery Address" value={address} onChange={(e) => setAddress(e.target.value)} />
+                                <input className="rounded-lg sm:w-96 py-4 px-10 text-black" type="text" placeholder="Delivery Address" value={address} onChange={(e) => setAddress(e.target.value)} />
                             </div>
                             <div className="mb-10 flex justify-center">
                                 <label htmlFor="tel"></label>
-                                <input className="rounded-lg sm:w-96 py-4 px-10" type="tel" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                <input className="rounded-lg sm:w-96 py-4 px-10 text-black" type="tel" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
                             </div>
                             <h2 className="font-extrabold mb-5 text-3xl">Payment Options</h2>
-                            <div>
+                            {/* <div>
                                 <input
                                     type="radio"
                                     id="payment-on-delivery"
@@ -171,7 +171,7 @@ const Checkout = ({ sessionId }) => {
                                     onChange={handlePaymentOptionChange}
                                 />
                                 <label className="" htmlFor="payment-on-delivery">Payment on Delivery</label>
-                            </div>
+                            </div> */}
                             <div>
                                 <input
                                     type="radio"

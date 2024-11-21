@@ -94,8 +94,8 @@ const Single_Fragrance = ({ sessionId }) => {
     return (
         <>
             <Header />
-            <main className="bg-gray-800 overflow-x-hidden">
-                <div className="md:flex relative bg-gray-800 text-gray-100 sm:p-20 md:p-20 xs:py-10 xs:px-5">
+            <main className="text-charcoal-gray bg-soft-ivory overflow-x-hidden">
+                <div className="md:flex relative bg-soft-ivory border border-muted-gold rounded-lg shadow-lg sm:p-20 md:p-20 xs:py-10 xs:px-5">
                     <div>
                         <img className="rounded-lg" src={imageUrl || fragrance?.imageUrl || object?.imageUrl} alt="fragrance-img" />
                     </div>
@@ -107,18 +107,18 @@ const Single_Fragrance = ({ sessionId }) => {
                                 </h2>
                                 <h2 className="text-2xl mt-5 font-bold">{fragrance?.brandName || object?.brandName}</h2>
                                 <p className="mt-20">{fragrance?.description || object?.description}</p>
-                                <div className="mt-12 flex sm:space-x-10 md:space-x-10 xs:justify-center xs:-space-x-32">
-                                    <input className="font-bold text-2xl outline-none bg-gray-800" readOnly value={`₦${totalPrice}`} />
-                                    <p className="text-2xl font-extralight line-through">₦{fragrance?.oldPrice || object?.oldPrice}</p>
+                                <div className="mt-12 flex sm:space-x-10 md:space-x-10 xs:justify-center xs:-space-x-32 text-charcoal-gray">
+                                    <input className="font-bold text-2xl outline-none text-charcoal-gray bg-soft-ivory" readOnly value={`₦${totalPrice}`} />
+                                    <p className="text-2xl font-extralight line-through text-charcoal-gray">₦{fragrance?.oldPrice || object?.oldPrice}</p>
                                 </div>
                             </div>
                             <div className="flex items-center mt-16 sm:space-x-20 xs:space-x-5">
-                                <div className="flex items-center sm:space-x-10 md:space-x-10 bg-amber-800 sm:w-48 md:w-48 py-3 px-5 text-white justify-center rounded-lg">
+                                <div className="flex items-center sm:space-x-10 md:space-x-10 bg-primary-brown text-soft-ivory sm:w-48 md:w-48 py-3 px-5 justify-center rounded-lg">
                                     <i className="fa fa-minus cursor-pointer" aria-hidden="true" onClick={minus}></i>
-                                    <input className="w-16 bg-amber-800 text-center outline-none" value={quantity} readOnly />
+                                    <input className="w-16 bg-primary-brown text-soft-ivory text-center outline-none" value={quantity} readOnly />
                                     <i className="fa fa-plus cursor-pointer" aria-hidden="true" onClick={plus}></i>
                                 </div>
-                                <button type="submit" className="bg-amber-800 text-white text-center cursor-pointer w-36 py-3 px-5 rounded-lg">
+                                <button type="submit" className="bg-primary-brown text-soft-ivory text-center cursor-pointer w-36 py-3 px-5 rounded-lg">
                                     Add to Cart
                                 </button>
                             </div>

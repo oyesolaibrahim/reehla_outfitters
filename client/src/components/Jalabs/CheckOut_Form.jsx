@@ -77,7 +77,7 @@ const PaystackCheckoutForm = ({total}) => {
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Email:</label>
           <input
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -87,17 +87,17 @@ const PaystackCheckoutForm = ({total}) => {
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Amount:</label>
           <input
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            className="w-full px-3 py-2 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
             type="number"
-            value={amount}
+            value={total}
             onChange={(e) => setAmount(e.target.value)}
-            required
+            readOnly
           />
         </div>
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2">Payment Method:</label>
           <select
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            className="w-full px-3 py-2 text-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
           >
@@ -112,7 +112,7 @@ const PaystackCheckoutForm = ({total}) => {
           <strong>Account Number:</strong> 0234402662<br />
           <strong>Bank Name:</strong> Gt Bank<br />
           <strong>Amount:</strong> ₦{total}<br />
-          Please send your evidence of payment to my <Link to="https://wa.link/hwaf21">Whatsapp</Link>.
+          Please send your evidence of payment to my <Link to="https://wa.link/hwaf21" style={{textDecoration:"underline"}}>Whatsapp</Link>.
         </p>
 
         )}

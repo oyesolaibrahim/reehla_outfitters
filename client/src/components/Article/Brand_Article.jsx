@@ -97,11 +97,11 @@ const Brand_Article = () => {
                     </div>
                 ) : (
                     objects?.map(object => (
-                        <article key={object._id} className={`bg-gray-800 border-2 border-amber-600 xs:my-3 width vh ${adminToken ? "xsvhs" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
+                        <article key={object._id} className={`bg-soft-ivory border border-muted-gold rounded-lg shadow-lg xs:my-3 width vh ${adminToken ? "xsvhs" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
                             <Link to="/brand" state={{  object }}>
                                 <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={object.imageUrl} alt="brand-img"/>
                             </Link>    
-                            <h3 className="flex justify-center sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.brandName}</h3>
+                            <h3 className="flex text-charcoal-gray justify-center sm:mt-10 md:mt-10 xs:mt-5 font-semibold sm:text-3xl md:text-3xl">{object.brandName}</h3>
                             {adminToken && (
                                 <div className="flex xs:flex-col xs:space-y-3 xs:items-center sm:flex-col sm:items-center sm:space-y-3 md:justify-between lg:flex-row lg:justify-between lg:space-x-5 my-3">
                                     <button onClick={() => removeBrand(object._id)} className="bg-amber-600 text-sm text-white rounded-lg sm:py-3 sm:px-5 xs:px-1 xs:py-2" type="button">Delete Brand</button>

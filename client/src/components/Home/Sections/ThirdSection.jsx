@@ -33,7 +33,7 @@ const leftSlide = useRef(null);
     return (
         <>  
             <section ref={leftSlide}>
-                <div className={`sm:pt-10 md:pt-36 xs:pt-10 text-white sm:mb-24 md:mb-24 ${visible ? 'animate-slideInLeft' : ''}`}>
+                <div className={`sm:pt-10 md:pt-36 xs:pt-10 text-charcoal-gray sm:mb-24 md:mb-24 ${visible ? 'animate-slideInLeft' : ''}`}>
                     <h1 className="flex sm:text-6xl md:text-6xl xs:text-4xl justify-center">New Arrivals</h1>
                 </div>
                 <New_Arrival_Article/>

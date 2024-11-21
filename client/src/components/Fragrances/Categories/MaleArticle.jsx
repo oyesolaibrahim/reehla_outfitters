@@ -67,7 +67,7 @@ const Male_Fragrance = () => {
     <>
       <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
         {objects.map(fragrance => (
-          <article key={fragrance._id} className={`bg-gray-800 text-gray-100 border-2 border-amber-600 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
+          <article key={fragrance._id} className={`bg-soft-ivory border border-muted-gold rounded-lg shadow-lg xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
             <Link to={`/fragrances/${fragrance._id}`} state={{ fragrance }}>
               <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={fragrance.imageUrl} alt="fragrance-img"/>
             </Link>

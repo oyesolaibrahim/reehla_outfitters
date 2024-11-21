@@ -68,7 +68,7 @@ console.log(jalabs)
     <>
       <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
         {objects.map(jalab => (
-          <article key={jalab._id} className={`bg-gray-800 text-gray-200 border-2 border-amber-600 xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
+          <article key={jalab._id} className={`bg-soft-ivory border border-muted-gold rounded-lg shadow-lg xs:my-3 width vh ${adminToken ? "xsvhsp" : "xsvh"} xs:mx-1 xs:py-1 sm:p-10 lg:m-4 md:m-3 sm:my-5 sm:mx-2 xs:p-2`}>
             <Link to={`/jalabs/${jalab._id}`} state={{ jalab }}>
               <img className="xs:p-1 xs:w-full xs:h-full xs:justify-center" src={jalab.imageUrl} alt="jalab-img"/>
             </Link>

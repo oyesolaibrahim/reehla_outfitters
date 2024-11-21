@@ -21,6 +21,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        'primary-brown': '#3B2F2F', // For headers, footers, and text
+        'soft-ivory': '#F9F6F2',   // Background color for the main content
+        'muted-gold': '#D4A373',   // Accent color for buttons and highlights
+        'charcoal-gray': '#4F4F4F', // Secondary text and borders
+        'pure-white': '#FFFFFF',    // High contrast elements
+    },
       keyframes: {
         slideInLeft: {
           '0%': {

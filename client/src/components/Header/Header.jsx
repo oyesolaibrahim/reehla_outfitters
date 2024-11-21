@@ -62,7 +62,7 @@ const Header = ({ myCarts = [] }) => {
     };
 
     return (
-        <header className="bg-amber-600 text-gray-100 sm:px-10 xs:px-1 sticky md:px-2 lg:px-10 md:-top-20 lg:-top-40 py-2 top top2 sm:-top-28 z-10">
+        <header className="bg-muted-gold text-charcoal-gray sm:px-10 xs:px-1 sticky md:px-2 lg:px-10 md:-top-20 lg:-top-40 py-2 top top2 sm:-top-28 z-10">
             <div className="flex md:justify-center -pt-40 xs:mb-4 sm:justify-center items-center">
                 <div>
                     <Link to="/">
@@ -84,26 +84,26 @@ const Header = ({ myCarts = [] }) => {
                     ></i>
                 </div>
                 <div className="sm:flex md:flex-row lg:flex-row lg:space-x-5 md:space-x-0 sm:items-start md:items-center">
-                    <div className={`md:flex-row md:flex sm:flex sm:flex-col lg:flex lg:flex-row xs:items-start sm:items-start md:p-0 xs:pt-36 sm:pt-36 xs:fixed sm:fixed sm:z xs:pl-10 sm:pl-10 xs:h-screen sm:h-screen md:h-1/6 xs:w-4/5 sm:w-1/2 xs:top-0 sm:top-0 md:static md:bg-transparent xs:bg-gray-800 xs:text-amber-600 sm:bg-gray-800 sm:text-amber-600 transition-all duration-1000 md:-space-x-12 md:items-center ${right ? "right" : "negative-right"}`}>
+                    <div className={`md:flex-row md:flex sm:flex sm:flex-col lg:flex lg:flex-row xs:items-start sm:items-start md:p-0 xs:pt-36 sm:pt-36 xs:fixed sm:fixed sm:z xs:pl-10 sm:pl-10 xs:h-screen sm:h-screen md:h-1/6 xs:w-4/5 sm:w-1/2 xs:top-0 sm:top-0 md:static md:bg-transparent xs:bg-soft-ivory xs:text-charcoal-gray sm:bg-soft-ivory sm:text-charcoal-gray transition-all duration-1000 md:-space-x-12 md:items-center ${right ? "right" : "negative-right"}`}>
                         <div className="md:flex-row md:flex lg:flex lg:flex-row sm:flex-col sm:items-start md:items-center md:-space-x-5">
                             <Link to="/">
-                                <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:px-0 sm:hover:text-amber-600 md:hover:text-gray-100">Home</h3>
+                                <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:px-0 sm:hover:hover:text-golden-yellow md:hover:text-golden-yellow">Home</h3>
                             </Link>
                             <Link to="/about">
-                                <h3 className="cursor-pointer min-w-32 font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:hover:text-amber-600 md:hover:text-gray-100">About Us</h3>
+                                <h3 className="cursor-pointer min-w-32 font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:hover:text-golden-yellow md:hover:text-golden-yellow">About Us</h3>
                             </Link>
                             <Link to="/blog">
-                                <h3 className="cursor-pointer lg:min-w-32 md:min-w-36 font-bold sm:mb-5 md:mb-0 py-3 sm:hover:text-amber-600 md:px-5 md:pr-10 md:hover:text-gray-100">Blog</h3>
+                                <h3 className="cursor-pointer lg:min-w-32 md:min-w-36 font-bold sm:mb-5 md:mb-0 py-3 sm:hover:hover:text-golden-yellow md:px-5 md:pr-10 md:hover:text-golden-yellow">Blog</h3>
                             </Link>
                         </div>
                         <div className="flex md:flex-row lg:flex-row md:mr-10 sm:pl-5 sm:flex-col sm:items-start xs:items-start xs:flex-col md:items-center">
                             <Link to="/signup">
-                                <h3 className="cursor-pointer font-bold xs:mb-6 sm:mb-5 md:mb-0 hover:rounded-lg hover:bg-amber-800 py-3 px-5 xs:-ml-5 lg:mr-3 md:mr-3 hover:text-gray-100">Signup</h3>
+                                <h3 className="cursor-pointer font-bold xs:mb-6 sm:mb-5 md:mb-0 hover:rounded-lg hover:bg-primary-brown text-charcoal-gray py-3 px-5 xs:-ml-5 lg:mr-3 md:mr-3">Signup</h3>
                             </Link>
                             <div>
                                 <Link to="/login">
-                                    <h3 className={`cursor-pointer ${adminToken && "hidden"} ${userToken && "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-800 py-3 px-5 xs:-ml-5 text-gray-100`}>Login</h3>
-                                    <h3 className={`cursor-pointer ${adminToken ? "inline-block" : "hidden"} ${userToken ? "inline-block" : "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-amber-800 py-3 px-5 xs:-ml-5 text-gray-100`} onClick={logout}>Logout</h3>
+                                    <h3 className={`cursor-pointer ${adminToken && "hidden"} ${userToken && "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-primary-brown text-soft-ivory py-3 px-5 xs:-ml-5`}>Login</h3>
+                                    <h3 className={`cursor-pointer ${adminToken ? "inline-block" : "hidden"} ${userToken ? "inline-block" : "hidden"} font-bold sm:mb-5 md:mb-0 rounded-lg bg-primary-brown text-soft-ivory py-3 px-5 xs:-ml-5`} onClick={logout}>Logout</h3>
                                 </Link>
                             </div>
 
@@ -117,11 +117,11 @@ const Header = ({ myCarts = [] }) => {
             </div>
             <div className="flex items-center md:justify-center sm:justify-start lg:space-x-48 md:space-x-10 sm:-space-x-16 xs:-space-x-16">
                 <div className="flex sm:justify-center md:justify-center items-center lg:space-x-60 xs:space-x-2 sm:space-x-2">
-                    <div className="flex sm:space-x-3 xs:space-x-0 sm:items-center xs:items-center xs:py-2 mt-10 rounded-lg bg-gray-800 sm:w-60 xs:w-28 sm:py-3 xs:px-2 text-gray-100">
+                    <div className="flex sm:space-x-3 xs:space-x-0 sm:items-center xs:items-center xs:py-2 mt-10 rounded-lg bg-primary-brown sm:w-60 xs:w-28 sm:py-3 xs:px-2 text-gray-100">
                         <h3 className="font-bold uppercase xs:text-xs sm:ml-10 xs:ml-3">Start Shopping</h3>
                         <i className="fa fa-arrow-right" aria-hidden="true"></i>
                     </div>
-                    <div className={`flex ${right ? "sm:-z-10 xs:-z-10" : ""} sm:space-x-10 md:space-x-10 xs:space-x-3 mt-10 rounded-lg bg-gray-800 sm:w-72 md:w-72 xs:w-52 py-3 sm:px-5 md:px-5 xs:px-2 text-gray-100 font-bold uppercase ml-10`}>
+                    <div className={`flex ${right ? "sm:-z-10 xs:-z-10" : ""} sm:space-x-10 md:space-x-10 xs:space-x-3 mt-10 rounded-lg bg-primary-brown sm:w-72 md:w-72 xs:w-52 py-3 sm:px-5 md:px-5 xs:px-2 text-gray-100 font-bold uppercase ml-10`}>
                         <div className="flex items-center space-x-2 relative">
                             <h3 className="xs:text-xs">Jalabs</h3>
                             <i className={`fa fa-chevron-down cursor-pointer`} aria-hidden="true" onClick={jalabMenuDisplay}></i>

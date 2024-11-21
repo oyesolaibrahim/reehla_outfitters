@@ -1081,10 +1081,10 @@ const uploadFileAndGetURL = async (file) => {
             const inputLetters = [...new Set(productName.toLowerCase().split(''))];
             
             // Only proceed if there are at least 4 unique letters
-            if (inputLetters.length < 4) return { productName: new RegExp('^$', 'i') }; // No match if less than 4 unique letters
+            if (inputLetters.length < 3) return { productName: new RegExp('^$', 'i') }; // No match if less than 4 unique letters
     
             // MongoDB regex for matching at least four letters
-            const regexPattern = inputLetters.slice(0, 4).map(letter => `(?=.*${letter})`).join('');
+            const regexPattern = inputLetters.slice(0, 3).map(letter => `(?=.*${letter})`).join('');
             const regex = new RegExp(`^${regexPattern}.*`, 'i');
     
             return { productName: regex };
