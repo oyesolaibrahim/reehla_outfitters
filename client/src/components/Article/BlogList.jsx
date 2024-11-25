@@ -47,12 +47,12 @@ const BlogList = ({ blogs }) => {
     <>
       <div className='sm:p-10'>
         {blogs?.map(blog => (
-          <div key={blog.id} className="bg-gray-800 border-2 border-amber-600 py-10 my-8 flex items-start xs:flex-col sm:flex-row sm:space-x-20">
+          <div key={blog.id} className="bg-soft-ivory border-2 border-muted-gold py-10 my-8 flex items-start xs:flex-col sm:flex-row sm:space-x-20">
               <img src={blog.imageUrl} alt="Blog" className="sm:w-1/3 xs:w-full px-3 xs:mb-10" />
             <div>
             <div>
-              <h3 className="text-2xl text-gray-100 font-semibold xs:flex xs:justify-center mb-2 xs:mx-auto xs:text-center">{blog.subject}</h3>
-              <p className="text-gray-100 xs:px-3 xs:text-center">{blog.message}</p>
+              <h3 className="text-2xl text-primary-brown font-semibold xs:flex xs:justify-center mb-2 xs:mx-auto xs:text-center">{blog.subject}</h3>
+              <p className="text-primary-brown xs:px-3 xs:text-center">{blog.message}</p>
             </div>
             {adminToken && (
               <div className='flex justify-center space-x-5 py-3 mx-auto'>

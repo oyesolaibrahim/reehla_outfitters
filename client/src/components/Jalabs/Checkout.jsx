@@ -100,7 +100,7 @@ const Checkout = ({ sessionId }) => {
         const getDeliveryFee = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/getdelivery`);
-                console.log(response.data);
+                // console.log(response.data);
                 setDeliveryFee(response.data.deliveryFee.deliveryFee)
             } catch (error) {
                 console.error('Error updating delivery fee:', error);
@@ -110,7 +110,7 @@ const Checkout = ({ sessionId }) => {
             try {
                 const result = await axios.get(`${process.env.REACT_APP_SERVER}/api/cart?sessionId=${sessionId}`);
                 setCartItems(result.data.jalabs || []);
-                console.log(cartItems);
+                // console.log(cartItems);
             } catch (error) {
                 console.error('Error fetching cart items:', error);
                 setCartItems([]); 
@@ -132,15 +132,15 @@ const Checkout = ({ sessionId }) => {
                 <form className="rounded-lg xs:py-10 lg:ml-10 xs:ml-0 md:py-10 sm:py-10" onSubmit={(e) => Confirm(e)}>
                     <div className="bg-soft-ivory border-2 border-muted-gold xs:p-10 md:flex rounded-2xl lg:px-16 py-4 lg:w-1/2 md:mx-auto md:p-10 sm:p-10 sm:w-4/5 sm:mx-auto md:w-2/3">
                         <div className="">
-                            <div className="pt-20 mb-10 flex flex-col items-start space-y-3">
+                            <div className="mb-10 flex justify-center pt-20">
                                 <label htmlFor="firstname">{token && "Firstname:"}</label>
                                 <input className="rounded-lg text-black sm:w-96 py-4 px-10 m-auto" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                             </div>
-                            <div className="mb-10  flex flex-col items-start space-y-3">
+                            <div className="mb-10 flex justify-center">
                                 <label htmlFor="lastname">{token && "Lastname:"}</label>
                                 <input className="rounded-lg sm:w-96 text-black py-4 px-10 m-auto" type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                             </div>
-                            <div className="mb-10 flex flex-col items-start space-y-3">
+                            <div className="mb-10 flex justify-center">
                                 <label htmlFor="email">{token && "Email:"}</label>
                                 <input className="rounded-lg sm:w-96 py-4 text-black px-10 m-auto" type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
                             </div>
@@ -184,7 +184,7 @@ const Checkout = ({ sessionId }) => {
                                 <label htmlFor="prepay-now">Pre-pay Now</label>
                             </div>
                            <Link to={`${paymentDiv || "#confirm"}`}>
-                                <button onClick={(e) => Proceed(e)} className="mt-10 cursor-pointer font-bold rounded-lg bg-amber-600 py-3 px-5 w-1/3 text-white">Proceed</button>
+                                <button onClick={(e) => Proceed(e)} className="mt-10 cursor-pointer font-bold rounded-lg bg-primary-brown py-3 px-5 w-1/3 text-soft-ivory">Proceed</button>
                            </Link> 
                         </div>
                     </div>
@@ -194,7 +194,7 @@ const Checkout = ({ sessionId }) => {
                         </div>
                     )}
                     <div>
-                        <div className="bg-gray-800 border-2 border-amber-600 p-5 lg:fixed sm:mt-10 lg:w-1/5 md:justify-center sm:w-4/5 sm:mx-auto xs:mt-10 right-10 top-64 flex md:static md:mx-auto md:w-2/3 rounded-lg">
+                        <div className="bg-soft-ivory border-2 border-muted-gold p-5 lg:fixed sm:mt-10 lg:w-1/5 md:justify-center sm:w-4/5 sm:mx-auto xs:mt-10 right-10 top-64 flex md:static md:mx-auto text-primary-brown md:w-2/3 rounded-lg">
                             <div>
                                 <div className="mb-3">
                                     <h3 className="mb-3 font-extrabold">Order Summary</h3>
@@ -215,7 +215,7 @@ const Checkout = ({ sessionId }) => {
                                     <h4 className="font-extrabold">₦{total}</h4>
                                 </div>
                                 <hr className="mb-3" />
-                                <button id="confirm" onClick={(e) => Confirm(e)} className="cursor-pointer font-bold rounded-lg bg-amber-600 py-3 px-5 text-white">CONFIRM ORDER</button>
+                                <button id="confirm" onClick={(e) => Confirm(e)} className="cursor-pointer font-bold rounded-lg bg-primary-brown py-3 px-5 text-soft-ivory">CONFIRM ORDER</button>
                             </div>
                         </div>
                     </div>

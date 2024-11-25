@@ -140,7 +140,7 @@ app.get("/api/editsinglejalab", editJalabPage);
 app.get("/api/editblog", editBlogPage);
 app.get("/api/blogs", getAllBlogs);
 app.get("/api/brands", getBrands);
-app.get("/verify-payment/:reference", verifyPayment);
+app.get("/api/verify-payment/:reference", verifyPayment);
 app.get("/api/generalfragrance", getFragrance);
 app.get("/api/malefragrance", getMaleFragrance);
 app.get("/api/femalefragrance", getFemaleFragrance);
@@ -168,7 +168,7 @@ app.post("/api/user/checkout", userCheckout);
 app.post("/api/bestseller", upload.single("imageFile"), createToBestSeller_Jalab);
 app.post("/api/newarrival", upload.single("imageFile"), createToNewArrival_Jalab);
 app.post("/api/topbrand", upload.single("imageFile"), createToTopBrand);
-app.post("/initialize-payment", createPayment);
+app.post("/api/initialize-payment", createPayment);
 app.post("/api/subscribe", Subscribe);
 app.post("/api/send-messages", upload.single("imageFile"), sendMessageToSubscribers);
 

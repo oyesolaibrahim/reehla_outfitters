@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const jwtDecode = require("jwt-decode");
 const axios = require('axios');
 const Subscription = require('../models/subscription.model'); 
+const Payment = require('../models/payment.model'); 
 const sendEmail = require('../services/emailService.services'); // Adjust the path as necessary
 require('dotenv').config();
 const { uploadFileToFirebase, db } = require('../../firebaseAdmin'); 
@@ -186,56 +187,112 @@ const sendMessageToSubscribers = async (req, res) => {
 const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY;
 
 const createPayment = async (req, res) => {
-  const { email, amount } = req.body;
+  const { email, amount, paymentMethod } = req.body;
 
   try {
-    const response = await axios.post(
-      'https://api.paystack.co/transaction/initialize',
-      {
-        email,
-        amount: amount * 100, // Paystack expects amount in kobo
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${paystackSecretKey}`,
-          'Content-Type': 'application/json',
+    if (paymentMethod === 'card') {
+      const response = await axios.post(
+        'https://api.paystack.co/transaction/initialize',
+        {
+          email,
+          amount: amount * 100, // Paystack expects the amount in kobo
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-    res.status(200).json({
-      authorization_url: response.data.data.authorization_url,
-      reference: response.data.data.reference,
-    });
+      // Save transaction to the database
+      const payment = new Payment({
+        email,
+        amount,
+        paymentMethod,
+        reference: response.data.data.reference,
+        status: 'pending', // Initially mark the transaction as pending
+      });
+      await payment.save();
+
+      // Respond with the authorization URL
+      return res.status(200).json({
+        authorization_url: response.data.data.authorization_url,
+        reference: response.data.data.reference,
+        paymentMethod,
+      });
+    } else if (paymentMethod === 'bank_transfer') {
+      // For bank transfer, send back bank details and save to the database
+      const payment = new Payment({
+        email,
+        amount,
+        paymentMethod,
+        reference: `BANK-${Date.now()}`, // Generate a unique reference for manual payments
+        status: 'pending',
+      });
+      await payment.save();
+
+      return res.status(200).json({
+        message: 'Bank transfer details',
+        paymentMethod,
+        bankDetails: {
+          accountName: 'Oyesola Ibrahim Omobolaji',
+          accountNumber: '0234402662',
+          bankName: 'Gt Bank',
+          amount,
+        },
+      });
+    } else {
+      return res.status(400).json({ error: 'Invalid payment method selected' });
+    }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error initializing payment:', error.message);
+    return res.status(500).json({ error: 'An error occurred while initializing payment' });
   }
 };
 
-
 const verifyPayment = async (req, res) => {
-  const { reference } = req.query;
+  const { reference } = req.params;
 
   try {
     const response = await axios.get(
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
         headers: {
-          Authorization: `Bearer ${paystackSecretKey}`,
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
         },
       }
     );
 
     if (response.data.data.status === 'success') {
-      res.status(200).json({ message: 'Payment verified successfully', data: response.data.data });
+      // Update payment status in the database
+      await Payment.findOneAndUpdate(
+        { reference },
+        { status: 'success' },
+        { new: true }
+      );
+
+      res.status(200).json({
+        message: 'Payment verified successfully',
+        data: response.data.data,
+      });
     } else {
-      res.status(400).json({ message: 'Payment verification failed', data: response.data.data });
+      await Payment.findOneAndUpdate(
+        { reference },
+        { status: 'failed' },
+        { new: true }
+      );
+
+      res.status(400).json({
+        message: 'Payment verification failed',
+        data: response.data.data,
+      });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error verifying payment:', error.message);
+    res.status(500).json({ error: 'An error occurred while verifying payment' });
   }
 };
-
 
 module.exports = {
     addUser,

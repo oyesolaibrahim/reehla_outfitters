@@ -83,8 +83,8 @@ const New_Arrival_Article = () => {
             <div className="flex lg:pl-10 xs:justify-between md:pl-10 sm:pl-0 xs:px-2 flex-wrap sm:px-3 items-center">
                 {loading ? (
                     <div className="flex flex-col justify-center items-center w-full h-full">
-                        <i className="fas fa-spinner fa-spin text-4xl text-white"></i>
-                        <p className="text-white">Loading...</p>
+                        <i className="fas fa-spinner fa-spin text-4xl text-primary-brown"></i>
+                        <p className="text-primary-brown">Loading...</p>
                     </div>
                 ) : (
                     objects?.map(object => (

@@ -110,7 +110,7 @@ const Article_Cart = ({ sessionId }) => {
                   </div>
                 </div>
               </article>
-              <button onClick={() => removeJalab(myCart._id, myCart.quantity)} className="xs:mt-5 md:bottom-0 md:right-1/3 mb-3 bg-primary-brown text-soft-ivory py-3 px-5 rounded-lg">Remove Jalab</button>
+              <button onClick={() => removeJalab(myCart._id, myCart.quantity)} className="xs:mt-5 md:bottom-0 md:right-1/3 mb-3 bg-primary-brown text-soft-ivory py-3 px-5 rounded-lg">Remove Product</button>
             </div>
           ))}
           {myCarts.length > 0 && (
@@ -120,13 +120,13 @@ const Article_Cart = ({ sessionId }) => {
             <div className="bg-soft-ivory border-2 border-muted-gold rounded-lg mt-10 sm:mx-auto md:ml-10 lg:ml-10 xs:mx-auto xs:w-4/5 py-5 px-5 lg:px-5 uppercase">
               <h3 className="text-2xl font-bold text-center">Sorry, Your Cart is empty</h3>
               <div className="relative mt-4 text-center">
-                <i className="fa fa-shopping-cart text-gray-500 fa-4x cursor-pointer mt-auto" aria-hidden="true"></i>
-                <div className="bg-gray-100 rounded-full absolute top-0 left-1/2">
-                  <p className="text-amber-600 text-center px-3 py-1">0</p>
+                <i className="fa fa-shopping-cart text-primary-brown fa-4x cursor-pointer mt-auto" aria-hidden="true"></i>
+                <div className="bg-muted-gold rounded-full absolute top-0 left-1/2">
+                  <p className="text-soft-ivory text-center px-3 py-1">0</p>
                 </div>
               </div>
               <div className="relative mt-4 text-xl">
-                <Link to="/" className="text-gray-200">
+                <Link to="/" className="text-primary-brown">
                   <i className="fa fa-hand-o-left mr-5" aria-hidden="true"></i>
                   Continue Shopping
                 </Link>
