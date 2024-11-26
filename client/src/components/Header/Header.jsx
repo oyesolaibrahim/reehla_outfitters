@@ -62,14 +62,14 @@ const Header = ({ myCarts = [] }) => {
     };
 
     return (
-        <header className="bg-muted-gold text-primary-brown sm:px-10 xs:px-1 sticky md:px-2 lg:px-10 md:-top-20 lg:-top-40 py-2 top top2 sm:-top-28 z-10">
+        <header className="bg-muted-gold text-primary-brown sm:px-10 xs:px-1 sticky md:px-2 lg:px-10 md:-top-20 lg:-top-40 py-2 top top2 sm:-top-28 xs:-top-32 z-10">
             <div className="flex md:justify-center -pt-40 xs:mb-4 sm:justify-center items-center">
-                <div className="w-full">
+                <div className="w-full xs:relative">
                      <Link to="/">
-                        <img className="lg:w-3/5 sm:w-1/3 md:w-full" src={logo} alt="logo-img" />
+                        <img className="lg:w-3/5 sm:w-1/2 md:w-full xs:absolute xs:-top-28 xs:-left-12 xs:min-w-40" src={logo} alt="logo-img" />
                     </Link>
                 </div>
-                <div className="flex items-center lg:mr-20 md:mr-0 sm:mr-20 xs:pr-16 space-x-2">
+                <div className="flex items-center lg:mr-20 md:mr-0 sm:mr-20 xs:mr-16 xs:mt-16 space-x-2">
                     <input
                         className="px-5 text-black search sm:py-4 lg:w-96 md:w-56 sm:w-80 rounded-lg xs:py-2"
                         placeholder="Search..."
@@ -84,7 +84,7 @@ const Header = ({ myCarts = [] }) => {
                     ></i>
                 </div>
                 <div className="sm:flex md:flex-row lg:flex-row lg:space-x-5 md:space-x-0 sm:items-start md:items-center">
-                    <div className={`md:flex-row md:flex sm:flex sm:flex-col lg:flex lg:flex-row xs:items-start sm:items-start md:p-0 xs:pt-36 sm:pt-36 xs:fixed sm:fixed sm:z xs:pl-10 sm:pl-10 xs:h-screen sm:h-screen md:h-1/6 xs:w-4/5 sm:w-1/2 xs:top-0 sm:top-0 md:static md:bg-transparent xs:bg-soft-ivory xs:text-charcoal-gray sm:bg-soft-ivory sm:text-charcoal-gray transition-all duration-1000 md:-space-x-12 md:items-center ${right ? "right" : "negative-right"}`}>
+                    <div className={`md:flex-row md:flex sm:flex sm:flex-col lg:flex lg:flex-row xs:items-start sm:items-start md:p-0 xs:pt-36 sm:pt-36 xs:fixed sm:fixed sm:z xs:pl-10 sm:pl-10 xs:h-screen sm:h-screen md:h-1/6 xs:w-4/5 sm:w-1/2 xs:top-0 sm:top-0 md:static md:bg-transparent xs:bg-gradient-to-l from-soft-ivory to-muted-gold  xs:text-charcoal-gray sm:bg-transparent sm:text-charcoal-gray transition-all duration-1000 md:-space-x-12 md:items-center ${right ? "right" : "negative-right"}`}>
                         <div className="md:flex-row md:flex lg:flex lg:flex-row sm:flex-col sm:items-start md:items-center md:-space-x-5">
                             <Link to="/">
                                 <h3 className="cursor-pointer font-bold sm:mb-5 md:mb-0 py-3 md:px-5 sm:px-0 sm:hover:text-primary-brown hover:text-soft-ivory">Home</h3>
